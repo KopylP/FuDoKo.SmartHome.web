@@ -1,5 +1,6 @@
 using FuDoKo.SmartHome.web.Data;
 using FuDoKo.SmartHome.web.Data.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Text;
 
 namespace FuDoKo.SmartHome.web
 {
@@ -46,6 +50,32 @@ namespace FuDoKo.SmartHome.web
             })
             .AddEntityFrameworkStores<ApplicationDbConrext>();
 
+            services.AddAuthentication(opts =>
+            {
+                opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(cnf =>
+            {
+                cnf.RequireHttpsMetadata = false;
+                cnf.SaveToken = true;
+                cnf.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidIssuer = Configuration["Auth:Jwt:Issurer"],
+                    ValidAudience = Configuration["Auth:Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["Auth:Jwt:Key"])
+                        ),
+                    ClockSkew = TimeSpan.Zero,
+
+                    RequireExpirationTime = true,
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = true
+                };
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
@@ -66,7 +96,7 @@ namespace FuDoKo.SmartHome.web
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            app.UseStatusCodePagesWithReExecute("errors/{0}");
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
