@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FuDoKo.SmartHome.web</name>
+    </assembly>
+    <members>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.TokenController.Auth(FuDoKo.SmartHome.web.Data.Models.TokenRequestViewModel)">
+            <summary>
+            Это метод для получения токена
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

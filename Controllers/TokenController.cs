@@ -36,7 +36,11 @@ namespace FuDoKo.SmartHome.web.Controllers
             _configuration = configuration;
         }
         #endregion
-
+        /// <summary>
+        /// Это метод для получения токена
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("Auth")]
         public async Task<IActionResult> Auth([FromBody]TokenRequestViewModel model)
         {
@@ -46,7 +50,7 @@ namespace FuDoKo.SmartHome.web.Controllers
                 case "password":
                     return await GetToken(model);
                 default:
-                    return new UnauthorizedResult();
+                    return Unauthorized(new UnauthorizedError());
             }
         }
 
@@ -62,7 +66,7 @@ namespace FuDoKo.SmartHome.web.Controllers
 
                 if (user == null || !await _userManager.CheckPasswordAsync(user, model.password))
                 {
-                    return new UnauthorizedResult();
+                    return Unauthorized(new UnauthorizedError());
                 }
 
                 DateTime now = DateTime.Now;
@@ -96,7 +100,7 @@ namespace FuDoKo.SmartHome.web.Controllers
             }
             catch (Exception ex)
             {
-                return new UnauthorizedResult();
+                return Unauthorized(new UnauthorizedError());
             }
         }
     }
