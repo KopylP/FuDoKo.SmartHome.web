@@ -18,7 +18,7 @@ namespace FuDoKo.SmartHome.web.Data.Models
         public string Name { get; set; }
 
         [Key]
-        [StringLength(12)]
+        [StringLength(16)]
         public string MAC { get; set; }
 
         [Required]

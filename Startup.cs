@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace FuDoKo.SmartHome.web
 {
@@ -44,6 +45,11 @@ namespace FuDoKo.SmartHome.web
                 p.Password.RequiredLength = 7;
             })
             .AddEntityFrameworkStores<ApplicationDbConrext>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +67,11 @@ namespace FuDoKo.SmartHome.web
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseStatusCodePagesWithReExecute("errors/{0}");
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My First API");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
