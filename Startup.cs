@@ -62,7 +62,7 @@ namespace FuDoKo.SmartHome.web
             {
                 cnf.RequireHttpsMetadata = false;
                 cnf.SaveToken = true;
-                cnf.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                cnf.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidIssuer = Configuration["Auth:Jwt:Issurer"],
                     ValidAudience = Configuration["Auth:Jwt:Audience"],
@@ -72,7 +72,7 @@ namespace FuDoKo.SmartHome.web
                     ClockSkew = TimeSpan.Zero,
 
                     RequireExpirationTime = true,
-                    ValidateIssuer = true,
+                    ValidateIssuer = false,
                     ValidateIssuerSigningKey = true,
                     ValidateAudience = true
                 };
@@ -87,6 +87,8 @@ namespace FuDoKo.SmartHome.web
                 c.IncludeXmlComments(xmlPath);
             });
             
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,6 +111,7 @@ namespace FuDoKo.SmartHome.web
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My First API");
             });
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -128,6 +131,18 @@ namespace FuDoKo.SmartHome.web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbConrext>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+                var userManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+
+                dbContext.Database.Migrate();
+
+                DbSeeder.Seed(dbContext, roleManager, userManager);
+            }
+
         }
     }
 }

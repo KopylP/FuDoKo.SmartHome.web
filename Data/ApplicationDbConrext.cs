@@ -11,7 +11,8 @@ namespace FuDoKo.SmartHome.web.Data
     public class ApplicationDbConrext: IdentityDbContext<ApplicationUser>
     {
         #region props
-
+        public DbSet<Controller> Controllers { get; set; }
+        public DbSet<UserHasController> UserHasControllers { get; set; }
         #endregion
 
         #region constructor

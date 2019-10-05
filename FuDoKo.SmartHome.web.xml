@@ -4,9 +4,42 @@
         <name>FuDoKo.SmartHome.web</name>
     </assembly>
     <members>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerController.Get">
+            <summary>
+            Получить список всех контроллеров пользователя
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerController.Put(FuDoKo.SmartHome.web.ViewModels.ControllerViewModel)">
+            <summary>
+            Добовление нового контроллера 
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:FuDoKo.SmartHome.web.Controllers.TokenController.Auth(FuDoKo.SmartHome.web.Data.Models.TokenRequestViewModel)">
             <summary>
             Это метод для получения токена
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:FuDoKo.SmartHome.web.Controllers.UserController">
+            <summary>
+            Контроллер учета пользователей
+            </summary>
+        </member>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.UserController.#ctor(FuDoKo.SmartHome.web.Data.ApplicationDbConrext,Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},Microsoft.AspNetCore.Identity.UserManager{FuDoKo.SmartHome.web.Data.Models.ApplicationUser})">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="role"></param>
+            <param name="userManager"></param>
+        </member>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.UserController.Put(FuDoKo.SmartHome.web.ViewModels.RegisterUserViewModel)">
+            <summary>
+            Регистрация нового пользователя в системе
             </summary>
             <param name="model"></param>
             <returns></returns>
