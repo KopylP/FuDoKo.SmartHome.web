@@ -48,7 +48,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
-                    MAC = table.Column<string>(maxLength: 12, nullable: false),
+                    MAC = table.Column<string>(maxLength: 16, nullable: false),
                     Status = table.Column<bool>(nullable: false, defaultValue: true),
                     InstalledDate = table.Column<DateTime>(nullable: false),
                     LastConnection = table.Column<DateTime>(nullable: false),
