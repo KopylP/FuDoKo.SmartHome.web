@@ -74,7 +74,7 @@ namespace FuDoKo.SmartHome.web.Controllers
             user.EmailConfirmed = true;
             user.LockoutEnabled = false;
 
-            _conrext.SaveChanges();
+            _context.SaveChanges();
 
             return new JsonResult(user.Adapt<UserViewModel>());
         }

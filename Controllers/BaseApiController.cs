@@ -13,7 +13,7 @@ namespace FuDoKo.SmartHome.web.Controllers
     public class BaseApiController : Controller
     {
         #region fields
-        protected ApplicationDbConrext _conrext;
+        protected ApplicationDbConrext _context;
         protected readonly Newtonsoft.Json.JsonSerializerSettings _jsonSettings = new Newtonsoft.Json.JsonSerializerSettings
         {
             Formatting = Newtonsoft.Json.Formatting.Indented
@@ -23,7 +23,7 @@ namespace FuDoKo.SmartHome.web.Controllers
         #region constructor
         public BaseApiController(ApplicationDbConrext context)
         {
-            _conrext = context;
+            _context = context;
         }
         #endregion
     }
