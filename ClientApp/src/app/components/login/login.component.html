@@ -1,0 +1,19 @@
+<h2>{{ title }}</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div *ngIf="form.errors?.auth">
+    {{form.errors?.auth}}
+  </div>
+  <div class="form-group">
+    <input type="text" required formControlName="Username" class="form-control" placeholder="Username" />
+    <div *ngIf="hasError('Username')" class="alert alert-danger">
+      Enter correct login!
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="password" required formControlName="Password" class="form-control" placeholder="Password" />
+    <div *ngIf="hasError('Password')" class="alert alert-danger" role="alert">
+      Enter correct login!
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success btn-signin">Log in</button>
+</form>

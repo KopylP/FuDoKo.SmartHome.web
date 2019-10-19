@@ -12,7 +12,7 @@
         </member>
         <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerController.Get(System.Int32)">
             <summary>
-            Получаем контроллей по айди
+            Получаем контроллер по айди
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -26,9 +26,9 @@
         </member>
         <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerController.Post(FuDoKo.SmartHome.web.ViewModels.ControllerViewModel)">
             <summary>
-            Изменение контроллера
-            Меняем Name, MAC, Status
-            Status на 0 желательно менять методом delete
+            Изменение контроллера.
+            Меняем Name, MAC, Status.
+            Status на 0 желательно менять методом delete.
             </summary>
             <param name="model"></param>
             <returns></returns>
