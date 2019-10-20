@@ -3,21 +3,23 @@ using System;
 using FuDoKo.SmartHome.web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FuDoKo.SmartHome.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbConrext))]
-    [Migration("20191003172739_Update Names")]
-    partial class UpdateNames
+    [Migration("20191020081046_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.ApplicationUser", b =>
                 {
@@ -82,7 +84,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -90,7 +93,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Command", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("DeviceConfigurationId");
 
@@ -114,7 +118,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(2);
+                        .HasMaxLength(2)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -131,7 +136,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Controller", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("InstalledDate");
 
@@ -139,7 +145,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.Property<string>("MAC")
                         .IsRequired()
-                        .HasMaxLength(12);
+                        .HasMaxLength(16);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -164,7 +170,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Device", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ControllerId");
 
@@ -186,7 +193,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasIndex("ControllerId");
 
                     b.HasIndex("MAC")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[MAC] IS NOT NULL");
 
                     b.ToTable("Devices");
                 });
@@ -194,7 +202,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.DeviceConfiguration", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("DeviceId");
 
@@ -215,7 +224,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Measure", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("MeasureName")
                         .IsRequired()
@@ -232,7 +242,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Script", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ConditionTypeId")
                         .HasMaxLength(2);
@@ -271,7 +282,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Sensor", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ControllerId");
 
@@ -302,7 +314,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.SensorType", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("TypeName")
                         .IsRequired()
@@ -319,7 +332,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.UserHasController", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ControllerId");
 
@@ -340,7 +354,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.UserHasDevice", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("DeviceId");
 
@@ -373,7 +388,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -381,7 +397,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -400,7 +417,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -467,12 +485,12 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.DeviceConfiguration", "DeviceConfiguration")
                         .WithMany("Commands")
                         .HasForeignKey("DeviceConfigurationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Script", "Script")
                         .WithMany("Commands")
                         .HasForeignKey("ScriptId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Device", b =>
@@ -488,12 +506,12 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Device", "Device")
                         .WithMany("DeviceConfigurations")
                         .HasForeignKey("DeviceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Measure", "Measure")
                         .WithMany("DeviceConfigurations")
                         .HasForeignKey("MeasureId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Script", b =>
@@ -501,12 +519,12 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.ConditionType", "ConditionType")
                         .WithMany("Scripts")
                         .HasForeignKey("ConditionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Sensor", "Sensor")
                         .WithMany("Scripts")
                         .HasForeignKey("SensorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Sensor", b =>
@@ -514,12 +532,12 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Controller", "Controller")
                         .WithMany("Sensors")
                         .HasForeignKey("ControllerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.SensorType", "SensorType")
                         .WithMany("Sensors")
                         .HasForeignKey("SensorTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.UserHasController", b =>
@@ -527,12 +545,12 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Controller", "Controller")
                         .WithMany("UsersHaveController")
                         .HasForeignKey("ControllerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.ApplicationUser", "User")
                         .WithMany("UserHasControllers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.UserHasDevice", b =>
@@ -540,12 +558,12 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Device", "Device")
                         .WithMany("UsersHaveDevice")
                         .HasForeignKey("DeviceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.UserHasController", "UserHasController")
                         .WithMany("UsersHaveDevices")
                         .HasForeignKey("UsersHaveControllerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

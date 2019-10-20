@@ -30,10 +30,11 @@ namespace FuDoKo.SmartHome.web.Data
                 .HasDefaultValue(true);
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(p => p.UserHasControllers)
-                .WithOne(p => p.User);
+                .WithOne(p => p.User)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserHasController>()
-                .ToTable("Users_Have_Controllers");
+                .ToTable("UsersHaveControllers");
             modelBuilder.Entity<UserHasController>()
                 .HasKey(p => p.Id);
             modelBuilder.Entity<UserHasController>()
@@ -41,13 +42,16 @@ namespace FuDoKo.SmartHome.web.Data
                 .ValueGeneratedOnAdd();
             modelBuilder.Entity<UserHasController>()
                 .HasOne(p => p.User)
-                .WithMany(p => p.UserHasControllers);
+                .WithMany(p => p.UserHasControllers)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<UserHasController>()
                 .HasOne(p => p.Controller)
-                .WithMany(p => p.UsersHaveController);
+                .WithMany(p => p.UsersHaveController)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<UserHasController>()
                 .HasMany(p => p.UsersHaveDevices)
-                .WithOne(p => p.UserHasController);
+                .WithOne(p => p.UserHasController)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Controller>()
                 .ToTable("Controllers");
@@ -61,10 +65,12 @@ namespace FuDoKo.SmartHome.web.Data
                 .ValueGeneratedOnAdd();
             modelBuilder.Entity<Controller>()
                 .HasMany(p => p.UsersHaveController)
-                .WithOne(p => p.Controller);
+                .WithOne(p => p.Controller)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Controller>()
                 .HasMany(p => p.Sensors)
-                .WithOne(p => p.Controller);
+                .WithOne(p => p.Controller)
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Controller>()
                 .HasIndex(p => p.MAC)
                 .IsUnique();
@@ -77,29 +83,34 @@ namespace FuDoKo.SmartHome.web.Data
             sensor.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
             sensor.HasOne(p => p.Controller)
-                .WithMany(p => p.Sensors);
+                .WithMany(p => p.Sensors)
+                .OnDelete(DeleteBehavior.Restrict);
             sensor.HasOne(p => p.SensorType)
-                .WithMany(p => p.Sensors);
+                .WithMany(p => p.Sensors)
+                .OnDelete(DeleteBehavior.Restrict);
 
             var sensorType = modelBuilder.Entity<SensorType>();
-            sensorType.ToTable("Sensor_Types");
+            sensorType.ToTable("SensorTypes");
             sensorType.HasKey(p => p.Id);
             sensorType.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
             sensorType.HasMany(p => p.Sensors)
-                .WithOne(p => p.SensorType);
+                .WithOne(p => p.SensorType)
+                .OnDelete(DeleteBehavior.Restrict);
             sensorType.HasIndex(p => p.TypeName)
                 .IsUnique();
 
             var userHasDevice = modelBuilder.Entity<UserHasDevice>();
-            userHasDevice.ToTable("Users_Have_Devices");
+            userHasDevice.ToTable("UsersHaveDevices");
             userHasDevice.HasKey(p => p.Id);
             userHasDevice.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
             userHasDevice.HasOne(p => p.UserHasController)
-                .WithMany(p => p.UsersHaveDevices);
+                .WithMany(p => p.UsersHaveDevices)
+                .OnDelete(DeleteBehavior.Restrict);
             userHasDevice.HasOne(p => p.Device)
-                .WithMany(p => p.UsersHaveDevice);
+                .WithMany(p => p.UsersHaveDevice)
+                .OnDelete(DeleteBehavior.Restrict);
 
             var devices = modelBuilder.Entity<Device>();
             devices.ToTable("Devices");
@@ -110,19 +121,22 @@ namespace FuDoKo.SmartHome.web.Data
                 .HasDefaultValue(false);
             devices.ToTable("Devices");
             devices.HasMany(p => p.UsersHaveDevice)
-                .WithOne(p => p.Device);
+                .WithOne(p => p.Device)
+                .OnDelete(DeleteBehavior.Restrict);
             devices.HasIndex(p => p.MAC)
                 .IsUnique();
 
             var configurations = modelBuilder.Entity<DeviceConfiguration>();
-            configurations.ToTable("Device_Configurations");
+            configurations.ToTable("DeviceConfigurations");
             configurations.HasKey(p => p.Id);
             configurations.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
             configurations.HasOne(p => p.Device)
-                .WithMany(p => p.DeviceConfigurations);
+                .WithMany(p => p.DeviceConfigurations)
+                .OnDelete(DeleteBehavior.Restrict);
             configurations.HasOne(p => p.Measure)
-                .WithMany(p => p.DeviceConfigurations);
+                .WithMany(p => p.DeviceConfigurations)
+                .OnDelete(DeleteBehavior.Restrict);
             configurations.HasMany(p => p.Commands).WithOne(p => p.DeviceConfiguration);
 
             var measures = modelBuilder.Entity<Measure>();
@@ -131,7 +145,8 @@ namespace FuDoKo.SmartHome.web.Data
             measures.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
             measures.HasMany(p => p.DeviceConfigurations)
-                .WithOne(p => p.Measure);
+                .WithOne(p => p.Measure)
+                .OnDelete(DeleteBehavior.Restrict);
             measures.HasIndex(p => p.MeasureName)
                 .IsUnique();
 
@@ -141,9 +156,11 @@ namespace FuDoKo.SmartHome.web.Data
             commands.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
             commands.HasOne(p => p.Script)
-                .WithMany(p => p.Commands);
+                .WithMany(p => p.Commands)
+                .OnDelete(DeleteBehavior.Restrict);
             commands.HasOne(p => p.DeviceConfiguration)
-                .WithMany(p => p.Commands);
+                .WithMany(p => p.Commands)
+                .OnDelete(DeleteBehavior.Restrict);
 
             var scripts = modelBuilder.Entity<Script>();
             scripts.ToTable("Scripts");
@@ -153,19 +170,23 @@ namespace FuDoKo.SmartHome.web.Data
             scripts.Property(p => p.Priority)
                 .HasDefaultValue(0);
             scripts.HasOne(p => p.ConditionType)
-                .WithMany(p => p.Scripts);
+                .WithMany(p => p.Scripts)
+                .OnDelete(DeleteBehavior.Restrict);
             scripts.HasOne(p => p.Sensor)
-                .WithMany(p => p.Scripts);
+                .WithMany(p => p.Scripts)
+                .OnDelete(DeleteBehavior.Restrict);
             scripts.HasMany(p => p.Commands)
-                .WithOne(p => p.Script);
+                .WithOne(p => p.Script)
+                .OnDelete(DeleteBehavior.Restrict);
 
             var conditionTypes = modelBuilder.Entity<ConditionType>();
-            conditionTypes.ToTable("Condition_Types");
+            conditionTypes.ToTable("ConditionTypes");
             conditionTypes.HasKey(p => p.Id);
             conditionTypes.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
             conditionTypes.HasMany(p => p.Scripts)
-                .WithOne(p => p.ConditionType);
+                .WithOne(p => p.ConditionType)
+                .OnDelete(DeleteBehavior.Restrict);
             conditionTypes.HasIndex(p => p.Type)
                 .IsUnique();
         }

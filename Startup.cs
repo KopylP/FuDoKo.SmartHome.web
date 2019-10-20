@@ -37,10 +37,10 @@ namespace FuDoKo.SmartHome.web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddEntityFrameworkMySql();
+
             services.AddDbContext<ApplicationDbConrext>(options =>
             {
-                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddIdentity<ApplicationUser, IdentityRole>(p =>
             {
