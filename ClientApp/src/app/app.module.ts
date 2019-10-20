@@ -11,6 +11,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { RegisterService } from './services/register.service';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +21,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
         HomeComponent,
         CounterComponent,
         FetchDataComponent,
-        LoginComponent
+        LoginComponent,
+        RegisterComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,7 +32,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'auth', component: LoginComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
+            { path: "register", component: RegisterComponent }
         ])
     ],
     providers: [
@@ -38,7 +41,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true
-        }
+        },
+        RegisterService
     ],
     bootstrap: [AppComponent]
 })
