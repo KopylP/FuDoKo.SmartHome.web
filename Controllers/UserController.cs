@@ -46,6 +46,8 @@ namespace FuDoKo.SmartHome.web.Controllers
         {
             if (model == null) return StatusCode(500, new InternalServerError());
 
+            if (!ModelState.IsValid) return StatusCode(500, new InternalServerError("Data is not correct!!!"));
+
             ApplicationUser user = await _userManager.FindByNameAsync(model.UserName);
             if (user != null) return BadRequest(new BadRequestError("User is already exista"));
 

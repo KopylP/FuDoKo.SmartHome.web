@@ -1,17 +1,20 @@
+@pink: rebeccapurple;
 button {
   width: 94%;
 }
 .login-container {
-  border: 1px solid #d9d9d9;
   padding: 10px 15px;
-  -webkit-box-shadow: -12px 12px 7px -5px rgba(217,217,217,1);
-  -moz-box-shadow: -12px 12px 7px -5px rgba(217,217,217,1);
-  box-shadow: -12px 12px 7px -5px rgba(217,217,217,1);
+
+  h1 {
+    color: @pink;
+    float: left;
+  }
 }
-.flex-login-container{
-  display:flex;
-  align-items:center;
+.flex-login-container {
+  display: flex;
+  align-items: center;
   margin-top: 12%;
+  
 }
 .div-login-title{
   padding: 10px 0px;
@@ -22,3 +25,52 @@ a{
 .div-login-errors{
   color:red;
 }
+
+.signup-container {
+  border-radius: 10px 0 0 10px;
+  background-color: rebeccapurple;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h4 {
+    
+    text-align: center;
+    color: white;
+  }
+}
+
+.flex-login {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 0 10px 10px 0;
+  height: 500px;
+  background-color: white;
+}
+
+body {
+  /*position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 110%;
+  height: 100vh;*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../../../../../wwwroot/images/background.jpg");
+}
+
+.icon-add-user {
+  margin-top: -100px;
+  font-size: 5em;
+  color: white;
+}
+
+/*.btn-success {
+  background-color: @pink!important;
+  border-color: @pink!important;
+}*/

@@ -13,6 +13,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RegisterService } from './services/register.service';
 import { RegisterComponent } from './components/register/register.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { RegisterComponent } from './components/register/register.component';
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
+        FontAwesomeModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'auth', component: LoginComponent },

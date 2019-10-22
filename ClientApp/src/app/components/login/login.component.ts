@@ -1,66 +1,74 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, ViewEncapsulation, OnDestroy } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
-
+import { faUnlockAlt, faUser, faUserPlus, faUsers, faKey } from '@fortawesome/free-solid-svg-icons';
 @Component({
-  selector: "login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.less"]
+    selector: "login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.less"],
+    encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent {
-  title: string;
-  form: FormGroup;
 
-  constructor(private router: Router,
-    private fb: FormBuilder,
-    private authService: AuthService,
-    @Inject('BASE_URL') private baseUrl: string) {
+    faUnlockAlt = faUnlockAlt;
+    faUser = faUser;
+    faUsers = faUsers;
+    faKey = faKey;
+    title: string;
+    form: FormGroup;
 
-    this.title = "Log in";
+    constructor(private router: Router,
+        private fb: FormBuilder,
+        private authService: AuthService,
+        @Inject('BASE_URL') private baseUrl: string) {
 
-    this.createForm();
-  }
+        this.title = "Sign in";
 
-  createForm() {
-    this.form = this.fb.group({
-      Username: ['', Validators.required],
-      Password: ['', Validators.required]
-    });
-  }
+        this.createForm();
+    }
 
-  onSubmit() {
-    const url = this.baseUrl + "api/token/auth";
-    const username = this.form.value.Username;
-    const password = this.form.value.Password;
-
-    this.authService.login(username, password)
-      .subscribe(res => {
-        alert(this.authService.getAuth()!.token)
-      },
-      err => {
-        this.form.setErrors({
-          "auth": "Username or password is incorrect"
+    createForm() {
+        this.form = this.fb.group({
+            Username: ['', Validators.required],
+            Password: ['', Validators.required]
         });
-      });
-  }
+    }
 
-  onBack() {
-    this.router.navigate(["home"]);
-  }
+    onSubmit() {
+        const url = this.baseUrl + "api/token/auth";
+        const username = this.form.value.Username;
+        const password = this.form.value.Password;
 
-  getFormControl(name: string) {
-    return this.form.get(name);
-  }
+        this.authService.login(username, password)
+            .subscribe(res => {
+                alert(this.authService.getAuth()!.token)
+            },
+                err => {
+                    this.form.setErrors({
+                        "auth": "Username or password is incorrect"
+                    });
+                });
+    }
 
-  isValid(name: string) {
-    let e = this.getFormControl(name);
-    return e && e.valid;
-  }
+    onBack() {
+        this.router.navigate(["home"]);
+    }
 
-  hasError(name: string) {
-    let e = this.getFormControl(name);
-    return e && (e.dirty || e.touched) && !e.valid;
-  }
+    getFormControl(name: string) {
+        return this.form.get(name);
+    }
+
+    isValid(name: string) {
+        let e = this.getFormControl(name);
+        return e && e.valid;
+    }
+
+    hasError(name: string) {
+        let e = this.getFormControl(name);
+        return e && (e.dirty || e.touched) && !e.valid;
+    }
+
+    
 
 }

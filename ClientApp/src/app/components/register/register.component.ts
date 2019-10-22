@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, ViewEncapsulation } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from "@angular/forms";
 import { Router } from "@angular/router";
 import { RegisterService } from "../../services/register.service";
@@ -6,7 +6,8 @@ import { RegisterService } from "../../services/register.service";
 @Component({
     selector: "register",
     templateUrl: "./register.component.html",
-    styleUrls: ["./register.component.less"]
+    styleUrls: ["./register.component.less"],
+    encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent {
     title: string;
