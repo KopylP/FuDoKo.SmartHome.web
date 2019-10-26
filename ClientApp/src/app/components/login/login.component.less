@@ -1,4 +1,5 @@
-@pink: rebeccapurple;
+@import "../../styles/main.less";
+
 button {
   width: 94%;
 }
@@ -23,7 +24,7 @@ a{
   margin-right:2px;
 }
 .div-login-errors{
-  color:red;
+  text-align: center;
 }
 
 .signup-container {
@@ -52,13 +53,11 @@ a{
   background-color: white;
 }
 
+#sign-up-button{
+  display: none;
+}
+
 body {
-  /*position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 110%;
-  height: 100vh;*/
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url("../../../../../wwwroot/images/background.jpg");
@@ -70,7 +69,19 @@ body {
   color: white;
 }
 
-/*.btn-success {
-  background-color: @pink!important;
-  border-color: @pink!important;
-}*/
+
+@media only screen and (max-width:765px) {
+  .signup-container {
+    display: none;
+  }
+
+  .flex-login {
+    border-radius: 3px;
+    height: auto;
+  }
+
+  #sign-up-button {
+    display: block;
+  }
+
+}

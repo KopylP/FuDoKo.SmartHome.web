@@ -2,6 +2,7 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  color: white;
 }
 
 html {
@@ -18,5 +19,7 @@ html {
 }
 
 header {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rebeccapurple;
+  
 }
+

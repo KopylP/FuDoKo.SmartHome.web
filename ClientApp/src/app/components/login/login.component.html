@@ -1,56 +1,66 @@
-<div class="background">
-
-</div>
 <div class="container-fluid main">
   <div class="row justify-content-center flex-login-container">
-    <div class="col-lg-2 signup-container">
-        <fa-icon class="icon-add-user" [icon]="faUsers"></fa-icon>
-        <h4>Don't have an account yet?</h4>
-        <button class="btn btn-outline-light" [routerLink]='["/register"]'>Sign up</button>
+    <div class="col-lg-2 col-md-3 signup-container">
+      <fa-icon class="icon-add-user" [icon]="faUsers"></fa-icon>
+      <h4>Don't have an account yet?</h4>
+      <button class="btn btn-outline-light" [routerLink]='["/register"]'>Sign up</button>
     </div>
-    <div  class="col-lg-3 flex-login">
+    <div class="col-lg-3 col-md-5 flex-login">
       <div class="col-lg-12 login-container">
         <div class="row justify-content-center">
           <div class="div-login-title">
             <h1>{{ title }}</h1>
           </div>
         </div>
+        <div class="row">
+          <div class="form-group col-12">
+            <mat-progress-bar [hidden]="!isSignAction" mode="indeterminate"></mat-progress-bar>
+          </div>
+        </div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="row justify-content-center">
-            <div *ngIf="form.errors?.auth" class="div-login-errors">
+            <div *ngIf="form.errors?.auth" class="invalid-feedback div-login-errors">
               {{form.errors?.auth}}
             </div>
           </div>
           <div class="row">
-            <div class="form-group col-12">
+            <div class="col-12 input-group">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1"><fa-icon [icon]="faUser"></fa-icon></span>
                 </div>
-                <input type="text" class="form-control" formControlName="Username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-              </div>
-              <div *ngIf="hasError('Username')" class="text-danger">
-                Enter correct login!
+                <input type="text" class="form-control" formControlName="Username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [ngClass]="{'is-invalid': hasError('Username')}">
+                <div *ngIf="hasError('Username')" class="invalid-feedback">
+                  Enter correct login!
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="form-group col-12">
+            <div class="input-group col-12">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1"><fa-icon [icon]="faUnlockAlt"></fa-icon></span>
                 </div>
-                <input type="password" class="form-control"formControlName="Password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
-              </div>
-              <div *ngIf="hasError('Password')" class="text-danger" role="alert">
-                Enter correct password!
+                <input type="password" class="form-control" formControlName="Password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" [ngClass]="{'is-invalid': hasError('Password')}">
+                <div *ngIf="hasError('Password')" class="invalid-feedback">
+                  Enter correct password!
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-12">
               <div class="row justify-content-center">
-                <button [disabled]="form.invalid" type="submit" class="btn btn-success">Sign in</button>
+                <button [disabled]="form.invalid" type="submit" class="btn btn-success">Sign in!</button>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row" id="sign-up-button">
+            <div class="col-12">
+              <div class="row justify-content-center">
+                <button type="button" class="btn btn-outline-dark" accesskey="['/register']">Sign up!</button>
               </div>
             </div>
           </div>
@@ -64,7 +74,7 @@
         </form>
       </div>
     </div>
-    
+
   </div>
 </div>
 

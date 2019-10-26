@@ -2,7 +2,7 @@ import { Component, Inject, ViewEncapsulation } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from "@angular/forms";
 import { Router } from "@angular/router";
 import { RegisterService } from "../../services/register.service";
-
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 @Component({
     selector: "register",
     templateUrl: "./register.component.html",
@@ -12,13 +12,14 @@ import { RegisterService } from "../../services/register.service";
 export class RegisterComponent {
     title: string;
     form: FormGroup;
+    faUser = faUser;
 
     constructor(private router: Router,
         private fb: FormBuilder,
         private registerService: RegisterService) {
 
         this.title = "Sign up";
-
+        document.body.classList.add("body-class");
         this.createForm();
     }
 
@@ -66,7 +67,7 @@ export class RegisterComponent {
             this.router.navigate(["auth"]);
         }, err => {
             this.form.setErrors({
-                "register": err.message
+                "register": err.error.message
             });
             console.log(err);
         });

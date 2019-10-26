@@ -1,73 +1,87 @@
 <div class="container-fluid">
   <div class="row justify-content-center flex-register-container">
-    <div class="col-lg-3 register-container">
-      <div class="row justify-content-center">
-        <div class="div-register-title">
-          <h1>{{ title }}</h1>
-        </div>
-      </div>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="register-flex col-lg-3 col-md-5">
+      <div class="col-lg-12 register-container">
         <div class="row justify-content-center">
-          <div *ngIf="form.errors?.auth" class="div-register-errors">
-            {{form.errors?.register}}
+          <div class="div-register-title">
+            <h1>{{ title }}</h1>
           </div>
         </div>
-        <div class="row">
-          <div class="form-group col-12">
-            <input type="text" required formControlName="Username" class="form-control" placeholder="Username" />
-            <div *ngIf="hasError('Username')" class="alert alert-danger">
-              Enter correct username!
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row justify-content-center">
+            <div *ngIf="form.errors?.register" class="div-register-errors invalid-feedback">
+              {{form.errors?.register}}
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-12">
-            <input type="email" required formControlName="Email" class="form-control" placeholder="Email" />
-            <div *ngIf="hasError('Email')" class="alert alert-danger">
-              Enter correct Email!
+          <div class="row">
+            <div class="form-group col-12">
+              <input type="text" required formControlName="Username" class="form-control" placeholder="Username" [ngClass]="{'is-invalid': hasError('Username')}" />
+              <div *ngIf="hasError('Username')" class="invalid-feedback">
+                Enter correct username!
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-12">
-            <input type="text" required formControlName="Name" class="form-control" placeholder="Name" />
-            <div *ngIf="hasError('Name')" class="alert alert-danger">
-              Enter correct name!
+          <div class="row">
+            <div class="form-group col-12">
+              <input type="email" required formControlName="Email" class="form-control" placeholder="Email" [ngClass]="{'is-invalid': hasError('Email')}" />
+              <div *ngIf="hasError('Email')" class="invalid-feedback">
+                Enter correct Email!
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-12">
-            <input type="text" required formControlName="Surname" class="form-control" placeholder="Surname" />
-            <div *ngIf="hasError('Surrname')" class="alert alert-danger">
-              Enter correct surname!
+          <div class="row">
+            <div class="form-group col-12">
+              <input type="text" required formControlName="Name" class="form-control" placeholder="Name" [ngClass]="{'is-invalid': hasError('Name')}"/>
+              <div *ngIf="hasError('Name')" class="invalid-feedback">
+                Enter correct name!
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-12">
-            <input type="password" required formControlName="Password" class="form-control" placeholder="Password" />
-            <div *ngIf="hasError('Password')" class="alert alert-danger" role="alert">
-              Enter correct password!
+          <div class="row">
+            <div class="form-group col-12">
+              <input type="text" required formControlName="Surname" class="form-control" placeholder="Surname" [ngClass]="{'is-invalid': hasError('Surname')}" />
+              <div *ngIf="hasError('Surname')" class="invalid-feedback">
+                Enter correct surname!
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-12">
-            <input type="password" required formControlName="ConfirmPassword" class="form-control" placeholder="Confirm password" />
-            <div *ngIf="hasError('ConfirmPassword')" class="alert alert-danger" role="alert">
-              Passwords should be the same!
+          <div class="row">
+            <div class="form-group col-12">
+              <input type="password" required formControlName="Password" class="form-control" placeholder="Password" [ngClass]="{'is-invalid': hasError('Password')}"/>
+              <div *ngIf="hasError('Password')" class="invalid-feedback" role="alert">
+                Enter correct password!
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="row justify-content-center">
-              <button [disabled]="form.invalid" type="submit" class="btn btn-success">Sign up!</button>
+          <div class="row">
+            <div class="form-group col-12">
+              <input type="password" required formControlName="ConfirmPassword" class="form-control" placeholder="Confirm password" [ngClass]="{'is-invalid': hasError('ConfirmPassword')}"/>
+              <div *ngIf="hasError('ConfirmPassword')" class="invalid-feedback" role="alert">
+                Passwords should be the same!
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+          <div class="row">
+            <div class="col-12">
+              <div class="row justify-content-center">
+                <button [disabled]="form.invalid" type="submit" class="btn btn-success">Sign up!</button>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="sign-in-button">
+            <div class="col-12">
+              <div class="row justify-content-center">
+                <button type="button" class="btn btn-outline-dark" [routerLink]="['/auth']">Sign in!</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="sign-in-flex-container col-lg-2 col-md-3">
+      <fa-icon class="icon-sign-in-user" [icon]="faUser"></fa-icon>
+      <h4>Do you already have an account?</h4>
+      <button class="btn btn-outline-light" [routerLink]='["/auth"]'>Sign in!</button>
     </div>
   </div>
 </div>

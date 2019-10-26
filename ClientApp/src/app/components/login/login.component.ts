@@ -17,6 +17,7 @@ export class LoginComponent {
     faKey = faKey;
     title: string;
     form: FormGroup;
+    isSignAction: boolean = false;
 
     constructor(private router: Router,
         private fb: FormBuilder,
@@ -36,18 +37,21 @@ export class LoginComponent {
     }
 
     onSubmit() {
+        this.isSignAction = true;
         const url = this.baseUrl + "api/token/auth";
         const username = this.form.value.Username;
         const password = this.form.value.Password;
 
         this.authService.login(username, password)
             .subscribe(res => {
-                alert(this.authService.getAuth()!.token)
+                alert(this.authService.getAuth()!.token);
+                this.isSignAction = false;
             },
                 err => {
                     this.form.setErrors({
                         "auth": "Username or password is incorrect"
                     });
+                    this.isSignAction = false;
                 });
     }
 

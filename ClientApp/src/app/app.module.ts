@@ -14,7 +14,12 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RegisterService } from './services/register.service';
 import { RegisterComponent } from './components/register/register.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ControllerListComponent } from './components/controller-list/controller-list.component';
+import { ControllerItemComponent } from './components/controller-item/controller-item.component';
+import { ControllerService } from './services/controller.service';
 @NgModule({
     declarations: [
         AppComponent,
@@ -23,29 +28,41 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         CounterComponent,
         FetchDataComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        ControllerListComponent,
+        ControllerItemComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
+        BrowserModule,
         ReactiveFormsModule,
+        MatProgressBarModule,
+        MatFormFieldModule,
+        MatInputModule,
         FontAwesomeModule,
         RouterModule.forRoot([
-            { path: '', component: HomeComponent, pathMatch: 'full' },
+            { path: '', component: ControllerListComponent },
             { path: 'auth', component: LoginComponent },
             { path: "register", component: RegisterComponent }
         ])
     ],
     providers: [
-        AuthService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true
         },
-        RegisterService
+        AuthService,
+        RegisterService,
+        ControllerService
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    exports: [
+        MatProgressBarModule,
+        MatFormFieldModule,
+        MatInputModule
+    ]
 })
 export class AppModule { }
