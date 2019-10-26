@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -37,7 +37,7 @@ import { ControllerService } from './services/controller.service';
         HttpClientModule,
         FormsModule,
         BrowserModule,
-        ReactiveFormsModule,
+        ReactiveFormModule,
         MatProgressBarModule,
         MatFormFieldModule,
         MatInputModule,
@@ -50,7 +50,7 @@ import { ControllerService } from './services/controller.service';
     ],
     providers: [
         {
-            provide: HTTP_INTERCEPTORS,
+            provide: HTTP_INTERCEPTOR,
             useClass: AuthInterceptor,
             multi: true
         },
