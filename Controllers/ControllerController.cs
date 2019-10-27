@@ -16,10 +16,10 @@ using System.Threading.Tasks;
 namespace FuDoKo.SmartHome.web.Controllers
 {
     [Authorize]
-    public class ControllerController: BaseApiController
+    public class ControllerController : BaseApiController
     {
         #region constructor
-        public ControllerController(ApplicationDbConrext dbContext): base(dbContext)
+        public ControllerController(ApplicationDbConrext dbContext) : base(dbContext)
         {
 
         }
@@ -116,7 +116,7 @@ namespace FuDoKo.SmartHome.web.Controllers
             var controller = _context.Controllers
                 .Where(p => p.MAC == model.MAC && p.Id != model.Id)
                 .FirstOrDefault();
-            if(controller != null) return StatusCode(500, new InternalServerError("Controller is ulready exists"));
+            if (controller != null) return StatusCode(500, new InternalServerError("Controller is ulready exists"));
             controller = _context.Controllers.Find(model.Id);
             if (controller == null) return NotFound(new NotFoundError());
             //Змінюємо контролер
@@ -128,6 +128,34 @@ namespace FuDoKo.SmartHome.web.Controllers
             _context.SaveChanges();
             //Повертаємо результат
             return new JsonResult(controller.Adapt<ControllerViewModel>());
+        }
+
+        /// <summary>
+        /// Этот метод делает контроллер disabled
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            //Беремо айді користувача з токену
+            var user = User.GetUser(_context);
+            if (user == null) return Unauthorized(new UnauthorizedError());
+            //Шукаємо контролер о тим самим id
+            var controller = _context.Controllers.Find(id);
+            if(controller == null) return NotFound(new NotFoundError());
+            //Перевіряємо, чи користувач належить до цього контроллера
+            var userHasController = _context
+                .UserHasControllers
+                .Where(p => p.UserId == user.Id)
+                .Where(p => p.ControllerId == controller.Id)
+                .Where(p => p.IsAdmin)
+                .FirstOrDefault();
+            if (userHasController == null) return Unauthorized(new UnauthorizedError());
+            //Змінюємо статус контроллера
+            controller.Status = false;
+            _context.SaveChanges();
+            return NoContent();
         }
 
         #endregion

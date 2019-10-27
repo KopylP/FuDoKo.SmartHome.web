@@ -128,7 +128,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasIndex("Type")
                         .IsUnique();
 
-                    b.ToTable("Condition_Types");
+                    b.ToTable("ConditionTypes");
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Controller", b =>
@@ -216,7 +216,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.HasIndex("MeasureId");
 
-                    b.ToTable("Device_Configurations");
+                    b.ToTable("DeviceConfigurations");
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Measure", b =>
@@ -324,7 +324,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasIndex("TypeName")
                         .IsUnique();
 
-                    b.ToTable("Sensor_Types");
+                    b.ToTable("SensorTypes");
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.UserHasController", b =>
@@ -346,7 +346,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Users_Have_Controllers");
+                    b.ToTable("UsersHaveControllers");
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.UserHasDevice", b =>
@@ -365,7 +365,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.HasIndex("UsersHaveControllerId");
 
-                    b.ToTable("Users_Have_Devices");
+                    b.ToTable("UsersHaveDevices");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

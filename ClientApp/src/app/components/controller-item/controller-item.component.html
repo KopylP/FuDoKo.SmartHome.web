@@ -1,6 +1,17 @@
+
 <div class="div-controller">
-  <div class="div-controller-circle">
+  <div class="div-controller-circle" #controllerElement>
     <fa-icon [icon]="faHome"></fa-icon>
+    <div class="custom-control custom-switch controller-switch" *ngIf="userHasController.isAdmin && class === 'selected'">
+      <input type="checkbox"
+             class="custom-control-input"
+             id="customSwitches"
+             [(ngModel)]="userHasController.controller.status"
+             (change)="changeStatus($event)">
+
+      <label class="custom-control-label"
+             for="customSwitches"></label>
+    </div>
   </div>
   <p>{{userHasController.controller.name}}</p>
 </div>

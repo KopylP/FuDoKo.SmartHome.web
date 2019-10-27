@@ -1,0 +1,26 @@
+<mdb-card cascade="true" wider="true" reverse="true" class="my-4">
+  <!--Card image-->
+  <div class="view view-cascade overlay waves-light" mdbWavesEffect>
+    <div class="card-div">
+        <h1><fa-icon [icon]="faUserAstronaut"></fa-icon> Admin panel</h1>
+    </div>
+    <a>
+      <div class="mask rgba-white-slight"></div>
+    </a>
+  </div>
+  <!--/Card image-->
+  <!-- Card content -->
+  <mdb-card-body cascade="true" class="text-center">
+
+    <!--Title-->
+    <mdb-card-title>
+      <h4>
+        <strong>Your controllers:</strong>
+      </h4>
+    </mdb-card-title>
+  <app-controller-list (onChanged)="onControllerChange($event)"></app-controller-list>
+  </mdb-card-body>
+</mdb-card>
+
+
+

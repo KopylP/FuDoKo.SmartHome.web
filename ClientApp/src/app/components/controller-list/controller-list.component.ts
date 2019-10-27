@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { ControllerService } from "../../services/controller.service";
 
 @Component({
@@ -8,10 +8,17 @@ import { ControllerService } from "../../services/controller.service";
 })
 export class ControllerListComponent  {
 
-    userHasControllers: UserHasController[] = [];
+    @Output() onChanged = new EventEmitter<UserHasController>();
 
+    userHasControllers: UserHasController[] = [];
+    selectedItem: UserHasController;
     constructor(private controllerService: ControllerService) {
 
+    }
+
+    setSelectedItem(item) {
+        this.selectedItem = item;
+        this.onChanged.emit(item);
     }
 
     ngOnInit(): void {

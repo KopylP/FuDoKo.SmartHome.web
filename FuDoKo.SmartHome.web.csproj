@@ -44,21 +44,51 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\components\controller-item\controller-item.component.ts" />
+    <None Remove="ClientApp\src\app\components\home\home.component.html" />
+    <None Remove="ClientApp\src\app\components\home\home.component.less" />
+    <None Remove="ClientApp\src\app\components\home\home.component.ts" />
     <None Remove="ClientApp\src\app\components\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\components\controller-list\controller-list.component.html" />
+    <None Remove="ClientApp\src\app\components\controller-list\controller-list.component.less" />
+    <None Remove="ClientApp\src\app\components\controller-list\controller-list.component.ts" />
     <None Remove="ClientApp\src\app\components\register\register.component.ts" />
     <None Remove="ClientApp\src\app\interceptors\auth.interceptor.ts" />
+    <None Remove="ClientApp\src\app\interfaces\Controller.ts" />
     <None Remove="ClientApp\src\app\interfaces\RegisterUser.ts" />
     <None Remove="ClientApp\src\app\interfaces\TokenResponse.ts" />
+    <None Remove="ClientApp\src\app\interfaces\UserHasController.ts" />
     <None Remove="ClientApp\src\app\services\auth.service.ts" />
+    <None Remove="ClientApp\src\app\services\controller.service.ts" />
     <None Remove="ClientApp\src\app\services\register.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\controller-item\controller-item.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\home\home.component.html">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\home\home.component.less">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\home\home.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\components\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\controller-list\controller-list.component.less">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\controller-list\controller-list.component.html">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\controller-list\controller-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\register\register.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interceptors\auth.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\Controller.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\RegisterUser.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\TokenResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\UserHasController.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\controller.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\register.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
   </ItemGroup>

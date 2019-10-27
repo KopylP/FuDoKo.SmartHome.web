@@ -13,7 +13,19 @@ export class ControllerService {
         return this.http.get<UserHasController[]>(this.url);
     }
 
-    get(id: number): Observable<UserHasController>{
+    get(id: number): Observable<Controller>{
         return this.http.get<UserHasController>(this.url + '/' + id);
+    }
+
+    disable(id: number): Observable<any> {
+        return this.http.delete(this.url + '/' + id);
+    }
+
+    edit(controller: Controller): Observable<Controller> {
+        return this.http.post<Controller>(this.url, controller);
+    }
+
+    put(controller: Controller): Observable<Controller> {
+        return this.http.put<Controller>(this.url, controller);
     }
 }

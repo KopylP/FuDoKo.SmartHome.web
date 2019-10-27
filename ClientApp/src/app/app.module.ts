@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AuthService } from './services/auth.service';
@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ControllerListComponent } from './components/controller-list/controller-list.component';
 import { ControllerItemComponent } from './components/controller-item/controller-item.component';
 import { ControllerService } from './services/controller.service';
+import { HomeComponent } from './components/home/home.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -30,27 +31,29 @@ import { ControllerService } from './services/controller.service';
         LoginComponent,
         RegisterComponent,
         ControllerListComponent,
-        ControllerItemComponent
+        ControllerItemComponent,
+        HomeComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
         BrowserModule,
-        ReactiveFormModule,
+        ReactiveFormsModule,
         MatProgressBarModule,
         MatFormFieldModule,
         MatInputModule,
+        MDBBootstrapModule.forRoot(),
         FontAwesomeModule,
         RouterModule.forRoot([
-            { path: '', component: ControllerListComponent },
+            { path: '', component: HomeComponent },
             { path: 'auth', component: LoginComponent },
             { path: "register", component: RegisterComponent }
         ])
     ],
     providers: [
         {
-            provide: HTTP_INTERCEPTOR,
+            provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true
         },

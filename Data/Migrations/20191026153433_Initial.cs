@@ -23,7 +23,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Condition_Types",
+                name: "ConditionTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(maxLength: 2, nullable: false)
@@ -32,7 +32,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Condition_Types", x => x.Id);
+                    table.PrimaryKey("PK_ConditionTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,7 +68,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sensor_Types",
+                name: "SensorTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -77,7 +77,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sensor_Types", x => x.Id);
+                    table.PrimaryKey("PK_SensorTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,9 +178,9 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Sensors_Sensor_Types_SensorTypeId",
+                        name: "FK_Sensors_SensorTypes_SensorTypeId",
                         column: x => x.SensorTypeId,
-                        principalTable: "Sensor_Types",
+                        principalTable: "SensorTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -271,7 +271,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users_Have_Controllers",
+                name: "UsersHaveControllers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -282,15 +282,15 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users_Have_Controllers", x => x.Id);
+                    table.PrimaryKey("PK_UsersHaveControllers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Have_Controllers_Controllers_ControllerId",
+                        name: "FK_UsersHaveControllers_Controllers_ControllerId",
                         column: x => x.ControllerId,
                         principalTable: "Controllers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Have_Controllers_Users_UserId",
+                        name: "FK_UsersHaveControllers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -298,7 +298,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Device_Configurations",
+                name: "DeviceConfigurations",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -309,15 +309,15 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Device_Configurations", x => x.Id);
+                    table.PrimaryKey("PK_DeviceConfigurations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Device_Configurations_Devices_DeviceId",
+                        name: "FK_DeviceConfigurations_Devices_DeviceId",
                         column: x => x.DeviceId,
                         principalTable: "Devices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Device_Configurations_Measures_MeasureId",
+                        name: "FK_DeviceConfigurations_Measures_MeasureId",
                         column: x => x.MeasureId,
                         principalTable: "Measures",
                         principalColumn: "Id",
@@ -345,9 +345,9 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 {
                     table.PrimaryKey("PK_Scripts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Scripts_Condition_Types_ConditionTypeId",
+                        name: "FK_Scripts_ConditionTypes_ConditionTypeId",
                         column: x => x.ConditionTypeId,
-                        principalTable: "Condition_Types",
+                        principalTable: "ConditionTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -359,7 +359,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users_Have_Devices",
+                name: "UsersHaveDevices",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -369,17 +369,17 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users_Have_Devices", x => x.Id);
+                    table.PrimaryKey("PK_UsersHaveDevices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Have_Devices_Devices_DeviceId",
+                        name: "FK_UsersHaveDevices_Devices_DeviceId",
                         column: x => x.DeviceId,
                         principalTable: "Devices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Have_Devices_Users_Have_Controllers_UsersHaveControllerId",
+                        name: "FK_UsersHaveDevices_UsersHaveControllers_UsersHaveControllerId",
                         column: x => x.UsersHaveControllerId,
-                        principalTable: "Users_Have_Controllers",
+                        principalTable: "UsersHaveControllers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -399,9 +399,9 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 {
                     table.PrimaryKey("PK_Commands", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Commands_Device_Configurations_DeviceConfigurationId",
+                        name: "FK_Commands_DeviceConfigurations_DeviceConfigurationId",
                         column: x => x.DeviceConfigurationId,
-                        principalTable: "Device_Configurations",
+                        principalTable: "DeviceConfigurations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -450,8 +450,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 column: "ScriptId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Condition_Types_Type",
-                table: "Condition_Types",
+                name: "IX_ConditionTypes_Type",
+                table: "ConditionTypes",
                 column: "Type",
                 unique: true);
 
@@ -462,13 +462,13 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Device_Configurations_DeviceId",
-                table: "Device_Configurations",
+                name: "IX_DeviceConfigurations_DeviceId",
+                table: "DeviceConfigurations",
                 column: "DeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Device_Configurations_MeasureId",
-                table: "Device_Configurations",
+                name: "IX_DeviceConfigurations_MeasureId",
+                table: "DeviceConfigurations",
                 column: "MeasureId");
 
             migrationBuilder.CreateIndex(
@@ -500,12 +500,6 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 column: "SensorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sensor_Types_TypeName",
-                table: "Sensor_Types",
-                column: "TypeName",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Sensors_ControllerId",
                 table: "Sensors",
                 column: "ControllerId");
@@ -514,6 +508,12 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 name: "IX_Sensors_SensorTypeId",
                 table: "Sensors",
                 column: "SensorTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SensorTypes_TypeName",
+                table: "SensorTypes",
+                column: "TypeName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -528,23 +528,23 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Have_Controllers_ControllerId",
-                table: "Users_Have_Controllers",
+                name: "IX_UsersHaveControllers_ControllerId",
+                table: "UsersHaveControllers",
                 column: "ControllerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Have_Controllers_UserId",
-                table: "Users_Have_Controllers",
+                name: "IX_UsersHaveControllers_UserId",
+                table: "UsersHaveControllers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Have_Devices_DeviceId",
-                table: "Users_Have_Devices",
+                name: "IX_UsersHaveDevices_DeviceId",
+                table: "UsersHaveDevices",
                 column: "DeviceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Have_Devices_UsersHaveControllerId",
-                table: "Users_Have_Devices",
+                name: "IX_UsersHaveDevices_UsersHaveControllerId",
+                table: "UsersHaveDevices",
                 column: "UsersHaveControllerId");
         }
 
@@ -569,19 +569,19 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 name: "Commands");
 
             migrationBuilder.DropTable(
-                name: "Users_Have_Devices");
+                name: "UsersHaveDevices");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Device_Configurations");
+                name: "DeviceConfigurations");
 
             migrationBuilder.DropTable(
                 name: "Scripts");
 
             migrationBuilder.DropTable(
-                name: "Users_Have_Controllers");
+                name: "UsersHaveControllers");
 
             migrationBuilder.DropTable(
                 name: "Devices");
@@ -590,7 +590,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 name: "Measures");
 
             migrationBuilder.DropTable(
-                name: "Condition_Types");
+                name: "ConditionTypes");
 
             migrationBuilder.DropTable(
                 name: "Sensors");
@@ -602,7 +602,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 name: "Controllers");
 
             migrationBuilder.DropTable(
-                name: "Sensor_Types");
+                name: "SensorTypes");
         }
     }
 }

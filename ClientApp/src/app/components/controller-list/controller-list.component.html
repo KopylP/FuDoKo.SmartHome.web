@@ -1,5 +1,9 @@
 <ul>
   <li *ngFor="let userHasController of userHasControllers">
-    <app-controller-item [userHasController]="userHasController"></app-controller-item>
+    <app-controller-item [userHasController]="userHasController"
+                         [class]="selectedItem === userHasController? 'selected': 'unselected'"
+                         (click)="setSelectedItem(userHasController)">
+    </app-controller-item>
   </li>
 </ul>
+

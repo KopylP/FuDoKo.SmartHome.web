@@ -5,20 +5,41 @@
   .div-controller-circle {
     height: 75px;
     width: 75px;
-    background: @pink;
     border-radius: 50%;
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
 
     fa-icon {
       font-size: 2em;
+    }
+  }
+
+  .div-controller-circle-background {
+    background: @light-pink;
+
+    fa-icon {
       color: white;
+    }
+  }
+
+  .div-controller-circle-outline {
+    border: 3px solid @light-pink;
+
+    fa-icon {
+      color: @light-pink;
     }
   }
 
   p {
     font-size: 0.9em;
     color: @pink;
+  }
+
+  .controller-switch {
+    position: absolute;
+    bottom: -5px;
+    right: -8px;
   }
 }
