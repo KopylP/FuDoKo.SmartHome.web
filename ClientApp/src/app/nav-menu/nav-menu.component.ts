@@ -1,18 +1,33 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+    selector: 'app-nav-menu',
+    templateUrl: './nav-menu.component.html',
+    styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
 
-  collapse() {
-    this.isExpanded = false;
-  }
+    faBars = faBars;
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
+    constructor(private authService: AuthService,
+        private router: Router) {
+    }
+
+    isExpanded = false;
+
+    collapse() {
+        this.isExpanded = false;
+    }
+
+    toggle() {
+        this.isExpanded = !this.isExpanded;
+    }
+
+    signOut() {
+        this.authService.logout();
+        this.router.navigate(["/auth"]);
+    }
 }

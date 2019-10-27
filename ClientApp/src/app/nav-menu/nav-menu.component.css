@@ -19,7 +19,9 @@ html {
 }
 
 header {
-  background-color: rebeccapurple;
-  
+  background-color: rebeccapurple; 
 }
 
+fa-icon {
+  color: white;
+}

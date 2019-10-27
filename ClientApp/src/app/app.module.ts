@@ -6,8 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -21,13 +19,13 @@ import { ControllerListComponent } from './components/controller-list/controller
 import { ControllerItemComponent } from './components/controller-item/controller-item.component';
 import { ControllerService } from './services/controller.service';
 import { HomeComponent } from './components/home/home.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthTrueGuard } from './guards/auth.true.guard';
 @NgModule({
     declarations: [
         AppComponent,
         NavMenuComponent,
         HomeComponent,
-        CounterComponent,
-        FetchDataComponent,
         LoginComponent,
         RegisterComponent,
         ControllerListComponent,
@@ -46,9 +44,9 @@ import { HomeComponent } from './components/home/home.component';
         MDBBootstrapModule.forRoot(),
         FontAwesomeModule,
         RouterModule.forRoot([
-            { path: '', component: HomeComponent },
-            { path: 'auth', component: LoginComponent },
-            { path: "register", component: RegisterComponent }
+            { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+            { path: 'auth', component: LoginComponent, canActivate: [AuthTrueGuard] },
+            { path: "register", component: RegisterComponent, canActivate: [AuthTrueGuard] }
         ])
     ],
     providers: [
@@ -59,7 +57,9 @@ import { HomeComponent } from './components/home/home.component';
         },
         AuthService,
         RegisterService,
-        ControllerService
+        ControllerService,
+        AuthGuard,
+        AuthTrueGuard
     ],
     bootstrap: [AppComponent],
     exports: [

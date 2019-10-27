@@ -1,11 +1,11 @@
-<div class="container-fluid main">
+<div class="container-fluid main-login">
   <div class="row justify-content-center flex-login-container">
-    <div class="col-lg-2 col-md-3 signup-container">
+    <div class="col-lg-3 col-md-4 signup-container">
       <fa-icon class="icon-add-user" [icon]="faUsers"></fa-icon>
       <h4>Don't have an account yet?</h4>
       <button class="btn btn-outline-light" [routerLink]='["/register"]'>Sign up</button>
     </div>
-    <div class="col-lg-3 col-md-5 flex-login">
+    <div class="col-lg-5 col-md-6 flex-login">
       <div class="col-lg-12 login-container">
         <div class="row justify-content-center">
           <div class="div-login-title">
@@ -52,24 +52,19 @@
           <div class="row">
             <div class="col-12">
               <div class="row justify-content-center">
-                <button [disabled]="form.invalid" type="submit" class="btn btn-success">Sign in!</button>
+                <button [disabled]="form.invalid" type="submit" mdbBtn color="success" mdbWavesEffect>Sign in!</button>
               </div>
             </div>
           </div>
-          <br />
           <div class="row" id="sign-up-button">
             <div class="col-12">
               <div class="row justify-content-center">
-                <button type="button" class="btn btn-outline-dark" accesskey="['/register']">Sign up!</button>
+                <button mdbBtn type="button" color="secondary" outline="true" mdbWavesEffect [routerLink]="['/register']">Sign up!</button>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="row justify-content-end">
-                <a href="#" class="btn btn-link">Forgot password?</a>
-              </div>
-            </div>
+          <div class="row justify-content-end">
+             <a href="#" class="btn btn-link forgot-link">Forgot password?</a>
           </div>
         </form>
       </div>

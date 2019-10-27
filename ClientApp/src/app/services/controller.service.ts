@@ -14,7 +14,7 @@ export class ControllerService {
     }
 
     get(id: number): Observable<Controller>{
-        return this.http.get<UserHasController>(this.url + '/' + id);
+        return this.http.get<Controller>(this.url + '/' + id);
     }
 
     disable(id: number): Observable<any> {

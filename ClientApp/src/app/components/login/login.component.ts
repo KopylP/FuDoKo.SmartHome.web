@@ -6,8 +6,7 @@ import { faUnlockAlt, faUser, faUserPlus, faUsers, faKey } from '@fortawesome/fr
 @Component({
     selector: "login",
     templateUrl: "./login.component.html",
-    styleUrls: ["./login.component.less"],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ["./login.component.less"]
 })
 export class LoginComponent {
 
@@ -44,8 +43,8 @@ export class LoginComponent {
 
         this.authService.login(username, password)
             .subscribe(res => {
-                alert(this.authService.getAuth()!.token);
                 this.isSignAction = false;
+                this.router.navigate(["/"]);
             },
                 err => {
                     this.form.setErrors({

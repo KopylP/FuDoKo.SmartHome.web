@@ -33,6 +33,13 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerController.Delete(System.Int32)">
+            <summary>
+            Этот метод делает контроллер disabled
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:FuDoKo.SmartHome.web.Controllers.TokenController.Auth(FuDoKo.SmartHome.web.Data.Models.TokenRequestViewModel)">
             <summary>
             Это метод для получения токена

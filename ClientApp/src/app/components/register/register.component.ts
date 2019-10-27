@@ -6,8 +6,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 @Component({
     selector: "register",
     templateUrl: "./register.component.html",
-    styleUrls: ["./register.component.less"],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ["./register.component.less"]
 })
 export class RegisterComponent {
     title: string;

@@ -1,93 +1,92 @@
 @import "../../styles/main.less";
-
 @conteiner-height: 700px;
-button {
-  width: 94%;
-}
-.register-container {
-  padding: 10px 15px;
-  height: auto;
-  
-}
-.div-register-title {
-  h1 {
-    color: @pink;
-  }
-}
-
-#sign-in-button {
-  display: none;
-}
-
-.sign-in-flex-container {
-  display: flex;
-  flex-direction:column;
-  justify-content: center;
-  align-items: center;
-  background: @pink;
-  height: @conteiner-height;
-  border-radius: 0 10px 10px 0;
-
-  h4 {
-    text-align: center;
-    color: white;
-  }
-}
-
-body {
-  background-repeat: no-repeat!important;
-  background-size: cover!important;
-  background-image: url("../../../../../wwwroot/images/background.jpg")!important;
-}
-
-.icon-sign-in-user {
-  margin-top: -100px;
-  font-size: 5em;
-  color: white;
-}
-
-.flex-register-container{
-  display:flex;
-  align-items:center;
-  margin-top: 5%;
-}
-.div-register-title{
-  padding: 10px 0px;
-}
-a{
-  margin-right:2px;
-}
-body {
-  background-image: none;
-}
-
-.register-flex {
-  display: flex;
-  border: 1px solid #d9d9d9;
-  align-items: center;
-  height: @conteiner-height;
-  justify-content: center;
-  border-radius: 10px 0 0 10px;
-  background-color: white;
-}
-
-@media only screen and (max-width:765px) {
-  .sign-in-flex-container{
-    display: none;
+.main-register {
+  button {
+    width: 94%;
   }
 
-  .register-flex {
-    border-radius: 5px;
+  .register-container {
+    padding: 10px 15px;
     height: auto;
   }
 
-  #sign-in-button{
-    display: block;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  .div-register-title {
+    h1 {
+      color: @pink;
+    }
+  }
+
+  #sign-in-button {
+    display: none;
+  }
+
+  .sign-in-flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: @pink;
+    height: @conteiner-height;
+    border-radius: 0 10px 10px 0;
+
+    h4 {
+      text-align: center;
+      color: white;
+    }
+  }
+  .icon-sign-in-user {
+    margin-top: -100px;
+    font-size: 5em;
+    color: white;
   }
 
   .flex-register-container {
-    margin-top: 1%;
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+  }
+
+  .div-register-title {
+    padding: 10px 0px;
+  }
+
+  a {
+    margin-right: 2px;
+  }
+
+  body {
+    background-image: none;
+  }
+
+  .register-flex {
+    display: flex;
+    border: 1px solid #d9d9d9;
+    align-items: center;
+    height: @conteiner-height;
+    justify-content: center;
+    border-radius: 10px 0 0 10px;
+    background-color: white;
+  }
+
+  @media only screen and (max-width:765px) {
+    .sign-in-flex-container {
+      display: none;
+    }
+
+    .register-flex {
+      border-radius: 5px;
+      height: auto;
+    }
+
+    #sign-in-button {
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .flex-register-container {
+      margin-top: 1%;
+    }
   }
 }
+
+
