@@ -13,6 +13,8 @@ namespace FuDoKo.SmartHome.web.Data
         #region props
         public DbSet<Controller> Controllers { get; set; }
         public DbSet<UserHasController> UserHasControllers { get; set; }
+        public DbSet<Sensor> Sensors { get; set; }
+        public DbSet<SensorType> SensorTypes { get; set; }
         #endregion
 
         #region constructor

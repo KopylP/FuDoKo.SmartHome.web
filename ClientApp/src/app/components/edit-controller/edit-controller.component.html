@@ -1,0 +1,39 @@
+<!--Title-->
+<h1>{{title}}</h1>
+<!--End Title-->
+<!--Body-->
+<form [formGroup]="form" (ngSubmit)="onSubmit">
+  <div class="container">
+    <div class="row">
+      <div class="form-group col-12">
+        <mat-progress-bar [hidden]="!isAction" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="row">
+      <div col-12 *ngIf="form.errors?.edit" class="invalid-feedback div-edit-errors">
+       {{form.errors?.edit}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12">
+        <input type="text" required formControlName="Name" class="form-control" placeholder="Please, call you new controller" [ngClass]="{'is-invalid': hasError('Name')}" />
+        <div *ngIf="hasError('Name')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-12">
+        <input type="text" required formControlName="Mac" class="form-control" placeholder="Please, enter MAC address for your controller" [ngClass]="{'is-invalid': hasError('Mac')}" />
+        <div *ngIf="hasError('Mac')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-between buttons-div">
+      <button [disabled]="form.invalid" type="button" mdbBtn color="success" mdbWavesEffect (click)="onSubmit()" class="col-lg-4 col-md-12">Submit</button>
+      <button type="button" mdbBtn color="primary" mdbWavesEffect class="col-lg-4 col-md-5" (click)="close()" autofocus>Exit</button>
+    </div>
+  </div>
+</form>
+<!--End Body-->

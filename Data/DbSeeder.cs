@@ -11,11 +11,15 @@ namespace FuDoKo.SmartHome.web.Data
     {
         public static void Seed(ApplicationDbConrext dbConrext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
-            if(!dbConrext.Users.Any())
+            if (!dbConrext.Users.Any())
             {
                 CreateUsers(dbConrext, roleManager, userManager)
                     .GetAwaiter()
-                    .GetResult();   
+                    .GetResult();
+            }
+            if(!dbConrext.SensorTypes.Any())
+            {
+                CreateSensorTypes(conrext: dbConrext);
             }
         }
         private static async Task CreateUsers(ApplicationDbConrext dbConrext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
@@ -23,12 +27,12 @@ namespace FuDoKo.SmartHome.web.Data
             string roleAdmin = "admin";
             string roleUser = "user";
 
-            if(!await roleManager.RoleExistsAsync(roleUser))
+            if (!await roleManager.RoleExistsAsync(roleUser))
             {
                 await roleManager.CreateAsync(new IdentityRole(roleUser));
             }
 
-            if(!await roleManager.RoleExistsAsync(roleAdmin))
+            if (!await roleManager.RoleExistsAsync(roleAdmin))
             {
                 await roleManager.CreateAsync(new IdentityRole(roleAdmin));
             }
@@ -46,7 +50,7 @@ namespace FuDoKo.SmartHome.web.Data
                 CreatedTime = now,
                 LastModifiedDate = now
             };
-            if(await userManager.FindByNameAsync(admin.UserName) == null)
+            if (await userManager.FindByNameAsync(admin.UserName) == null)
             {
                 await userManager.CreateAsync(admin, "Pass4Admin");
                 await userManager.AddToRoleAsync(admin, roleAdmin);
@@ -55,6 +59,16 @@ namespace FuDoKo.SmartHome.web.Data
                 admin.LockoutEnabled = false;
             }
             dbConrext.SaveChanges();
+        }
+
+        private static void CreateSensorTypes(ApplicationDbConrext conrext)
+        {
+            conrext.SensorTypes.AddRange(
+                    new SensorType { TypeName = "light" },
+                    new SensorType { TypeName = "temperature" },
+                    new SensorType { TypeName = "submersion" }
+                );
+            conrext.SaveChanges();
         }
     }
 }

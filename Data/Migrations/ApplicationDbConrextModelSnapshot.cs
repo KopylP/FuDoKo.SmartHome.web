@@ -142,8 +142,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.Property<DateTime>("LastConnection");
 
                     b.Property<string>("MAC")
-                        .IsRequired()
-                        .HasMaxLength(16);
+                        .HasMaxLength(12);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -157,10 +156,9 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Id", "MAC");
-
                     b.HasIndex("MAC")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[MAC] IS NOT NULL");
 
                     b.ToTable("Controllers");
                 });

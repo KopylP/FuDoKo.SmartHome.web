@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FuDoKo.SmartHome.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbConrext))]
-    [Migration("20191026153433_Initial")]
+    [Migration("20191107150130_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,8 +144,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.Property<DateTime>("LastConnection");
 
                     b.Property<string>("MAC")
-                        .IsRequired()
-                        .HasMaxLength(16);
+                        .HasMaxLength(12);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -159,10 +158,9 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Id", "MAC");
-
                     b.HasIndex("MAC")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[MAC] IS NOT NULL");
 
                     b.ToTable("Controllers");
                 });

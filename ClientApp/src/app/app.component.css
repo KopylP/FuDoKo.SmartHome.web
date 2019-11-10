@@ -3,9 +3,13 @@
   .body-content {
     padding-top: 50px;
   }
+  .container{
+    display: block;
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+  }
 }
 
-/*body {
-  background-color: white;
-}*/
-
+.container {
+  height: 90%;
+}

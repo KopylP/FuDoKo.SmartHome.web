@@ -21,6 +21,20 @@ import { ControllerService } from './services/controller.service';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthTrueGuard } from './guards/auth.true.guard';
+import { EditControllerComponent } from './components/edit-controller/edit-controller.component';
+import { EditControllerService } from './services/edit-controller.service';
+import { AddButtonComponent } from './components/add-button/add-button.component';
+import { MatDialogModule, MatOptionModule, MatSelectModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule } from '@angular/material/menu';
+import { SensorService } from './services/sensor.service';
+import { SensorListComponent } from './components/sensor-list/sensor-list.component';
+import { SensorItemComponent } from './components/sensor-item/sensor-item.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { SensorEditService } from './services/sensor-edit.service';
+import { SensorTypeService } from './services/sensor-type.service';
+import { SensorEditComponent } from './components/sensor-edit/sensor-edit.component';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -30,7 +44,16 @@ import { AuthTrueGuard } from './guards/auth.true.guard';
         RegisterComponent,
         ControllerListComponent,
         ControllerItemComponent,
-        HomeComponent
+        HomeComponent,
+        EditControllerComponent,
+        AddButtonComponent,
+        SensorListComponent,
+        SensorItemComponent,
+        SensorEditComponent
+    ],
+    entryComponents: [
+        EditControllerComponent,
+        SensorEditComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,9 +63,15 @@ import { AuthTrueGuard } from './guards/auth.true.guard';
         ReactiveFormsModule,
         MatProgressBarModule,
         MatFormFieldModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
         MatInputModule,
+        MatMenuModule,
         MDBBootstrapModule.forRoot(),
         FontAwesomeModule,
+        MatSlideToggleModule,
+        MatOptionModule,
+        MatSelectModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, canActivate: [AuthGuard] },
             { path: 'auth', component: LoginComponent, canActivate: [AuthTrueGuard] },
@@ -59,7 +88,11 @@ import { AuthTrueGuard } from './guards/auth.true.guard';
         RegisterService,
         ControllerService,
         AuthGuard,
-        AuthTrueGuard
+        AuthTrueGuard,
+        EditControllerService,
+        SensorService,
+        SensorEditService,
+        SensorTypeService
     ],
     bootstrap: [AppComponent],
     exports: [

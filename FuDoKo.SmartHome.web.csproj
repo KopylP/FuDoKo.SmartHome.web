@@ -35,6 +35,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
@@ -48,7 +49,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\components\add-button\add-button.component.ts" />
     <None Remove="ClientApp\src\app\components\controller-item\controller-item.component.ts" />
+    <None Remove="ClientApp\src\app\components\edit-controller\edit-controller.component.ts" />
     <None Remove="ClientApp\src\app\components\home\home.component.html" />
     <None Remove="ClientApp\src\app\components\home\home.component.less" />
     <None Remove="ClientApp\src\app\components\home\home.component.ts" />
@@ -57,18 +60,29 @@
     <None Remove="ClientApp\src\app\components\controller-list\controller-list.component.less" />
     <None Remove="ClientApp\src\app\components\controller-list\controller-list.component.ts" />
     <None Remove="ClientApp\src\app\components\register\register.component.ts" />
+    <None Remove="ClientApp\src\app\components\sensor-edit\sensor-edit.component.ts" />
+    <None Remove="ClientApp\src\app\components\sensor-item\sensor-item.component.ts" />
+    <None Remove="ClientApp\src\app\components\sensor-list\sensor-list.component.ts" />
     <None Remove="ClientApp\src\app\interceptors\auth.interceptor.ts" />
     <None Remove="ClientApp\src\app\interfaces\Controller.ts" />
     <None Remove="ClientApp\src\app\interfaces\RegisterUser.ts" />
+    <None Remove="ClientApp\src\app\interfaces\Sensor.ts" />
+    <None Remove="ClientApp\src\app\interfaces\SensorType.ts" />
     <None Remove="ClientApp\src\app\interfaces\TokenResponse.ts" />
     <None Remove="ClientApp\src\app\interfaces\UserHasController.ts" />
     <None Remove="ClientApp\src\app\services\auth.service.ts" />
     <None Remove="ClientApp\src\app\services\controller.service.ts" />
+    <None Remove="ClientApp\src\app\services\edit-controller.service.ts" />
     <None Remove="ClientApp\src\app\services\register.service.ts" />
+    <None Remove="ClientApp\src\app\services\sensor-edit.service.ts" />
+    <None Remove="ClientApp\src\app\services\sensor-type.service.ts" />
+    <None Remove="ClientApp\src\app\services\sensor.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\add-button\add-button.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\controller-item\controller-item.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\edit-controller\edit-controller.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\home\home.component.html">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -87,14 +101,25 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\components\controller-list\controller-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\register\register.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\sensor-edit\sensor-edit.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\sensor-item\sensor-item.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\sensor-list\sensor-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interceptors\auth.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\Sensor.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Controller.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\RegisterUser.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\SensorType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\TokenResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\UserHasController.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\controller.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\edit-controller.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\register.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\sensor-edit.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\sensor-type.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\sensor.service.ts" />
   </ItemGroup>
 
   <ItemGroup>

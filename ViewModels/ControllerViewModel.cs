@@ -12,7 +12,7 @@ namespace FuDoKo.SmartHome.web.ViewModels
         [Required]
         public string Name { get; set; }
         [Required]
-        [StringLength(16)]
+        [StringLength(12)]
         public string MAC { get; set; }
 
         public bool Status { get; set; }

@@ -71,7 +71,4 @@ export class LoginComponent {
         let e = this.getFormControl(name);
         return e && (e.dirty || e.touched) && !e.valid;
     }
-
-    
-
 }

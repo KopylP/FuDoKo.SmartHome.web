@@ -1,3 +1,56 @@
 @pink: rebeccapurple;
 @light-pink: #A463E5;
 @dark-pink: #552A80;
+.base-item-circle {
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+
+  fa-icon {
+    font-size: 2em;
+  }
+}
+.base-switch {
+  position: absolute;
+  bottom: -5px;
+  right: -8px;
+}
+
+.item-ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    float: left;
+    padding: 0;
+    margin-left: 10px;
+  }
+
+  li:first-child {
+    margin-left: 0;
+  }
+}
+
+/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #e3d5ff;
+}
+
+/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #c6aaff;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}

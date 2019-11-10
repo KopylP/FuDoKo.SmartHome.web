@@ -18,7 +18,7 @@ var ControllerService = /** @class */ (function () {
     ControllerService.prototype.get = function (id) {
         return this.http.get(this.url + '/' + id);
     };
-    ControllerService.prototype.disable = function (id) {
+    ControllerService.prototype.delete = function (id) {
         return this.http.delete(this.url + '/' + id);
     };
     ControllerService.prototype.edit = function (controller) {

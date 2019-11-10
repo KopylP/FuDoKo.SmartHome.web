@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { Controller } from "../interfaces/Controller";
+import { UserHasController } from "../interfaces/UserHasController";
 
 @Injectable()
 export class ControllerService {
@@ -17,7 +19,7 @@ export class ControllerService {
         return this.http.get<Controller>(this.url + '/' + id);
     }
 
-    disable(id: number): Observable<any> {
+    delete(id: number): Observable<any> {
         return this.http.delete(this.url + '/' + id);
     }
 

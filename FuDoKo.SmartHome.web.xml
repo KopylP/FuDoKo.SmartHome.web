@@ -35,7 +35,7 @@
         </member>
         <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerController.Delete(System.Int32)">
             <summary>
-            Этот метод делает контроллер disabled
+            Этот метод удаляет контроллер
             </summary>
             <param name="id"></param>
             <returns></returns>

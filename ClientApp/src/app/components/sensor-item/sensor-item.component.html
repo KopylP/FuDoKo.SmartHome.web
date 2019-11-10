@@ -1,0 +1,16 @@
+<div class="div-sensor" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="menuTrigger.closeMenu()" (contextmenu)="toggleMenu()">
+  <div class="sensor-value" *ngIf="sensor.status">{{ sensor.value }}</div>
+  <div [class]="'base-item-circle ' + sensor.sensorType.typeName">
+    <fa-icon [icon]="selectedIcon"></fa-icon>
+    <div class="base-switch">
+      <mat-slide-toggle [(ngModel)]="sensor.status"
+               (change)="changeStatus()"></mat-slide-toggle>
+    </div>
+  </div>
+  <p>{{ sensor.name }}</p>
+</div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="editSensor()">Edit</button>
+  <button mat-menu-item (click)="deleteSensor()">Delete</button>
+</mat-menu>

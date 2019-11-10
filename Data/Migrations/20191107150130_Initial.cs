@@ -42,7 +42,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
-                    MAC = table.Column<string>(maxLength: 16, nullable: false),
+                    MAC = table.Column<string>(maxLength: 12, nullable: true),
                     Status = table.Column<bool>(nullable: false, defaultValue: true),
                     InstalledDate = table.Column<DateTime>(nullable: false),
                     LastConnection = table.Column<DateTime>(nullable: false),
@@ -51,7 +51,6 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Controllers", x => x.Id);
-                    table.UniqueConstraint("AK_Controllers_Id_MAC", x => new { x.Id, x.MAC });
                 });
 
             migrationBuilder.CreateTable(
@@ -459,7 +458,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 name: "IX_Controllers_MAC",
                 table: "Controllers",
                 column: "MAC",
-                unique: true);
+                unique: true,
+                filter: "[MAC] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceConfigurations_DeviceId",

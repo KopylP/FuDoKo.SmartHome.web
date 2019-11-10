@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
+import { UserHasController } from "../../interfaces/UserHasController";
 
 @Component({
     selector: "app-home",

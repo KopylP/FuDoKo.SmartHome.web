@@ -1,9 +1,11 @@
-<ul>
+<ul class="item-ul">
   <li *ngFor="let userHasController of userHasControllers">
     <app-controller-item [userHasController]="userHasController"
                          [class]="selectedItem === userHasController? 'selected': 'unselected'"
-                         (click)="setSelectedItem(userHasController)">
+                         (click)="setSelectedItem(userHasController)"
+                         (onDeleteController)="deleteController($event)">
     </app-controller-item>
   </li>
 </ul>
+<add-button (click)="addController()"></add-button>
 

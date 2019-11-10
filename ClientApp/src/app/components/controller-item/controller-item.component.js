@@ -9,8 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var ControllerItemComponent = /** @class */ (function () {
-    function ControllerItemComponent(controllerService) {
+    function ControllerItemComponent(controllerService, editControllerService) {
         this.controllerService = controllerService;
+        this.editControllerService = editControllerService;
+        this.countOfClicks = 0;
+        this.onDeleteController = new core_1.EventEmitter();
         this.faHome = free_solid_svg_icons_1.faHome;
     }
     ControllerItemComponent.prototype.ngOnInit = function () {
@@ -28,21 +31,43 @@ var ControllerItemComponent = /** @class */ (function () {
                 this.controllerElement.nativeElement.classList.remove("div-controller-circle-outline");
                 this.controllerElement.nativeElement.classList.add("div-controller-circle-background");
             }
+            else {
+                this.controllerElement.nativeElement.classList.remove("div-controller-circle-background");
+                this.controllerElement.nativeElement.classList.add("div-controller-circle-outline");
+            }
         }
     };
     ControllerItemComponent.prototype.changeStatus = function (event) {
-        var checked = event.currentTarget.checked;
+        var _this = this;
         var controller = this.userHasController.controller;
-        if (checked) {
-            this.controllerService.edit(controller).subscribe(function (res) {
-                console.log("Controller is updated");
-            });
+        this.controllerService.edit(controller).subscribe(function (res) {
+            _this.userHasController.controller = res;
+        }, function (err) {
+            console.log("Error");
+        });
+    };
+    ControllerItemComponent.prototype.toggleMenu = function () {
+        if (this.class === "selected") {
+            this.trigger.openMenu();
         }
         else {
-            this.controllerService.disable(controller.id).subscribe(function (res) {
-                console.log("Controller is disabled!");
-            });
+            this.trigger.closeMenu();
         }
+        return false;
+    };
+    ControllerItemComponent.prototype.deleteController = function () {
+        var _this = this;
+        this.controllerService.delete(this.userHasController.controller.id).subscribe(function (res) {
+            _this.onDeleteController.emit(_this.userHasController.controller.id);
+        });
+    };
+    ControllerItemComponent.prototype.editController = function () {
+        var _this = this;
+        this.editControllerService.open(true, this.userHasController.controller.id).afterClosed().subscribe(function (res) {
+            if (typeof res !== 'undefined') {
+                _this.userHasController.controller = res;
+            }
+        });
     };
     __decorate([
         core_1.Input()
@@ -50,6 +75,12 @@ var ControllerItemComponent = /** @class */ (function () {
     __decorate([
         core_1.Input()
     ], ControllerItemComponent.prototype, "class", void 0);
+    __decorate([
+        core_1.ViewChild('menuTrigger', { static: true })
+    ], ControllerItemComponent.prototype, "trigger", void 0);
+    __decorate([
+        core_1.Output()
+    ], ControllerItemComponent.prototype, "onDeleteController", void 0);
     __decorate([
         core_1.ViewChild("controllerElement", { static: true })
     ], ControllerItemComponent.prototype, "controllerElement", void 0);

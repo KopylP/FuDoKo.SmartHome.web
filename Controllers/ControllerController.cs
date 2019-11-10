@@ -74,10 +74,10 @@ namespace FuDoKo.SmartHome.web.Controllers
         public IActionResult Put([FromBody] ControllerViewModel model)
         {
             //Перевіряємо модель
-            if (model == null) return StatusCode(500, new InternalServerError());
-            if (model.MAC.Length != 16) return StatusCode(500, new InternalServerError("MAC address is incorrect"));
+            if (model == null || !ModelState.IsValid) return StatusCode(500, new InternalServerError("Data is incorrect!"));
             var controller = _context.Controllers.Where(p => p.MAC == model.MAC).FirstOrDefault();
             if (controller != null) return StatusCode(500, new InternalServerError("Controller is already exists"));
+            if(model.MAC.Length != 12) return StatusCode(500, new InternalServerError("MAC address must has 12 symbols!"));
             //Беремо айді користувача з токену
             var user = User.GetUser(_context);
             if (user == null) return Unauthorized(new UnauthorizedError());
@@ -112,7 +112,8 @@ namespace FuDoKo.SmartHome.web.Controllers
             var user = User.GetUser(_context);
             if (user == null) return Unauthorized(new UnauthorizedError());
             //Перевіряємо модель
-            if (model == null && !ModelState.IsValid) return StatusCode(500, new InternalServerError());
+            if (model == null || !ModelState.IsValid) return StatusCode(500, new InternalServerError());
+            if (model.MAC.Length != 12) return StatusCode(500, new InternalServerError("MAC address must has 12 symbols!"));
             var controller = _context.Controllers
                 .Where(p => p.MAC == model.MAC && p.Id != model.Id)
                 .FirstOrDefault();
@@ -131,7 +132,7 @@ namespace FuDoKo.SmartHome.web.Controllers
         }
 
         /// <summary>
-        /// Этот метод делает контроллер disabled
+        /// Этот метод удаляет контроллер
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -153,7 +154,8 @@ namespace FuDoKo.SmartHome.web.Controllers
                 .FirstOrDefault();
             if (userHasController == null) return Unauthorized(new UnauthorizedError());
             //Змінюємо статус контроллера
-            controller.Status = false;
+            _context.Controllers.Remove(controller);
+            _context.UserHasControllers.Remove(userHasController);
             _context.SaveChanges();
             return NoContent();
         }

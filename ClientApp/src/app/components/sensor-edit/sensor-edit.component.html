@@ -1,0 +1,50 @@
+<!--Title-->
+<h1>{{title}}</h1>
+<!--End Title-->
+<!--Body-->
+<form [formGroup]="form" (ngSubmit)="onSubmit">
+  <div class="container">
+    <div class="row">
+      <div class="form-group col-12">
+        <mat-progress-bar [hidden]="!isAction" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="row">
+      <div col-12 *ngIf="form.errors?.edit" class="invalid-feedback div-edit-errors">
+       {{form.errors?.edit}}
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="form-group col-8">
+        <input type="text" required formControlName="Name" class="form-control" placeholder="Please, call your sensor" [ngClass]="{'is-invalid': hasError('Name')}" />
+        <div *ngIf="hasError('Name')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+      <div class="form-group col-4 pin">
+        <input type="number" required formControlName="Pin" class="form-control" placeholder="Pin" [ngClass]="{'is-invalid': hasError('Pin')}" />
+        <div *ngIf="hasError('Pin')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col-6 form-group">
+        <mat-form-field>
+          <mat-label>Select an option</mat-label>
+          <mat-select formControlName="SensorTypeId">
+            <mat-option *ngFor="let sensorType of sensorTypes" [value]="sensorType.id">{{ sensorType.typeName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="hasError('SensorTypeId')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-between buttons-div">
+      <button [disabled]="form.invalid" type="button" mdbBtn color="success" mdbWavesEffect (click)="onSubmit()" class="col-lg-4 col-md-12">Submit</button>
+      <button type="button" mdbBtn color="primary" mdbWavesEffect class="col-lg-4 col-md-5" (click)="close()" autofocus>Exit</button>
+    </div>
+  </div>
+</form>
+<!--End Body-->

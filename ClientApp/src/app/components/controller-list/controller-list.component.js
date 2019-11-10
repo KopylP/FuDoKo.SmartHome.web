@@ -8,8 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ControllerListComponent = /** @class */ (function () {
-    function ControllerListComponent(controllerService) {
+    function ControllerListComponent(controllerService, editControllerService) {
         this.controllerService = controllerService;
+        this.editControllerService = editControllerService;
         this.onChanged = new core_1.EventEmitter();
         this.userHasControllers = [];
     }
@@ -25,6 +26,23 @@ var ControllerListComponent = /** @class */ (function () {
         }, function (err) {
             console.log(err);
         });
+    };
+    ControllerListComponent.prototype.addController = function () {
+        var _this = this;
+        console.log("click");
+        this.editControllerService.open(false).afterClosed().subscribe(function (res) {
+            if (typeof res !== 'undefined') {
+                _this.userHasControllers.push({
+                    isAdmin: true,
+                    controller: res
+                });
+            }
+        });
+    };
+    ControllerListComponent.prototype.deleteController = function (id) {
+        var userHasController = this.userHasControllers.filter(function (p) { return p.controller.id === id; })[0];
+        var index = this.userHasControllers.indexOf(userHasController);
+        this.userHasControllers.splice(index, 1);
     };
     __decorate([
         core_1.Output()
