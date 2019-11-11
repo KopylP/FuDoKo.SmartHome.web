@@ -15,4 +15,8 @@ export class HomeComponent  {
     onControllerChange(userHasController: any) {
         this.selectedItem = userHasController;
     }
+
+    onDelete() {
+        this.selectedItem = null;
+    }
 }

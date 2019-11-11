@@ -3,6 +3,7 @@ import { Sensor } from "../../interfaces/Sensor";
 import { SensorService } from "../../services/sensor.service";
 import { faThermometerHalf, faLightbulb, faTint, IconDefinition, faSun } from "@fortawesome/free-solid-svg-icons";
 import { MatMenuTrigger } from "@angular/material";
+import { SensorEditService } from "../../services/sensor-edit.service";
 
 @Component({
     selector: "app-sensor-item",
@@ -21,7 +22,8 @@ export class SensorItemComponent implements OnInit {
     @ViewChild('menuTrigger', { static: true })
     trigger: MatMenuTrigger;
 
-    constructor(private sensorService: SensorService) {}
+    constructor(private sensorService: SensorService,
+        private sensorEditService: SensorEditService) { }
 
     ngOnInit(): void {
         switch (this.sensor.sensorType.typeName) {
@@ -38,7 +40,13 @@ export class SensorItemComponent implements OnInit {
     }
 
     editSensor() {
-
+        this.sensorEditService.open(true, this.sensor.controllerId, this.sensor.id)
+            .afterClosed()
+            .subscribe(res => {
+                if (res !== "undefined") {
+                    this.sensor = res;
+                }
+            })
     }
 
     deleteSensor() {

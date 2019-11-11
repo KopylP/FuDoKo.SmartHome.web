@@ -11,6 +11,7 @@ import { UserHasController } from "../../interfaces/UserHasController";
 export class ControllerListComponent  {
 
     @Output() onChanged = new EventEmitter<UserHasController>();
+    @Output() onDeleteController = new EventEmitter<number>();
 
     userHasControllers: Array<UserHasController> = [];
     selectedItem: UserHasController;
@@ -49,5 +50,7 @@ export class ControllerListComponent  {
         const userHasController = this.userHasControllers.filter(p => p.controller.id === id)[0];
         const index = this.userHasControllers.indexOf(userHasController);
         this.userHasControllers.splice(index, 1);
+        this.onDeleteController.emit(this.selectedItem.controller.id);
+        this.selectedItem = null;
     }
 }

@@ -175,13 +175,13 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         column: x => x.ControllerId,
                         principalTable: "Controllers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Sensors_SensorTypes_SensorTypeId",
                         column: x => x.SensorTypeId,
                         principalTable: "SensorTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -287,13 +287,13 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         column: x => x.ControllerId,
                         principalTable: "Controllers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UsersHaveControllers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

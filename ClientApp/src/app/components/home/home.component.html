@@ -21,7 +21,8 @@
               <strong>Your controllers:</strong>
             </h4>
           </mdb-card-title>
-          <app-controller-list (onChanged)="onControllerChange($event)"></app-controller-list>
+          <app-controller-list (onChanged)="onControllerChange($event)"
+                               (onDeleteController)="onDelete()"></app-controller-list>
         </mdb-card-body>
       </mdb-card>
     </div>

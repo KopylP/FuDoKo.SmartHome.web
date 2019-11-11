@@ -13,11 +13,10 @@ var core_1 = require("@angular/core");
 var material_1 = require("@angular/material");
 var forms_1 = require("@angular/forms");
 var SensorEditComponent = /** @class */ (function () {
-    function SensorEditComponent(dialogRef, fb, data, sensorService, controllerService, sensorTypeService) {
+    function SensorEditComponent(dialogRef, fb, data, sensorService, sensorTypeService) {
         this.dialogRef = dialogRef;
         this.fb = fb;
         this.sensorService = sensorService;
-        this.controllerService = controllerService;
         this.sensorTypeService = sensorTypeService;
         this.isAction = false;
         this.editMode = data.editMode;
@@ -25,10 +24,8 @@ var SensorEditComponent = /** @class */ (function () {
         this.controllerId = data.controllerId;
         this.createForm();
         this.sensor = {};
-        this.loadControllers();
         this.loadSensorTypes();
         if (this.editMode) {
-            this.loadData();
             this.title = "Edit sensor";
         }
         else {
@@ -46,27 +43,23 @@ var SensorEditComponent = /** @class */ (function () {
         this.form.setValue({
             Name: this.sensor.name,
             Pin: this.sensor.pin,
-            ControllerId: this.sensor.controllerId,
             SensorTypeId: this.sensor.sensorTypeId
-        });
-    };
-    SensorEditComponent.prototype.loadControllers = function () {
-        var _this = this;
-        this.controllerService.getAll().subscribe(function (res) {
-            _this.controllers = res.filter(function (p) { return p.isAdmin; }).map(function (p) { return p.controller; });
         });
     };
     SensorEditComponent.prototype.loadSensorTypes = function () {
         var _this = this;
         this.sensorTypeService.all().subscribe(function (res) {
             _this.sensorTypes = res;
+            _this.loadData();
         });
     };
     SensorEditComponent.prototype.loadData = function () {
         var _this = this;
+        console.log(this.id);
         this.sensorService.get(this.id).subscribe(function (res) {
             _this.sensor = res;
-            _this.updateForm();
+            if (_this.editMode)
+                _this.updateForm();
         });
     };
     SensorEditComponent.prototype.close = function () {
@@ -93,6 +86,7 @@ var SensorEditComponent = /** @class */ (function () {
         sensor.controllerId = this.controllerId;
         if (this.editMode) {
             sensor.id = this.sensor.id;
+            sensor.status = this.sensor.status;
             sensor.controllerId = this.sensor.controllerId;
             this.sensorService.post(sensor).subscribe(function (res) {
                 _this.dialogRef.close(res);

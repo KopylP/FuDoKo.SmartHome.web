@@ -31,8 +31,8 @@
     <div class="row justify-content-between">
       <div class="col-6 form-group">
         <mat-form-field>
-          <mat-label>Select an option</mat-label>
-          <mat-select formControlName="SensorTypeId">
+          <mat-label>Sensor type</mat-label>
+          <mat-select formControlName="SensorTypeId" [disabled]="editMode">
             <mat-option *ngFor="let sensorType of sensorTypes" [value]="sensorType.id">{{ sensorType.typeName }}</mat-option>
           </mat-select>
         </mat-form-field>

@@ -30,17 +30,14 @@ export class SensorEditComponent {
         private fb: FormBuilder,
         @Inject(MAT_DIALOG_DATA) data,
         private sensorService: SensorService,
-        private controllerService: ControllerService,
         private sensorTypeService: SensorTypeService) {
         this.editMode = data.editMode;
         this.id = data.id;
         this.controllerId = data.controllerId;
         this.createForm();
         this.sensor = <Sensor>{};
-        this.loadControllers();
         this.loadSensorTypes();
         if (this.editMode) {
-            this.loadData();
             this.title = "Edit sensor";
         } else {
             this.title = "Add sensor";
@@ -59,27 +56,23 @@ export class SensorEditComponent {
         this.form.setValue({
             Name: this.sensor.name,
             Pin: this.sensor.pin,
-            ControllerId: this.sensor.controllerId,
             SensorTypeId: this.sensor.sensorTypeId
-        });
-    }
-
-    loadControllers() {
-        this.controllerService.getAll().subscribe(res => {
-            this.controllers = res.filter(p => p.isAdmin).map(p => p.controller);
         });
     }
 
     loadSensorTypes() {
         this.sensorTypeService.all().subscribe(res => {
             this.sensorTypes = res;
+            this.loadData();
         });
     }
 
     loadData() {
+        console.log(this.id);
         this.sensorService.get(this.id).subscribe(res => {
             this.sensor = res;
-            this.updateForm();
+            if (this.editMode)
+              this.updateForm();
         })
     }
 
@@ -110,6 +103,7 @@ export class SensorEditComponent {
         sensor.controllerId = this.controllerId;
         if (this.editMode) {
             sensor.id = this.sensor.id;
+            sensor.status = this.sensor.status;
             sensor.controllerId = this.sensor.controllerId;
             this.sensorService.post(sensor).subscribe(res => {
                 this.dialogRef.close(res);

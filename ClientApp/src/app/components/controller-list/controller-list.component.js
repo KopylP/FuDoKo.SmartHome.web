@@ -12,6 +12,7 @@ var ControllerListComponent = /** @class */ (function () {
         this.controllerService = controllerService;
         this.editControllerService = editControllerService;
         this.onChanged = new core_1.EventEmitter();
+        this.onDeleteController = new core_1.EventEmitter();
         this.userHasControllers = [];
     }
     ControllerListComponent.prototype.setSelectedItem = function (item) {
@@ -43,10 +44,15 @@ var ControllerListComponent = /** @class */ (function () {
         var userHasController = this.userHasControllers.filter(function (p) { return p.controller.id === id; })[0];
         var index = this.userHasControllers.indexOf(userHasController);
         this.userHasControllers.splice(index, 1);
+        this.onDeleteController.emit(this.selectedItem.controller.id);
+        this.selectedItem = null;
     };
     __decorate([
         core_1.Output()
     ], ControllerListComponent.prototype, "onChanged", void 0);
+    __decorate([
+        core_1.Output()
+    ], ControllerListComponent.prototype, "onDeleteController", void 0);
     ControllerListComponent = __decorate([
         core_1.Component({
             selector: "app-controller-list",

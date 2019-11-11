@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { SensorService } from "../../services/sensor.service";
 import { Controller } from "../../interfaces/Controller";
 import { Sensor } from "../../interfaces/Sensor";

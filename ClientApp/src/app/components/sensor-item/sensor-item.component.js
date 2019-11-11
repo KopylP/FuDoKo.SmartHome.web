@@ -9,8 +9,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var SensorItemComponent = /** @class */ (function () {
-    function SensorItemComponent(sensorService) {
+    function SensorItemComponent(sensorService, sensorEditService) {
         this.sensorService = sensorService;
+        this.sensorEditService = sensorEditService;
         this.faThermometerHalf = free_solid_svg_icons_1.faThermometerHalf;
         this.faSun = free_solid_svg_icons_1.faSun;
         this.faTint = free_solid_svg_icons_1.faTint;
@@ -30,6 +31,14 @@ var SensorItemComponent = /** @class */ (function () {
         }
     };
     SensorItemComponent.prototype.editSensor = function () {
+        var _this = this;
+        this.sensorEditService.open(true, this.sensor.controllerId, this.sensor.id)
+            .afterClosed()
+            .subscribe(function (res) {
+            if (res !== "undefined") {
+                _this.sensor = res;
+            }
+        });
     };
     SensorItemComponent.prototype.deleteSensor = function () {
         var _this = this;

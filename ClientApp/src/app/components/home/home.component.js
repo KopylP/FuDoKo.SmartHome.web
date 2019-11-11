@@ -15,6 +15,9 @@ var HomeComponent = /** @class */ (function () {
     HomeComponent.prototype.onControllerChange = function (userHasController) {
         this.selectedItem = userHasController;
     };
+    HomeComponent.prototype.onDelete = function () {
+        this.selectedItem = null;
+    };
     HomeComponent = __decorate([
         core_1.Component({
             selector: "app-home",
