@@ -50,7 +50,8 @@ var SensorEditComponent = /** @class */ (function () {
         var _this = this;
         this.sensorTypeService.all().subscribe(function (res) {
             _this.sensorTypes = res;
-            _this.loadData();
+            if (_this.editMode)
+                _this.loadData();
         });
     };
     SensorEditComponent.prototype.loadData = function () {
@@ -89,8 +90,8 @@ var SensorEditComponent = /** @class */ (function () {
             sensor.status = this.sensor.status;
             sensor.controllerId = this.sensor.controllerId;
             this.sensorService.post(sensor).subscribe(function (res) {
-                _this.dialogRef.close(res);
                 _this.isAction = false;
+                _this.dialogRef.close(res);
             }, function (err) {
                 _this.isAction = false;
                 _this.form.setErrors({
@@ -100,7 +101,7 @@ var SensorEditComponent = /** @class */ (function () {
         }
         else {
             this.sensorService.put(sensor).subscribe(function (res) {
-                console.log(res);
+                _this.isAction = false;
                 _this.dialogRef.close(res);
             }, function (err) {
                 _this.isAction = false;

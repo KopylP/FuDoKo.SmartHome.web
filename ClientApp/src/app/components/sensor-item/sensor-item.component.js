@@ -35,7 +35,8 @@ var SensorItemComponent = /** @class */ (function () {
         this.sensorEditService.open(true, this.sensor.controllerId, this.sensor.id)
             .afterClosed()
             .subscribe(function (res) {
-            if (res !== "undefined") {
+            console.log(res);
+            if (typeof res !== "undefined") {
                 _this.sensor = res;
             }
         });

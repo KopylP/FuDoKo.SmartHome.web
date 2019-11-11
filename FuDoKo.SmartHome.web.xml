@@ -40,6 +40,22 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerHardwareController.Sensors">
+            <summary>
+            нужные заголовки:
+            fudoko-mac-address: your-controller-mac-address
+            Метод возващает доступные сенсоры для контроллера
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerHardwareController.UpdateSensors(FuDoKo.SmartHome.web.ViewModels.SensorViewModel)">
+            <summary>
+            нужные заголовки:
+            fudoko-mac-address: your-controller-mac-address
+            Изменение значения датчика в таблице
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:FuDoKo.SmartHome.web.Controllers.TokenController.Auth(FuDoKo.SmartHome.web.Data.Models.TokenRequestViewModel)">
             <summary>
             Это метод для получения токена

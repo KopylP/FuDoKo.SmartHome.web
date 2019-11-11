@@ -43,7 +43,8 @@ export class SensorItemComponent implements OnInit {
         this.sensorEditService.open(true, this.sensor.controllerId, this.sensor.id)
             .afterClosed()
             .subscribe(res => {
-                if (res !== "undefined") {
+                console.log(res);
+                if (typeof res !== "undefined") {
                     this.sensor = res;
                 }
             })

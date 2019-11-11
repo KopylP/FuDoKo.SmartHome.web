@@ -1,5 +1,6 @@
 using FuDoKo.SmartHome.web.Data;
 using FuDoKo.SmartHome.web.Data.Models;
+using FuDoKo.SmartHome.web.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -86,6 +87,8 @@ namespace FuDoKo.SmartHome.web
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services.AddScoped<ControllerAuthFilter>();
             
             
 

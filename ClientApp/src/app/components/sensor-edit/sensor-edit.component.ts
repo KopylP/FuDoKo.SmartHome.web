@@ -15,7 +15,7 @@ import { Controller } from "../../interfaces/Controller";
 })
 export class SensorEditComponent {
 
-    private editMode: boolean;
+    public editMode: boolean;
     private id: number;
     public title: string;
     private controllerId: number;
@@ -63,7 +63,8 @@ export class SensorEditComponent {
     loadSensorTypes() {
         this.sensorTypeService.all().subscribe(res => {
             this.sensorTypes = res;
-            this.loadData();
+            if (this.editMode)
+              this.loadData();
         });
     }
 
@@ -106,8 +107,8 @@ export class SensorEditComponent {
             sensor.status = this.sensor.status;
             sensor.controllerId = this.sensor.controllerId;
             this.sensorService.post(sensor).subscribe(res => {
-                this.dialogRef.close(res);
                 this.isAction = false;
+                this.dialogRef.close(res);
             }, err => {
                     this.isAction = false;
                     this.form.setErrors({
@@ -116,7 +117,7 @@ export class SensorEditComponent {
             });
         } else {
             this.sensorService.put(sensor).subscribe(res => {
-                console.log(res);
+                this.isAction = false;
                 this.dialogRef.close(res);
             }, err => {
                     this.isAction = false;
