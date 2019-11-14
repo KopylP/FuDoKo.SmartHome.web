@@ -1,10 +1,12 @@
 using FuDoKo.SmartHome.web.Data;
 using FuDoKo.SmartHome.web.Data.Models;
 using FuDoKo.SmartHome.web.Filters;
+using FuDoKo.SmartHome.web.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FuDoKo.SmartHome.web
 {
@@ -31,6 +34,8 @@ namespace FuDoKo.SmartHome.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the Angular files will be served from this directory
@@ -77,6 +82,23 @@ namespace FuDoKo.SmartHome.web
                     ValidateIssuerSigningKey = true,
                     ValidateAudience = true
                 };
+                cnf.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        // если запрос направлен хабу
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/real/sensors")))
+                        {
+                            // получаем токен из строки запроса
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddSwaggerGen(c =>
@@ -89,8 +111,8 @@ namespace FuDoKo.SmartHome.web
             });
 
             services.AddScoped<ControllerAuthFilter>();
-            
-            
+
+            services.AddSignalR();
 
         }
 
@@ -114,7 +136,12 @@ namespace FuDoKo.SmartHome.web
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My First API");
             });
+
             app.UseAuthentication();
+            app.UseSignalR(conf =>
+            {
+                conf.MapHub<SensorHub>("/real/sensors");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -134,6 +161,9 @@ namespace FuDoKo.SmartHome.web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+
+            
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {

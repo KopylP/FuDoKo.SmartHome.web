@@ -7,9 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var signalr_1 = require("@aspnet/signalr");
 var SensorListComponent = /** @class */ (function () {
-    function SensorListComponent(sensorCervice) {
+    function SensorListComponent(sensorCervice, sensorEditServie, authService) {
         this.sensorCervice = sensorCervice;
+        this.sensorEditServie = sensorEditServie;
+        this.authService = authService;
     }
     SensorListComponent.prototype.loadData = function () {
         var _this = this;
@@ -22,10 +25,52 @@ var SensorListComponent = /** @class */ (function () {
     };
     SensorListComponent.prototype.ngOnInit = function () {
         this.loadData();
+        this.initHub();
+    };
+    SensorListComponent.prototype.ngOnChanges = function (changes) {
+        if (typeof changes['controller'] !== 'undefined') {
+            if (!changes['controller'].firstChange) {
+                this.loadData();
+            }
+        }
+    };
+    SensorListComponent.prototype.initHub = function () {
+        var _this = this;
+        this.hubConnection = new signalr_1.HubConnectionBuilder()
+            .configureLogging(signalr_1.LogLevel.Debug)
+            .withUrl('/real/sensors', {
+            skipNegotiation: true,
+            transport: signalr_1.HttpTransportType.WebSockets,
+            accessTokenFactory: function () { return _this.authService.getAuth().token; }
+        })
+            .build();
+        this.hubConnection
+            .start()
+            .then(function (p) {
+            console.log("Server is started");
+        })
+            .catch(function (err) {
+            console.log(err);
+        });
+        this.hubConnection.on("UpdateSensor", function (data) {
+            var index = _this.sensors.findIndex(function (p) { return p.id == data.id; });
+            _this.sensors.splice(index, 1, data);
+        });
     };
     SensorListComponent.prototype.addSensor = function () {
+        var _this = this;
+        this.sensorEditServie
+            .open(false, this.controller.id)
+            .afterClosed()
+            .subscribe(function (res) {
+            if (typeof res !== "undefined") {
+                _this.sensors.push(res);
+            }
+        });
     };
-    SensorListComponent.prototype.deleteSensor = function () {
+    SensorListComponent.prototype.deleteSensor = function (id) {
+        var index = this.sensors.findIndex(function (p) { return p.id === id; });
+        this.sensors.splice(index, 1);
     };
     __decorate([
         core_1.Input()
