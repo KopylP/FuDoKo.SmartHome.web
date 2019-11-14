@@ -34,6 +34,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SensorEditService } from './services/sensor-edit.service';
 import { SensorTypeService } from './services/sensor-type.service';
 import { SensorEditComponent } from './components/sensor-edit/sensor-edit.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SensorHubService } from './services/sensor-hub.service';
 
 @NgModule({
     declarations: [
@@ -71,6 +73,7 @@ import { SensorEditComponent } from './components/sensor-edit/sensor-edit.compon
         FontAwesomeModule,
         MatSlideToggleModule,
         MatOptionModule,
+        MatSnackBarModule,
         MatSelectModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -92,7 +95,8 @@ import { SensorEditComponent } from './components/sensor-edit/sensor-edit.compon
         EditControllerService,
         SensorService,
         SensorEditService,
-        SensorTypeService
+        SensorTypeService,
+        SensorHubService
     ],
     bootstrap: [AppComponent],
     exports: [

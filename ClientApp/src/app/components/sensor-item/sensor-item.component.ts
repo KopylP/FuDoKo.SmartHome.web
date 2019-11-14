@@ -5,6 +5,7 @@ import { faThermometerHalf, faLightbulb, faTint, IconDefinition, faSun } from "@
 import { MatMenuTrigger } from "@angular/material";
 import { SensorEditService } from "../../services/sensor-edit.service";
 
+
 @Component({
     selector: "app-sensor-item",
     templateUrl: "./sensor-item.component.html",
@@ -49,6 +50,7 @@ export class SensorItemComponent implements OnInit {
                 }
             })
     }
+
 
     deleteSensor() {
         this.sensorService.delete(this.sensor.id).subscribe(res => {

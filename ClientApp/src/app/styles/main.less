@@ -54,3 +54,25 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield; /* Firefox */
 }
+
+.snack {
+  margin-top: 90px !important;
+}
+
+::ng-deep .snack-success {
+  .snack;
+  background-color: forestgreen !important;
+
+  button {
+    color: white;
+  }
+}
+
+::ng-deep .snack-error {
+  .snack;
+  background-color: red !important;
+
+  button {
+    color: white;
+  }
+}

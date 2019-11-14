@@ -76,6 +76,7 @@
     <None Remove="ClientApp\src\app\services\edit-controller.service.ts" />
     <None Remove="ClientApp\src\app\services\register.service.ts" />
     <None Remove="ClientApp\src\app\services\sensor-edit.service.ts" />
+    <None Remove="ClientApp\src\app\services\sensor-hub.service.ts" />
     <None Remove="ClientApp\src\app\services\sensor-type.service.ts" />
     <None Remove="ClientApp\src\app\services\sensor.service.ts" />
   </ItemGroup>
@@ -119,6 +120,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\register.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\sensor-edit.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\sensor-hub.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\sensor-type.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\sensor.service.ts" />
   </ItemGroup>

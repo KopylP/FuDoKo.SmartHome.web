@@ -7,12 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var signalr_1 = require("@aspnet/signalr");
 var SensorListComponent = /** @class */ (function () {
-    function SensorListComponent(sensorCervice, sensorEditServie, authService) {
+    function SensorListComponent(sensorCervice, sensorEditServie, authService, snackBar, sensorHubService) {
         this.sensorCervice = sensorCervice;
         this.sensorEditServie = sensorEditServie;
         this.authService = authService;
+        this.snackBar = snackBar;
+        this.sensorHubService = sensorHubService;
     }
     SensorListComponent.prototype.loadData = function () {
         var _this = this;
@@ -36,26 +37,24 @@ var SensorListComponent = /** @class */ (function () {
     };
     SensorListComponent.prototype.initHub = function () {
         var _this = this;
-        this.hubConnection = new signalr_1.HubConnectionBuilder()
-            .configureLogging(signalr_1.LogLevel.Debug)
-            .withUrl('/real/sensors', {
-            skipNegotiation: true,
-            transport: signalr_1.HttpTransportType.WebSockets,
-            accessTokenFactory: function () { return _this.authService.getAuth().token; }
-        })
-            .build();
-        this.hubConnection
-            .start()
-            .then(function (p) {
-            console.log("Server is started");
-        })
-            .catch(function (err) {
-            console.log(err);
+        this.sensorHubService.init(null, function () {
+            _this.openSnackBar("Ooops. Real time information from sensors is is not available.", "Refresh", "snack-error")
+                .subscribe(function () { return _this.initHub(); });
         });
-        this.hubConnection.on("UpdateSensor", function (data) {
+        //listen to edit value of sensor event
+        this.sensorHubService.onUpdateSensors(function (data) {
             var index = _this.sensors.findIndex(function (p) { return p.id == data.id; });
-            _this.sensors.splice(index, 1, data);
+            if (index !== -1)
+                _this.sensors.splice(index, 1, data);
         });
+    };
+    SensorListComponent.prototype.openSnackBar = function (message, action, snackClass) {
+        return this.snackBar.open(message, action, {
+            duration: 5000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+            panelClass: [snackClass]
+        }).onAction();
     };
     SensorListComponent.prototype.addSensor = function () {
         var _this = this;

@@ -5,6 +5,9 @@ import { Sensor } from "../../interfaces/Sensor";
 import { SensorEditService } from "../../services/sensor-edit.service";
 import { HubConnection, HubConnectionBuilder, HttpTransportType, LogLevel } from '@aspnet/signalr';
 import { AuthService } from "../../services/auth.service";
+import { Observable } from "rxjs";
+import { MatSnackBar } from "@angular/material";
+import { SensorHubService } from "../../services/sensor-hub.service";
 @Component({
     selector: "app-sensor-list",
     templateUrl: "./sensor-list.component.html",
@@ -19,7 +22,9 @@ export class SensorListComponent implements OnInit, OnChanges {
 
     constructor(private sensorCervice: SensorService,
         private sensorEditServie: SensorEditService,
-        private authService: AuthService) {
+        private authService: AuthService,
+        private snackBar: MatSnackBar,
+        private sensorHubService: SensorHubService) {
 
     }
 
@@ -28,8 +33,8 @@ export class SensorListComponent implements OnInit, OnChanges {
             this.sensors = res;
             console.log(res);
         }, err => {
-                console.log(err);
-        });    
+            console.log(err);
+        });
     }
 
     ngOnInit(): void {
@@ -46,27 +51,26 @@ export class SensorListComponent implements OnInit, OnChanges {
     }
 
     initHub() {
-        this.hubConnection = new HubConnectionBuilder()
-            .configureLogging(LogLevel.Debug)
-            .withUrl('/real/sensors', {
-                skipNegotiation: true,
-                transport: HttpTransportType.WebSockets,
-                accessTokenFactory: () => this.authService.getAuth().token
-            })
-            .build();
-        this.hubConnection
-            .start()
-            .then(p => {
-                console.log("Server is started");
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
-        this.hubConnection.on("UpdateSensor", data => {
-            const index = this.sensors.findIndex(p => p.id == data.id);
-            this.sensors.splice(index, 1, data);
+        
+        this.sensorHubService.init(null, () => {
+            this.openSnackBar("Ooops. Real time information from sensors is is not available.", "Refresh", "snack-error")
+                .subscribe(() => this.initHub());
         });
+        //listen to edit value of sensor event
+        this.sensorHubService.onUpdateSensors(data => {
+            const index = this.sensors.findIndex(p => p.id == data.id);
+            if (index !== -1)
+                this.sensors.splice(index, 1, data);
+        });
+    }
+
+    openSnackBar(message: string, action: string, snackClass: string): Observable<void> {
+        return this.snackBar.open(message, action, {
+            duration: 5000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+            panelClass: [snackClass]
+        }).onAction();
     }
 
     addSensor() {
