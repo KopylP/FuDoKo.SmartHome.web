@@ -24,7 +24,7 @@ import { AuthTrueGuard } from './guards/auth.true.guard';
 import { EditControllerComponent } from './components/edit-controller/edit-controller.component';
 import { EditControllerService } from './services/edit-controller.service';
 import { AddButtonComponent } from './components/add-button/add-button.component';
-import { MatDialogModule, MatOptionModule, MatSelectModule } from '@angular/material';
+import { MatDialogModule, MatOptionModule, MatSelectModule, MatRadioButton, MatRadioModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { SensorService } from './services/sensor.service';
@@ -36,6 +36,9 @@ import { SensorTypeService } from './services/sensor-type.service';
 import { SensorEditComponent } from './components/sensor-edit/sensor-edit.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SensorHubService } from './services/sensor-hub.service';
+import { DeviceListComponent } from './components/device-list/device-list.component';
+import { DeviceItemComponent } from './components/device-item/device-item.component';
+import { EditDeviceComponent } from './components/edit-device/edit-device.component';
 
 @NgModule({
     declarations: [
@@ -51,11 +54,15 @@ import { SensorHubService } from './services/sensor-hub.service';
         AddButtonComponent,
         SensorListComponent,
         SensorItemComponent,
-        SensorEditComponent
+        SensorEditComponent,
+        DeviceListComponent,
+        DeviceItemComponent,
+        EditDeviceComponent
     ],
     entryComponents: [
         EditControllerComponent,
-        SensorEditComponent
+        SensorEditComponent,
+        EditDeviceComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -74,6 +81,7 @@ import { SensorHubService } from './services/sensor-hub.service';
         MatSlideToggleModule,
         MatOptionModule,
         MatSnackBarModule,
+        MatRadioModule,
         MatSelectModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, canActivate: [AuthGuard] },

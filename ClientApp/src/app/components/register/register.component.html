@@ -9,7 +9,7 @@
         </div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="row justify-content-center">
-            <div *ngIf="form.errors?.register" class="div-register-errors invalid-feedback">
+            <div *ngIf="form.errors?.register" class="div-register-errors invalid-feedback" style="text-align:center">
               {{form.errors?.register}}
             </div>
           </div>

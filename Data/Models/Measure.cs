@@ -16,10 +16,14 @@ namespace FuDoKo.SmartHome.web.Data.Models
         [Required]
         [MaxLength(20)]
         public string MeasureName { get; set; }
+
+        [Required]
+        public int DeviceTypeId { get; set; }
         #endregion
 
         #region lazy props
         public virtual IEnumerable<DeviceConfiguration> DeviceConfigurations { get; set; }
+        public virtual DeviceType DeviceType { get; set; }
         #endregion
     }
 }

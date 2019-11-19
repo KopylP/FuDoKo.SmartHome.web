@@ -35,6 +35,16 @@ namespace FuDoKo.SmartHome.web
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors(opts =>
+            {
+                opts.AddPolicy("MobilePolicy", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -127,7 +137,7 @@ namespace FuDoKo.SmartHome.web
             {
                 app.UseExceptionHandler("/Error");
             }
-
+            app.UseCors("MobilePolicy");
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseStatusCodePagesWithReExecute("/errors/{0}");

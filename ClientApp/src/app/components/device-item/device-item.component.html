@@ -1,0 +1,15 @@
+<div class="div-circle-container" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="menuTrigger.closeMenu()" (contextmenu)="toggleMenu()">
+  <div [class]="'base-item-circle ' + getClass()">
+    <fa-icon [icon]="selectedIcon"></fa-icon>
+    <div class="base-switch">
+      <mat-slide-toggle [(ngModel)]="device.status"
+                        (change)="changeStatus()"></mat-slide-toggle>
+    </div>
+  </div>
+  <p>{{ device.name }}</p>
+</div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="editDevice()">Edit</button>
+  <button mat-menu-item (click)="deleteDevice()">Delete</button>
+</mat-menu>

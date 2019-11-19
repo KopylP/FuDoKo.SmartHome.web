@@ -20,7 +20,7 @@ namespace FuDoKo.SmartHome.web.ViewModels
         public bool Status { get; set; }
 
         [Required]
-        public int Value { get; set; }
+        public float Value { get; set; }
 
         [Required]
         public int SensorTypeId { get; set; }

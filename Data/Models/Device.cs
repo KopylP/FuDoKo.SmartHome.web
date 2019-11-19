@@ -30,10 +30,16 @@ namespace FuDoKo.SmartHome.web.Data.Models
         [Required]
         public int ControllerId { get; set; }
 
+        [Required]
+        public int DeviceTypeId { get; set; }
+
         #endregion
         #region lazy props
         [ForeignKey("ControllerId")]
         public virtual Controller Controller { get; set; }
+
+        [ForeignKey("DeviceTypeId")]
+        public virtual DeviceType DeviceType { get; set; }
 
         public virtual IEnumerable<UserHasDevice> UsersHaveDevice { get; set; } = new List<UserHasDevice>();
 

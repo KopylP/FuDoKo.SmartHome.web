@@ -1,4 +1,4 @@
-<div class="div-sensor" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="menuTrigger.closeMenu()" (contextmenu)="toggleMenu()">
+<div class="div-circle-container" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="menuTrigger.closeMenu()" (contextmenu)="toggleMenu()">
   <div class="sensor-value" *ngIf="sensor.status">{{ sensor.value }}</div>
   <div [class]="'base-item-circle ' + sensor.sensorType.typeName">
     <fa-icon [icon]="selectedIcon"></fa-icon>

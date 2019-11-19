@@ -44,6 +44,19 @@
   background-color: #c6aaff;
 }
 
+/deep/ .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: @pink;
+}
+
+/deep/ .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  color: rgb(66, 134, 244);
+  background-color: @pink;
+}
+
+/deep/ .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: @pink;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */
@@ -73,6 +86,21 @@ input[type=number] {
   background-color: red !important;
 
   button {
+    color: white;
+  }
+}
+
+.div-circle-container {
+  text-align: center;
+  position: relative;
+
+  p {
+    font-size: 0.9em;
+    color: @pink;
+    width: 75px;
+  }
+
+  fa-icon {
     color: white;
   }
 }

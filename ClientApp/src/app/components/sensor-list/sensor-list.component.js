@@ -71,6 +71,9 @@ var SensorListComponent = /** @class */ (function () {
         var index = this.sensors.findIndex(function (p) { return p.id === id; });
         this.sensors.splice(index, 1);
     };
+    SensorListComponent.prototype.ngOnDestroy = function () {
+        this.sensorHubService.close();
+    };
     __decorate([
         core_1.Input()
     ], SensorListComponent.prototype, "controller", void 0);

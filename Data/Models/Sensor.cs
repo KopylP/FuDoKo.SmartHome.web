@@ -25,7 +25,7 @@ namespace FuDoKo.SmartHome.web.Data.Models
 
         [Required]
         [MaxLength(3)]
-        public int Value { get; set; }
+        public float Value { get; set; }
 
         [Required]
         public int SensorTypeId { get; set; }

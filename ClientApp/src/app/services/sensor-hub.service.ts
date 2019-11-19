@@ -37,4 +37,8 @@ export class SensorHubService {
             callback(data);
         });
     }
+
+    close() {
+        this.hubConnection.stop();
+    }
 }

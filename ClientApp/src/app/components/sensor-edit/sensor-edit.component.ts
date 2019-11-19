@@ -116,6 +116,7 @@ export class SensorEditComponent {
                     });
             });
         } else {
+            sensor.status = true;
             this.sensorService.put(sensor).subscribe(res => {
                 this.isAction = false;
                 this.dialogRef.close(res);

@@ -1,0 +1,58 @@
+<!--Title-->
+<h1>{{title}}</h1>
+<!--End Title-->
+<!--Body-->
+<form [formGroup]="form" (ngSubmit)="onSubmit">
+  <div class="container">
+    <div class="row">
+      <div class="form-group col-12">
+        <mat-progress-bar [hidden]="!isAction" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="row">
+      <div col-12 *ngIf="form.errors?.edit" class="invalid-feedback div-edit-errors">
+        {{form.errors?.edit}}
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="form-group col-12">
+        <input type="text" required formControlName="Name" class="form-control" placeholder="Please, call your sensor" [ngClass]="{'is-invalid': hasError('Name')}" />
+        <div *ngIf="hasError('Name')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <mat-radio-group aria-label="Select an option" formControlName="ConnectionType" [disabled]="editMode">
+        <mat-radio-button [value]="'pin'" checked>Pin</mat-radio-button>
+        <mat-radio-button [value]="'MAC'">MAC</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="row justify-content-center">
+      <div class="form-group col-12">
+        <input type="text" required formControlName="Connection" [placeholder]="form.value.ConnectionType" class="form-control" [ngClass]="{'is-invalid': hasError('Connection')}" />
+        <div *ngIf="hasError('Connection')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="col-6 form-group">
+        <mat-form-field>
+          <mat-label>Device type</mat-label>
+          <mat-select formControlName="DeviceTypeId" [disabled]="editMode">
+            <mat-option *ngFor="let deviceType of deviceTypes" [value]="deviceType.id">{{ deviceType.typeName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="hasError('DeviceTypeId')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-between buttons-div">
+      <button [disabled]="form.invalid" type="button" mdbBtn color="success" mdbWavesEffect (click)="onSubmit()" class="col-lg-4 col-md-12">Submit</button>
+      <button type="button" mdbBtn color="primary" mdbWavesEffect class="col-lg-4 col-md-5" (click)="close()" autofocus>Exit</button>
+    </div>
+  </div>
+</form>
+<!--End Body-->

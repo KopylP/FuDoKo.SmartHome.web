@@ -39,6 +39,9 @@ var SensorHubService = /** @class */ (function () {
             callback(data);
         });
     };
+    SensorHubService.prototype.close = function () {
+        this.hubConnection.stop();
+    };
     SensorHubService = __decorate([
         core_1.Injectable()
     ], SensorHubService);

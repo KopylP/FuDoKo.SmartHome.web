@@ -100,6 +100,7 @@ var SensorEditComponent = /** @class */ (function () {
             });
         }
         else {
+            sensor.status = true;
             this.sensorService.put(sensor).subscribe(function (res) {
                 _this.isAction = false;
                 _this.dialogRef.close(res);

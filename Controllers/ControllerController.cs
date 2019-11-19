@@ -47,7 +47,7 @@ namespace FuDoKo.SmartHome.web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult Get(int id)
         {
             //Беремо айді користувача з токену
@@ -110,7 +110,6 @@ namespace FuDoKo.SmartHome.web.Controllers
         {
             //Беремо айді користувача з токену
             var user = User.GetUser(_context);
-            if (user == null) return Unauthorized(new UnauthorizedError());
             //Перевіряємо модель
             if (model == null || !ModelState.IsValid) return StatusCode(500, new InternalServerError());
             if (model.MAC.Length != 12) return StatusCode(500, new InternalServerError("MAC address must has 12 symbols!"));
@@ -136,12 +135,11 @@ namespace FuDoKo.SmartHome.web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
             //Беремо айді користувача з токену
             var user = User.GetUser(_context);
-            if (user == null) return Unauthorized(new UnauthorizedError());
             //Шукаємо контролер о тим самим id
             var controller = _context.Controllers.Find(id);
             if(controller == null) return NotFound(new NotFoundError());
@@ -160,6 +158,86 @@ namespace FuDoKo.SmartHome.web.Controllers
             return NoContent();
         }
 
+        #endregion
+
+        #region access
+        [HttpGet("Access/{id}")]
+        public IActionResult Access(int id)
+        {
+            var user = User.GetUser(_context);
+
+            var userHasController = _context.UserHasControllers
+                .Where(p => p.UserId == user.Id)
+                .Where(p => p.IsAdmin)
+                .Where(p => p.Id == id)
+                .FirstOrDefault();
+
+            if (userHasController == null) return Unauthorized(new UnauthorizedError());
+
+            var usersHasThisController = _context
+                .UserHasControllers
+                .Include(p => p.User)
+                .Where(p => p.ControllerId == id)
+                .Where(p => !p.IsAdmin);
+
+            return Json(usersHasThisController.Adapt<UserHasControllerViewModel[]>());
+        }
+
+        [HttpPut("Access")]
+        public IActionResult AccessAdd(ControllerAccessViewModel model)
+        {
+            if (model == null) return StatusCode(500, new InternalServerError());
+
+            var user = User.GetUser(_context);
+
+            var userHasController = _context
+                .UserHasControllers.Where(p => p.UserId == user.Id)
+                .Where(p => p.ControllerId == model.ControllerId)
+                .Where(p => p.IsAdmin)
+                .FirstOrDefault();
+
+            if (userHasController == null) return Unauthorized(new UnauthorizedError());
+
+            var accessUser = _context
+                .Users
+                .Where(p => p.Email == model.UserName || p.UserName == model.UserName)
+                .FirstOrDefault();
+
+            if (accessUser == null) return NotFound(new NotFoundError("User not found!"));
+
+            var accessUserHasController = new UserHasController
+            {
+                IsAdmin = false,
+                ControllerId = model.ControllerId,
+                UserId = accessUser.Id
+            };
+
+            _context.UserHasControllers.Add(accessUserHasController);
+            _context.SaveChanges();
+            return Json(accessUserHasController.Adapt<UserHasControllerViewModel>());
+        }
+
+        [HttpDelete("Access/{id}")]
+        public IActionResult AccessDelete(int id)
+        {
+            var user = User.GetUser(_context);
+
+            var accessUserHasController = _context.UserHasControllers.Find(id);
+
+            if (accessUserHasController == null) return NotFound(new NotFoundError());
+
+            var userHasController = _context.UserHasControllers
+                .Where(p => p.ControllerId == accessUserHasController.ControllerId)
+                .Where(p => p.UserId == user.Id)
+                .Where(p => p.IsAdmin)
+                .FirstOrDefault();
+
+            if (userHasController == null) return Unauthorized(new UnauthorizedError());
+
+            _context.UserHasControllers.Remove(accessUserHasController);
+            _context.SaveChanges();
+            return NoContent();
+        }
         #endregion
     }
 }

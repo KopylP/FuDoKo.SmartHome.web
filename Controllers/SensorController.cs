@@ -70,7 +70,8 @@ namespace FuDoKo.SmartHome.web.Controllers
                 Pin = model.Pin,
                 SensorTypeId = model.SensorTypeId,
                 ControllerId = model.ControllerId,
-                Value = 0
+                Value = 0,
+                Status = model.Status  
             };
             _context.Sensors.Add(sensor);
             _context.SaveChanges();

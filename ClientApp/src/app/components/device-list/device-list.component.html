@@ -1,0 +1,18 @@
+<mdb-card cascade="true" wider="true" reverse="true" class="my-4">
+
+  <!-- Card content -->
+  <mdb-card-body cascade="true" class="text-center">
+
+    <!--Title-->
+    <mdb-card-title>
+      <h4>
+        <strong>Your devices:</strong>
+      </h4>
+    </mdb-card-title>
+    <ul class="item-ul">
+      <li *ngFor="let device of devices"><app-device-item [device]="device" (onDeviceDeleted)="onDeviceDeleted($event)"></app-device-item></li>
+      <li><add-button (click)="addDevice()"></add-button></li>
+    </ul>
+
+  </mdb-card-body>
+</mdb-card>

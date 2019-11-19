@@ -17,9 +17,15 @@ namespace FuDoKo.SmartHome.web.Data
                     .GetAwaiter()
                     .GetResult();
             }
-            if(!dbConrext.SensorTypes.Any())
+
+            if (!dbConrext.SensorTypes.Any())
             {
                 CreateSensorTypes(conrext: dbConrext);
+            }
+
+            if (!dbConrext.DeviceTypes.Any())
+            {
+                CreateDeviceTypes(context: dbConrext);
             }
         }
         private static async Task CreateUsers(ApplicationDbConrext dbConrext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
@@ -69,6 +75,16 @@ namespace FuDoKo.SmartHome.web.Data
                     new SensorType { TypeName = "submersion" }
                 );
             conrext.SaveChanges();
+        }
+
+        private static void CreateDeviceTypes(ApplicationDbConrext context)
+        {
+            context.DeviceTypes.AddRange(
+                    new DeviceType { TypeName = "Switch" },
+                    new DeviceType { TypeName = "Lamp" },
+                    new DeviceType { TypeName = "LED lamp" }
+                );
+            context.SaveChanges();
         }
     }
 }

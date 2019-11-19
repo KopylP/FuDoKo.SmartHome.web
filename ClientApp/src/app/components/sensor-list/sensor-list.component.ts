@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from "@angular/core";
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy } from "@angular/core";
 import { SensorService } from "../../services/sensor.service";
 import { Controller } from "../../interfaces/Controller";
 import { Sensor } from "../../interfaces/Sensor";
@@ -13,7 +13,7 @@ import { SensorHubService } from "../../services/sensor-hub.service";
     templateUrl: "./sensor-list.component.html",
     styleUrls: ["./sensor-list.component.less"]
 })
-export class SensorListComponent implements OnInit, OnChanges {
+export class SensorListComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() controller: Controller;
     sensors: Sensor[];
@@ -87,6 +87,10 @@ export class SensorListComponent implements OnInit, OnChanges {
     deleteSensor(id: number) {
         const index = this.sensors.findIndex(p => p.id === id);
         this.sensors.splice(index, 1);
+    }
+
+    ngOnDestroy(): void {
+        this.sensorHubService.close();
     }
 
 }
