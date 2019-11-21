@@ -66,6 +66,7 @@
     <None Remove="ClientApp\src\app\components\sensor-list\sensor-list.component.ts" />
     <None Remove="ClientApp\src\app\interceptors\auth.interceptor.ts" />
     <None Remove="ClientApp\src\app\interfaces\Controller.ts" />
+    <None Remove="ClientApp\src\app\interfaces\ControllerAccess.ts" />
     <None Remove="ClientApp\src\app\interfaces\Device.ts" />
     <None Remove="ClientApp\src\app\interfaces\DeviceType.ts" />
     <None Remove="ClientApp\src\app\interfaces\RegisterUser.ts" />
@@ -109,6 +110,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\components\sensor-item\sensor-item.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\sensor-list\sensor-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interceptors\auth.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\ControllerAccess.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Device.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\DeviceType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Sensor.ts">
@@ -134,7 +136,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\Новая папка\" />
     <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Api\ApiErrors\ApiError.cs" />
+    <None Include="Api\ApiErrors\BadRequestError.cs" />
+    <None Include="Api\ApiErrors\InternalServerError.cs" />
+    <None Include="Api\ApiErrors\NotFoundError.cs" />
+    <None Include="Api\ApiErrors\UnauthorizedError.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

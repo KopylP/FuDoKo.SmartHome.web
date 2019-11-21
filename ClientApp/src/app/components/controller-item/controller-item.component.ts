@@ -4,6 +4,7 @@ import { ControllerService } from "../../services/controller.service";
 import { MatMenuTrigger } from "@angular/material";
 import { EditControllerService } from "../../services/edit-controller.service";
 import { UserHasController } from "../../interfaces/UserHasController";
+import { ControllerAccessService } from "../../services/controller-access.service";
 
 
 @Component({
@@ -26,8 +27,11 @@ export class ControllerItemComponent implements OnInit, OnChanges {
     controllerElement: ElementRef;
 
     faHome = faHome;
-    constructor(private controllerService: ControllerService,
-        private editControllerService: EditControllerService) {
+    constructor(
+        private controllerService: ControllerService,
+        private editControllerService: EditControllerService,
+        private controllerAccessService: ControllerAccessService
+    ) {
     }
 
     ngOnInit(): void {
@@ -61,7 +65,7 @@ export class ControllerItemComponent implements OnInit, OnChanges {
     }
 
     toggleMenu() {
-        if (this.class === "selected") {
+        if (this.class === "selected" && this.userHasController.isAdmin) {
             this.trigger.openMenu();
         } else {
             this.trigger.closeMenu();
@@ -81,5 +85,9 @@ export class ControllerItemComponent implements OnInit, OnChanges {
                 this.userHasController.controller = res;
             }
         });
+    }
+
+    accessPolicy() {
+        this.controllerAccessService.open(this.userHasController.controller.id);
     }
 }

@@ -7,6 +7,7 @@ namespace FuDoKo.SmartHome.web.ViewModels
 {
     public class UserHasControllerViewModel
     {
+        public int Id { get; set; }
         public string UserId { get; set; }
 
         public int ControllerId { get; set; }

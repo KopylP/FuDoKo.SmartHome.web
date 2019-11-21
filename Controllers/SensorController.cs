@@ -58,6 +58,17 @@ namespace FuDoKo.SmartHome.web.Controllers
         {
             if (model == null) return StatusCode(500, new InternalServerError());
             if (!ModelState.IsValid) return StatusCode(500, new InternalServerError("Incorrect data!"));
+
+            var user = User.GetUser(_context);
+
+            var userHasController = _context
+                .UserHasControllers
+                .Where(p => p.UserId == user.Id)
+                .Where(p => p.ControllerId == model.ControllerId)
+                .Where(p => p.IsAdmin);
+
+            if (userHasController == null) return Unauthorized(new UnauthorizedError());
+
             var sensors = _context.Sensors
                 .Where(p => p.ControllerId == model.ControllerId)
                 .Where(p => p.Pin == model.Pin);
@@ -96,7 +107,8 @@ namespace FuDoKo.SmartHome.web.Controllers
 
             var userHasController = _context.UserHasControllers
                 .Where(p => p.ControllerId == sensor.ControllerId)
-                .Where(p => p.UserId == user.Id);
+                .Where(p => p.UserId == user.Id)
+                .Where(p => p.IsAdmin);
 
             if (userHasController == null) return Unauthorized(new UnauthorizedError());
 

@@ -9,9 +9,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var ControllerItemComponent = /** @class */ (function () {
-    function ControllerItemComponent(controllerService, editControllerService) {
+    function ControllerItemComponent(controllerService, editControllerService, controllerAccessService) {
         this.controllerService = controllerService;
         this.editControllerService = editControllerService;
+        this.controllerAccessService = controllerAccessService;
         this.countOfClicks = 0;
         this.onDeleteController = new core_1.EventEmitter();
         this.faHome = free_solid_svg_icons_1.faHome;
@@ -47,7 +48,7 @@ var ControllerItemComponent = /** @class */ (function () {
         });
     };
     ControllerItemComponent.prototype.toggleMenu = function () {
-        if (this.class === "selected") {
+        if (this.class === "selected" && this.userHasController.isAdmin) {
             this.trigger.openMenu();
         }
         else {
@@ -68,6 +69,9 @@ var ControllerItemComponent = /** @class */ (function () {
                 _this.userHasController.controller = res;
             }
         });
+    };
+    ControllerItemComponent.prototype.accessPolicy = function () {
+        this.controllerAccessService.open(this.userHasController.controller.id);
     };
     __decorate([
         core_1.Input()

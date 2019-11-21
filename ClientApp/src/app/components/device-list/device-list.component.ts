@@ -15,7 +15,7 @@ export class DeviceListComponent implements OnInit {
         private editDeviceService: EditDeviceService) { }
 
     @Input() controller: Controller;
-
+    @Input() isAdmin: boolean;
     devices: Device[];
 
     ngOnInit() {

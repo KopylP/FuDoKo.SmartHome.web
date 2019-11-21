@@ -14,6 +14,7 @@ import { SensorEditService } from "../../services/sensor-edit.service";
 export class SensorItemComponent implements OnInit {
 
     @Input() sensor: Sensor;
+    @Input() isAdmin: boolean;
     faThermometerHalf = faThermometerHalf;
     faSun = faSun;
     faTint = faTint;
@@ -59,7 +60,9 @@ export class SensorItemComponent implements OnInit {
     }
 
     toggleMenu() {
-        this.trigger.openMenu();
+        if (this.isAdmin) {
+            this.trigger.openMenu();
+        }
         return false;
     }
 

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from "@a
 import { Router } from "@angular/router";
 import { RegisterService } from "../../services/register.service";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { RegisterUser } from "../../interfaces/RegisterUser";
 @Component({
     selector: "register",
     templateUrl: "./register.component.html",

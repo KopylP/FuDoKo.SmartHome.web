@@ -10,8 +10,8 @@
       </h4>
     </mdb-card-title>
     <ul class="item-ul">
-      <li *ngFor="let device of devices"><app-device-item [device]="device" (onDeviceDeleted)="onDeviceDeleted($event)"></app-device-item></li>
-      <li><add-button (click)="addDevice()"></add-button></li>
+      <li *ngFor="let device of devices"><app-device-item [device]="device" (onDeviceDeleted)="onDeviceDeleted($event)" [isAdmin]="isAdmin"></app-device-item></li>
+      <li><add-button (click)="addDevice()" *ngIf="isAdmin"></add-button></li>
     </ul>
 
   </mdb-card-body>

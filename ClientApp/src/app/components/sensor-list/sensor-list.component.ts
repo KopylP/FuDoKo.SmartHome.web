@@ -18,10 +18,12 @@ export class SensorListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() controller: Controller;
     sensors: Sensor[];
 
+    @Input() isAdmin: boolean;
+
     private hubConnection: HubConnection;
 
     constructor(private sensorCervice: SensorService,
-        private sensorEditServie: SensorEditService,
+        private sensorEditService: SensorEditService,
         private authService: AuthService,
         private snackBar: MatSnackBar,
         private sensorHubService: SensorHubService) {
@@ -73,8 +75,9 @@ export class SensorListComponent implements OnInit, OnChanges, OnDestroy {
         }).onAction();
     }
 
+
     addSensor() {
-        this.sensorEditServie
+        this.sensorEditService
             .open(false, this.controller.id)
             .afterClosed()
             .subscribe(res => {

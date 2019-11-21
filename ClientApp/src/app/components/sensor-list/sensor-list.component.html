@@ -11,8 +11,8 @@
         </h4>
       </mdb-card-title>
         <ul class="item-ul">
-          <li *ngFor="let sensor of sensors"><app-sensor-item [sensor]="sensor" (onSensorDelete)="deleteSensor($event)"></app-sensor-item></li>
-          <li><add-button (click)="addSensor()"></add-button></li>
+          <li *ngFor="let sensor of sensors"><app-sensor-item [sensor]="sensor" (onSensorDelete)="deleteSensor($event)" [isAdmin]="isAdmin"></app-sensor-item></li>
+          <li><add-button (click)="addSensor()" *ngIf="isAdmin"></add-button></li>
         </ul>
       
     </mdb-card-body>

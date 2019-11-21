@@ -48,7 +48,9 @@ var SensorItemComponent = /** @class */ (function () {
         });
     };
     SensorItemComponent.prototype.toggleMenu = function () {
-        this.trigger.openMenu();
+        if (this.isAdmin) {
+            this.trigger.openMenu();
+        }
         return false;
     };
     SensorItemComponent.prototype.changeStatus = function () {
@@ -62,6 +64,9 @@ var SensorItemComponent = /** @class */ (function () {
     __decorate([
         core_1.Input()
     ], SensorItemComponent.prototype, "sensor", void 0);
+    __decorate([
+        core_1.Input()
+    ], SensorItemComponent.prototype, "isAdmin", void 0);
     __decorate([
         core_1.Output()
     ], SensorItemComponent.prototype, "onSensorDelete", void 0);

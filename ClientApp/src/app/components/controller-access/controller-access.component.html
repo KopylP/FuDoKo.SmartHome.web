@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="justify-content-center col-12">
+      <h1>{{ title }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <h3>Your users:</h3>
+    </div>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-12">
+      <mat-chip-list #chipList aria-label="User selection">
+        <mat-chip *ngFor="let userHasController of usersHasControllers" [selectable]="selectable"
+                  [removable]="removable" (removed)="remove(userHasController)" color="primary">
+          {{userHasController.user.userName}}
+          <mat-icon matChipRemove *ngIf="removable"><fa-icon [icon]="faTimesCircle"></fa-icon></mat-icon>
+        </mat-chip>
+        <input placeholder="Your users here..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
+  <div class="row justify-content-end buttons">
+      <button type="button" mdbBtn color="primary" mdbWavesEffect (click)="close()" autofocus>Exit</button>
+  </div>
+</div>

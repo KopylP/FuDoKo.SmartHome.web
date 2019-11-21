@@ -24,7 +24,7 @@ import { AuthTrueGuard } from './guards/auth.true.guard';
 import { EditControllerComponent } from './components/edit-controller/edit-controller.component';
 import { EditControllerService } from './services/edit-controller.service';
 import { AddButtonComponent } from './components/add-button/add-button.component';
-import { MatDialogModule, MatOptionModule, MatSelectModule, MatRadioButton, MatRadioModule } from '@angular/material';
+import { MatDialogModule, MatOptionModule, MatSelectModule, MatRadioButton, MatRadioModule, MatChipsModule, MatIconModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { SensorService } from './services/sensor.service';
@@ -39,6 +39,7 @@ import { SensorHubService } from './services/sensor-hub.service';
 import { DeviceListComponent } from './components/device-list/device-list.component';
 import { DeviceItemComponent } from './components/device-item/device-item.component';
 import { EditDeviceComponent } from './components/edit-device/edit-device.component';
+import { ControllerAccessComponent } from './components/controller-access/controller-access.component';
 
 @NgModule({
     declarations: [
@@ -57,12 +58,14 @@ import { EditDeviceComponent } from './components/edit-device/edit-device.compon
         SensorEditComponent,
         DeviceListComponent,
         DeviceItemComponent,
-        EditDeviceComponent
+        EditDeviceComponent,
+        ControllerAccessComponent
     ],
     entryComponents: [
         EditControllerComponent,
         SensorEditComponent,
-        EditDeviceComponent
+        EditDeviceComponent,
+        ControllerAccessComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -82,6 +85,8 @@ import { EditDeviceComponent } from './components/edit-device/edit-device.compon
         MatOptionModule,
         MatSnackBarModule,
         MatRadioModule,
+        MatChipsModule,
+        MatIconModule,
         MatSelectModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, canActivate: [AuthGuard] },

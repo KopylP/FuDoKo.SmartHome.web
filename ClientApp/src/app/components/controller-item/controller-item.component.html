@@ -2,8 +2,9 @@
 <div class="div-controller" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="menuTrigger.closeMenu()" (contextmenu)="toggleMenu()" >
   <div class="base-item-circle" #controllerElement>
     <fa-icon [icon]="faHome"></fa-icon>
-    <div class="custom-control custom-switch base-switch" *ngIf="userHasController.isAdmin && class === 'selected'">
+    <div class="custom-control custom-switch base-switch" *ngIf="class === 'selected'">
       <mat-slide-toggle [(ngModel)]="userHasController.controller.status"
+                        [disabled]="!userHasController.isAdmin"
                         (change)="changeStatus()"></mat-slide-toggle>
     </div>
   </div>
@@ -13,4 +14,5 @@
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="editController()">Edit</button>
   <button mat-menu-item (click)="deleteController()">Delete</button>
+  <button mat-menu-item (click)="accessPolicy()">Access policy</button>
 </mat-menu>

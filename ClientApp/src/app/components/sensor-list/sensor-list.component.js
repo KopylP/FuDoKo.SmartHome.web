@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var SensorListComponent = /** @class */ (function () {
-    function SensorListComponent(sensorCervice, sensorEditServie, authService, snackBar, sensorHubService) {
+    function SensorListComponent(sensorCervice, sensorEditService, authService, snackBar, sensorHubService) {
         this.sensorCervice = sensorCervice;
-        this.sensorEditServie = sensorEditServie;
+        this.sensorEditService = sensorEditService;
         this.authService = authService;
         this.snackBar = snackBar;
         this.sensorHubService = sensorHubService;
@@ -58,7 +58,7 @@ var SensorListComponent = /** @class */ (function () {
     };
     SensorListComponent.prototype.addSensor = function () {
         var _this = this;
-        this.sensorEditServie
+        this.sensorEditService
             .open(false, this.controller.id)
             .afterClosed()
             .subscribe(function (res) {
@@ -77,6 +77,9 @@ var SensorListComponent = /** @class */ (function () {
     __decorate([
         core_1.Input()
     ], SensorListComponent.prototype, "controller", void 0);
+    __decorate([
+        core_1.Input()
+    ], SensorListComponent.prototype, "isAdmin", void 0);
     SensorListComponent = __decorate([
         core_1.Component({
             selector: "app-sensor-list",

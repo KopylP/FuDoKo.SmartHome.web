@@ -14,7 +14,7 @@ import { EditDeviceService } from '../../services/edit-device.service';
 export class DeviceItemComponent implements OnInit {
 
     @Input() device: Device;
-
+    @Input() isAdmin: boolean;
     @Output() onDeviceDeleted: EventEmitter<Device> = new EventEmitter <Device>();
 
     @ViewChild('menuTrigger', { static: true })
@@ -45,7 +45,9 @@ export class DeviceItemComponent implements OnInit {
     }
 
     toggleMenu() {
-        this.trigger.openMenu();
+        if (this.isAdmin) {
+            this.trigger.openMenu();
+        }
         return false;
     }
 
