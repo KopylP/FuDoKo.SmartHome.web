@@ -34,10 +34,10 @@ export class DeviceItemComponent implements OnInit {
             case "Lamp":
                 this.selectedIcon = faLightbulb;
                 break;
-            case "Led lamp":
+            case "LED lamp":
                 this.selectedIcon = faMenorah;
                 break;
-            case "Switcher":
+            case "Switch":
                 this.selectedIcon = faLightbulb;
                 break;
 

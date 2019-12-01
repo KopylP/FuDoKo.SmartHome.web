@@ -19,6 +19,10 @@ namespace FuDoKo.SmartHome.web.Data
         public DbSet<Device> Devices { get; set; }
         public DbSet<DeviceType> DeviceTypes { get; set; }
         public DbSet<Measure> Measures { get; set; }
+        public DbSet<Script> Scripts { get; set; }
+        public DbSet<Command> Commands { get; set; }
+        public DbSet<ConditionType> ConditionTypes { get; set; }
+        public DbSet<DeviceConfiguration> DeviceConfigurations { get; set; }
         #endregion
 
         #region constructor
@@ -78,6 +82,10 @@ namespace FuDoKo.SmartHome.web.Data
                 .WithOne(p => p.Controller)
                 .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Controller>()
+                .HasMany(p => p.Scripts)
+                .WithOne(p => p.Controller)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Controller>()
                 .HasIndex(p => p.MAC)
                 .IsUnique();
 
@@ -88,9 +96,6 @@ namespace FuDoKo.SmartHome.web.Data
                 .HasDefaultValue(true);
             sensor.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
-            sensor.HasOne(p => p.Controller)
-                .WithMany(p => p.Sensors)
-                .OnDelete(DeleteBehavior.Cascade);
             sensor.HasOne(p => p.SensorType)
                 .WithMany(p => p.Sensors)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -111,9 +116,6 @@ namespace FuDoKo.SmartHome.web.Data
             userHasDevice.HasKey(p => p.Id);
             userHasDevice.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
-            userHasDevice.HasOne(p => p.UserHasController)
-                .WithMany(p => p.UsersHaveDevices)
-                .OnDelete(DeleteBehavior.Restrict);
             userHasDevice.HasOne(p => p.Device)
                 .WithMany(p => p.UsersHaveDevice)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -133,19 +135,24 @@ namespace FuDoKo.SmartHome.web.Data
                 .IsUnique();
             devices.HasOne(p => p.DeviceType)
                 .WithMany(p => p.Devices);
+            devices.HasMany(p => p.DeviceConfigurations)
+                .WithOne(p => p.Device)
+                .OnDelete(DeleteBehavior.Cascade);
 
             var configurations = modelBuilder.Entity<DeviceConfiguration>();
             configurations.ToTable("DeviceConfigurations");
             configurations.HasKey(p => p.Id);
             configurations.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
-            configurations.HasOne(p => p.Device)
-                .WithMany(p => p.DeviceConfigurations)
-                .OnDelete(DeleteBehavior.Restrict);
             configurations.HasOne(p => p.Measure)
                 .WithMany(p => p.DeviceConfigurations)
                 .OnDelete(DeleteBehavior.Restrict);
-            configurations.HasMany(p => p.Commands).WithOne(p => p.DeviceConfiguration);
+            configurations.HasMany(p => p.Commands)
+                .WithOne(p => p.DeviceConfiguration)
+                .OnDelete(DeleteBehavior.Cascade);
+            configurations.HasOne(p => p.Device)
+                .WithMany(p => p.DeviceConfigurations)
+                .OnDelete(DeleteBehavior.Cascade);
 
             var measures = modelBuilder.Entity<Measure>();
             measures.ToTable("Measures");
@@ -165,9 +172,6 @@ namespace FuDoKo.SmartHome.web.Data
             commands.HasKey(p => p.Id);
             commands.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
-            commands.HasOne(p => p.Script)
-                .WithMany(p => p.Commands)
-                .OnDelete(DeleteBehavior.Cascade);
             commands.HasOne(p => p.DeviceConfiguration)
                 .WithMany(p => p.Commands)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -188,6 +192,7 @@ namespace FuDoKo.SmartHome.web.Data
             scripts.HasMany(p => p.Commands)
                 .WithOne(p => p.Script)
                 .OnDelete(DeleteBehavior.Cascade);
+
 
             var conditionTypes = modelBuilder.Entity<ConditionType>();
             conditionTypes.ToTable("ConditionTypes");

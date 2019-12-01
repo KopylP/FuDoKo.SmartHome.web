@@ -18,13 +18,16 @@ namespace FuDoKo.SmartHome.web.Data.Models
         public int ScriptId { get; set; }
 
         [Required]
-        public DateTime Time { get; set; }
+        public TimeSpan TimeSpan { get; set; }
         
         [Required]
         public int DeviceConfigurationId { get; set; }
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public bool End { get; set; }
         #endregion
 
         #region lazy props

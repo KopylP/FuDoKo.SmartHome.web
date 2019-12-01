@@ -20,12 +20,22 @@ namespace FuDoKo.SmartHome.web.Data
 
             if (!dbConrext.SensorTypes.Any())
             {
-                CreateSensorTypes(conrext: dbConrext);
+                CreateSensorTypes(context: dbConrext);
             }
 
             if (!dbConrext.DeviceTypes.Any())
             {
                 CreateDeviceTypes(context: dbConrext);
+            }
+
+            if(!dbConrext.ConditionTypes.Any())
+            {
+                CreateConditionTypes(context: dbConrext);
+            }
+
+            if(!dbConrext.Measures.Any())
+            {
+                CreateMeasureTypes(context: dbConrext);
             }
         }
         private static async Task CreateUsers(ApplicationDbConrext dbConrext, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
@@ -67,14 +77,14 @@ namespace FuDoKo.SmartHome.web.Data
             dbConrext.SaveChanges();
         }
 
-        private static void CreateSensorTypes(ApplicationDbConrext conrext)
+        private static void CreateSensorTypes(ApplicationDbConrext context)
         {
-            conrext.SensorTypes.AddRange(
+            context.SensorTypes.AddRange(
                     new SensorType { TypeName = "light" },
                     new SensorType { TypeName = "temperature" },
                     new SensorType { TypeName = "submersion" }
                 );
-            conrext.SaveChanges();
+            context.SaveChanges();
         }
 
         private static void CreateDeviceTypes(ApplicationDbConrext context)
@@ -82,7 +92,29 @@ namespace FuDoKo.SmartHome.web.Data
             context.DeviceTypes.AddRange(
                     new DeviceType { TypeName = "Switch" },
                     new DeviceType { TypeName = "Lamp" },
-                    new DeviceType { TypeName = "LED lamp" }
+                    new DeviceType { TypeName = "LED lamp" },
+                    new DeviceType { TypeName = "Virtual" }
+                );
+            context.SaveChanges();
+        }
+
+        private static void CreateConditionTypes(ApplicationDbConrext context)
+        {
+            context.ConditionTypes.AddRange(
+                    new ConditionType { Type = ">" },
+                    new ConditionType { Type = "<" },
+                    new ConditionType { Type = "=" }
+                );
+        }
+
+        private static void CreateMeasureTypes(ApplicationDbConrext context)
+        {
+            var deviceTypes = context.DeviceTypes;
+            context.Measures.AddRange(
+                    new Measure { MeasureName = "PWM", DeviceTypeId = deviceTypes.Where(p => p.TypeName == "LED lamp").FirstOrDefault().Id },
+                    new Measure { MeasureName = "Switch", DeviceTypeId = deviceTypes.Where(p => p.TypeName == "Switch").FirstOrDefault().Id },
+                    new Measure { MeasureName = "Lamp", DeviceTypeId = deviceTypes.Where(p => p.TypeName == "Lamp").FirstOrDefault().Id },
+                    new Measure { MeasureName = "Virtual", DeviceTypeId = deviceTypes.Where(p => p.TypeName == "Virtual").FirstOrDefault().Id }
                 );
             context.SaveChanges();
         }

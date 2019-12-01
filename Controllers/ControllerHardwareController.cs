@@ -72,6 +72,41 @@ namespace FuDoKo.SmartHome.web.Controllers
             await _hubContext.Clients.User(userHasController.UserId).UpdateSensor(sensorViewModel).ConfigureAwait(false);
             return Json(sensor.Adapt<SensorViewModel>());
         }
+
+        [HttpGet("Scripts")]
+        public async Task<IActionResult> GetScripts()
+        {
+            var controller = _context.Controllers.Where(p => p.MAC == HttpContext.Mac()).FirstOrDefault();
+            if (controller == null) return Unauthorized(new UnauthorizedError());
+
+            var scripts = await _context.Scripts
+                .Where(p => p.ControllerId == controller.Id)
+                .Where(p => !p.Complited)
+                .Include(p => p.ConditionType)
+                .Include(p => p.Commands)
+                .ThenInclude(p => p.DeviceConfiguration)
+                .ThenInclude(p => p.Device)
+                .Include(p => p.Commands)
+                .ThenInclude(p => p.DeviceConfiguration)
+                .ThenInclude(p => p.Measure)
+                .ToArrayAsync().ConfigureAwait(false);
+
+            return Json(scripts.Adapt<ScriptViewModel[]>());
+        }
+
+        [HttpDelete("Scriprs/{scriptId}")]
+        public async Task<IActionResult> DeleteScript(int scriptId)
+        {
+            var controller = _context.Controllers.Where(p => p.MAC == HttpContext.Mac()).FirstOrDefault();
+            if (controller == null) return Unauthorized(new UnauthorizedError());
+
+            var script = await _context.Scripts.FindAsync(scriptId).ConfigureAwait(false);
+
+            if (script == null) return NotFound(new NotFoundError());
+
+            return NoContent();
+        }
+
     }
 
 }

@@ -23,7 +23,8 @@ namespace FuDoKo.SmartHome.web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var deviceTypes = _context.DeviceTypes.ToList();
+            var deviceTypes = _context.DeviceTypes
+                .Where(p => p.TypeName != "Virtual").ToList();
             return Json(deviceTypes.Adapt<DeviceTypeViewModel[]>());
         }
         #endregion

@@ -113,6 +113,15 @@ namespace FuDoKo.SmartHome.web.Controllers
             //Перевіряємо модель
             if (model == null || !ModelState.IsValid) return StatusCode(500, new InternalServerError());
             if (model.MAC.Length != 12) return StatusCode(500, new InternalServerError("MAC address must has 12 symbols!"));
+
+            var userHasController = _context.UserHasControllers
+                .Where(p => p.UserId == user.Id)
+                .Where(p => p.ControllerId == model.Id)
+                .Where(p => p.IsAdmin)
+                .FirstOrDefault();
+
+            if (userHasController == null) return Unauthorized(new UnauthorizedError());
+
             var controller = _context.Controllers
                 .Where(p => p.MAC == model.MAC && p.Id != model.Id)
                 .FirstOrDefault();

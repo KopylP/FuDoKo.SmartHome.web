@@ -35,7 +35,8 @@ namespace FuDoKo.SmartHome.web.Data.Models
 
         #region lazy props
         public virtual IEnumerable<Sensor> Sensors { get; set; } = new List<Sensor>();
-        public virtual IEnumerable<UserHasController> UsersHaveController { get; set; } = new List<UserHasController>(); 
+        public virtual IEnumerable<UserHasController> UsersHaveController { get; set; } = new List<UserHasController>();
+        public virtual IEnumerable<Script> Scripts { get; set; } = new List<Script>();
         #endregion
     }
 }

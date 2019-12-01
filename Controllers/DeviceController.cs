@@ -25,7 +25,7 @@ namespace FuDoKo.SmartHome.web.Controllers
 
         #region methods
         [HttpGet("All/{controllerId}")]
-        public IActionResult All(int controllerId)
+        public IActionResult All(int controllerId, [FromQuery(Name = "virtual")] bool withVirtual = false)
         {
             var user = User.GetUser(_context);
 
@@ -43,7 +43,13 @@ namespace FuDoKo.SmartHome.web.Controllers
 
             var devices = userHasDevices
                 .Select(p => p.Device)
-                .Include(p => p.DeviceType);
+                .Include(p => p.DeviceType)
+                .AsQueryable();
+
+            if (!withVirtual)
+            {
+                devices = devices.Where(p => p.DeviceType.TypeName != "Virtual");
+            }
 
             return Json(devices.Adapt<DeviceViewModel[]>());
         }
@@ -126,7 +132,7 @@ namespace FuDoKo.SmartHome.web.Controllers
                 .Where(p => p.Pin != 0 && p.Pin != device.Pin && p.Pin == model.Pin);
 
             var sensorsWithCommonPin = _context
-                .Devices
+                .Sensors
                 .Where(p => p.ControllerId == userHasController.ControllerId)
                 .Where(p => p.Pin != 0 && p.Pin != device.Pin && p.Pin == model.Pin);
 
@@ -172,7 +178,7 @@ namespace FuDoKo.SmartHome.web.Controllers
                 .Where(p => p.Pin != 0 && p.Pin == model.Pin);
 
             var sensorsWithCommonPin = _context
-                .Devices
+                .Sensors
                 .Where(p => p.ControllerId == userHasController.ControllerId)
                 .Where(p => p.Pin != 0 && p.Pin == model.Pin);
 
