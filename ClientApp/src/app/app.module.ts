@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +24,7 @@ import { AuthTrueGuard } from './guards/auth.true.guard';
 import { EditControllerComponent } from './components/edit-controller/edit-controller.component';
 import { EditControllerService } from './services/edit-controller.service';
 import { AddButtonComponent } from './components/add-button/add-button.component';
-import { MatDialogModule, MatOptionModule, MatSelectModule, MatRadioButton, MatRadioModule, MatChipsModule, MatIconModule } from '@angular/material';
+import { MatDialogModule, MatOptionModule, MatSelectModule, MatRadioButton, MatRadioModule, MatChipsModule, MatIconModule, MatNativeDateModule, GestureConfig } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { SensorService } from './services/sensor.service';
@@ -40,6 +40,14 @@ import { DeviceListComponent } from './components/device-list/device-list.compon
 import { DeviceItemComponent } from './components/device-item/device-item.component';
 import { EditDeviceComponent } from './components/edit-device/edit-device.component';
 import { ControllerAccessComponent } from './components/controller-access/controller-access.component';
+import { ScriptListComponent } from './components/script-list/script-list.component';
+import { ScriptItemComponent } from './components/script-item/script-item.component';
+import { ScriptEditComponent } from './components/script-edit/script-edit.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule, MatDatepicker } from '@angular/material/datepicker';
+import { ScriptEditService } from './services/script-edit.service';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
     declarations: [
@@ -59,13 +67,17 @@ import { ControllerAccessComponent } from './components/controller-access/contro
         DeviceListComponent,
         DeviceItemComponent,
         EditDeviceComponent,
-        ControllerAccessComponent
+        ControllerAccessComponent,
+        ScriptListComponent,
+        ScriptItemComponent,
+        ScriptEditComponent
     ],
     entryComponents: [
         EditControllerComponent,
         SensorEditComponent,
         EditDeviceComponent,
-        ControllerAccessComponent
+        ControllerAccessComponent,
+        ScriptEditComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -87,7 +99,12 @@ import { ControllerAccessComponent } from './components/controller-access/contro
         MatRadioModule,
         MatChipsModule,
         MatIconModule,
+        MatCheckboxModule,
         MatSelectModule,
+        MatDatepickerModule,
+        MatButtonToggleModule,
+        MatNativeDateModule,
+        MatSliderModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, canActivate: [AuthGuard] },
             { path: 'auth', component: LoginComponent, canActivate: [AuthTrueGuard] },
@@ -109,7 +126,8 @@ import { ControllerAccessComponent } from './components/controller-access/contro
         SensorService,
         SensorEditService,
         SensorTypeService,
-        SensorHubService
+        SensorHubService,
+        { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }
     ],
     bootstrap: [AppComponent],
     exports: [

@@ -33,6 +33,8 @@ namespace FuDoKo.SmartHome.web.Data.Models
 
         #region lazy props
         public virtual IEnumerable<UserHasController> UserHasControllers { get; set; }
+
+        public virtual IEnumerable<Script> Scripts { get; set; }
         #endregion
     }
 }

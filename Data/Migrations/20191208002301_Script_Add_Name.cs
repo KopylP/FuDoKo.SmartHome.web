@@ -2,22 +2,22 @@
 
 namespace FuDoKo.SmartHome.web.Data.Migrations
 {
-    public partial class EndCommand : Migration
+    public partial class Script_Add_Name : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "End",
-                table: "Commands",
+            migrationBuilder.AddColumn<string>(
+                name: "Name",
+                table: "Scripts",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: "");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "End",
-                table: "Commands");
+                name: "Name",
+                table: "Scripts");
         }
     }
 }

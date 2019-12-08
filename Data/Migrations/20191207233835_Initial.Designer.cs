@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FuDoKo.SmartHome.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbConrext))]
-    [Migration("20191116193052_Initial")]
+    [Migration("20191207233835_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,12 +98,14 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.Property<int>("DeviceConfigurationId");
 
+                    b.Property<bool>("End");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
                     b.Property<int>("ScriptId");
 
-                    b.Property<DateTime>("Time");
+                    b.Property<TimeSpan>("TimeSpan");
 
                     b.HasKey("Id");
 
@@ -269,12 +271,16 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ConditionTypeId")
+                    b.Property<bool>("Complited");
+
+                    b.Property<int?>("ConditionTypeId")
                         .HasMaxLength(2);
 
-                    b.Property<float>("ConditionValue");
+                    b.Property<float?>("ConditionValue");
 
-                    b.Property<float>("Delta")
+                    b.Property<int>("ControllerId");
+
+                    b.Property<float?>("Delta")
                         .HasMaxLength(4);
 
                     b.Property<DateTime>("LastModificationDate");
@@ -284,13 +290,18 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         .HasMaxLength(2)
                         .HasDefaultValue(0);
 
-                    b.Property<int>("RepeatTimes");
+                    b.Property<int?>("RepeatTimes");
 
-                    b.Property<int>("SensorId");
+                    b.Property<int?>("SensorId");
+
+                    b.Property<bool>("Status");
 
                     b.Property<DateTime>("TimeFrom");
 
-                    b.Property<DateTime>("TimeTo");
+                    b.Property<DateTime?>("TimeTo");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.Property<bool>("Visible");
 
@@ -298,7 +309,11 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.HasIndex("ConditionTypeId");
 
+                    b.HasIndex("ControllerId");
+
                     b.HasIndex("SensorId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Scripts");
                 });
@@ -323,7 +338,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(true);
 
-                    b.Property<int>("Value")
+                    b.Property<float>("Value")
                         .HasMaxLength(3);
 
                     b.HasKey("Id");
@@ -514,7 +529,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Script", "Script")
                         .WithMany("Commands")
                         .HasForeignKey("ScriptId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Device", b =>
@@ -535,12 +550,12 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Device", "Device")
                         .WithMany("DeviceConfigurations")
                         .HasForeignKey("DeviceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Measure", "Measure")
                         .WithMany("DeviceConfigurations")
                         .HasForeignKey("MeasureId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Measure", b =>
@@ -558,9 +573,19 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         .HasForeignKey("ConditionTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("FuDoKo.SmartHome.web.Data.Models.Controller", "Controller")
+                        .WithMany("Scripts")
+                        .HasForeignKey("ControllerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Sensor", "Sensor")
                         .WithMany("Scripts")
                         .HasForeignKey("SensorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FuDoKo.SmartHome.web.Data.Models.ApplicationUser", "User")
+                        .WithMany("Scripts")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

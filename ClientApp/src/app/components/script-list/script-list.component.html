@@ -1,0 +1,18 @@
+<mdb-card cascade="true" wider="true" reverse="true" class="my-4">
+
+  <!-- Card content -->
+  <mdb-card-body cascade="true" class="text-center">
+
+    <!--Title-->
+    <mdb-card-title>
+      <h4>
+        <strong>Your scripts:</strong>
+      </h4>
+    </mdb-card-title>
+    <ul class="item-ul">
+      <li *ngFor="let script of scripts"><app-script-item [script]="script" (onDeleteScript)="onDeleteScript($event)"></app-script-item></li>
+      <li><add-button (click)="addScript()"></add-button></li>
+    </ul>
+
+  </mdb-card-body>
+</mdb-card>

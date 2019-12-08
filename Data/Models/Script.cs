@@ -16,10 +16,17 @@ namespace FuDoKo.SmartHome.web.Data.Models
 
         public float? ConditionValue { get; set; }
 
+        [Required]
+        public string Name { get; set; }
+
         [MaxLength(2)]
         public int? ConditionTypeId { get; set; }
 
+        [Required]
         public int ControllerId { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
 
         [Required]
         public DateTime LastModificationDate { get; set; }
@@ -37,6 +44,8 @@ namespace FuDoKo.SmartHome.web.Data.Models
         public int? RepeatTimes { get; set; }
         
         public bool Complited { get; set; }
+
+        public bool Status { get; set; }
 
         [Required]
         public bool Visible { get; set; }
@@ -57,6 +66,9 @@ namespace FuDoKo.SmartHome.web.Data.Models
 
         [ForeignKey("ControllerId")]
         public virtual Controller Controller { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser User { get; set; } 
         #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FuDoKo.SmartHome.web.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,12 +13,12 @@ namespace FuDoKo.SmartHome.web.ViewModels
 
         public float? ConditionValue { get; set; }
 
+        [Required]
+        public string Name;
         public int? ConditionTypeId { get; set; }
-
-        public DateTime LastModificationDate { get; set; }
-
         public int? SensorId { get; set; }
 
+        public bool Status { get; set; }
         public int ControllerId { get; set; }
 
         public DateTime TimeFrom { get; set; }
@@ -30,10 +31,9 @@ namespace FuDoKo.SmartHome.web.ViewModels
 
         public int Priority { get; set; }//default 0
 
-        public virtual Sensor Sensor { get; set; }
+        public virtual SensorViewModel Sensor { get; set; }
 
-        public virtual ConditionType ConditionType { get; set; }
+        public virtual ConditionTypeViewModel ConditionType { get; set; }
 
-        public virtual IEnumerable<Command> Commands { get; set; }
     }
 }

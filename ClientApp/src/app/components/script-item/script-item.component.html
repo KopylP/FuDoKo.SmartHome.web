@@ -1,0 +1,16 @@
+<div class="div-circle-container" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="menuTrigger.closeMenu()" (contextmenu)="toggleMenu()">
+  <div class="base-item-circle script-circle">
+    <fa-icon [icon]="scriptIcon"></fa-icon>
+    <div class="base-switch">
+      <mat-slide-toggle [(ngModel)]="script.status"
+                        (change)="changeScript()"></mat-slide-toggle>
+    </div>
+  </div>
+  <p>{{ script.name }}</p>
+</div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item >Edit</button>
+  <button mat-menu-item >Commands</button>
+  <button mat-menu-item (click)="deleteScript()">Delete</button>
+</mat-menu>

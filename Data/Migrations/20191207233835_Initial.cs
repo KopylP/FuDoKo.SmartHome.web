@@ -190,7 +190,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     Name = table.Column<string>(maxLength: 100, nullable: true),
                     Pin = table.Column<int>(maxLength: 2, nullable: false),
                     Status = table.Column<bool>(nullable: false, defaultValue: true),
-                    Value = table.Column<int>(maxLength: 3, nullable: false),
+                    Value = table.Column<float>(maxLength: 3, nullable: false),
                     SensorTypeId = table.Column<int>(nullable: false),
                     ControllerId = table.Column<int>(nullable: false)
                 },
@@ -341,13 +341,13 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         column: x => x.DeviceId,
                         principalTable: "Devices",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DeviceConfigurations_Measures_MeasureId",
                         column: x => x.MeasureId,
                         principalTable: "Measures",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -356,14 +356,18 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ConditionValue = table.Column<float>(nullable: false),
-                    ConditionTypeId = table.Column<int>(maxLength: 2, nullable: false),
+                    ConditionValue = table.Column<float>(nullable: true),
+                    ConditionTypeId = table.Column<int>(maxLength: 2, nullable: true),
+                    ControllerId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     LastModificationDate = table.Column<DateTime>(nullable: false),
-                    SensorId = table.Column<int>(nullable: false),
+                    SensorId = table.Column<int>(nullable: true),
                     TimeFrom = table.Column<DateTime>(nullable: false),
-                    TimeTo = table.Column<DateTime>(nullable: false),
-                    Delta = table.Column<float>(maxLength: 4, nullable: false),
-                    RepeatTimes = table.Column<int>(nullable: false),
+                    TimeTo = table.Column<DateTime>(nullable: true),
+                    Delta = table.Column<float>(maxLength: 4, nullable: true),
+                    RepeatTimes = table.Column<int>(nullable: true),
+                    Complited = table.Column<bool>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
                     Visible = table.Column<bool>(nullable: false),
                     Priority = table.Column<int>(maxLength: 2, nullable: false, defaultValue: 0)
                 },
@@ -377,9 +381,21 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Scripts_Controllers_ControllerId",
+                        column: x => x.ControllerId,
+                        principalTable: "Controllers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Scripts_Sensors_SensorId",
                         column: x => x.SensorId,
                         principalTable: "Sensors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Scripts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -417,9 +433,10 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ScriptId = table.Column<int>(nullable: false),
-                    Time = table.Column<DateTime>(nullable: false),
+                    TimeSpan = table.Column<TimeSpan>(nullable: false),
                     DeviceConfigurationId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    End = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -435,7 +452,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                         column: x => x.ScriptId,
                         principalTable: "Scripts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -538,9 +555,19 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                 column: "ConditionTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Scripts_ControllerId",
+                table: "Scripts",
+                column: "ControllerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Scripts_SensorId",
                 table: "Scripts",
                 column: "SensorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Scripts_UserId",
+                table: "Scripts",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sensors_ControllerId",

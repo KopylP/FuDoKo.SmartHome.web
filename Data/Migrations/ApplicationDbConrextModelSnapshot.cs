@@ -283,6 +283,9 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.Property<DateTime>("LastModificationDate");
 
+                    b.Property<string>("Name")
+                        .IsRequired();
+
                     b.Property<int>("Priority")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(2)
@@ -292,9 +295,14 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
 
                     b.Property<int?>("SensorId");
 
+                    b.Property<bool>("Status");
+
                     b.Property<DateTime>("TimeFrom");
 
                     b.Property<DateTime?>("TimeTo");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.Property<bool>("Visible");
 
@@ -305,6 +313,8 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasIndex("ControllerId");
 
                     b.HasIndex("SensorId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Scripts");
                 });
@@ -520,7 +530,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Script", "Script")
                         .WithMany("Commands")
                         .HasForeignKey("ScriptId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Device", b =>
@@ -546,7 +556,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Measure", "Measure")
                         .WithMany("DeviceConfigurations")
                         .HasForeignKey("MeasureId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("FuDoKo.SmartHome.web.Data.Models.Measure", b =>
@@ -572,6 +582,11 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.Sensor", "Sensor")
                         .WithMany("Scripts")
                         .HasForeignKey("SensorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FuDoKo.SmartHome.web.Data.Models.ApplicationUser", "User")
+                        .WithMany("Scripts")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -611,7 +626,7 @@ namespace FuDoKo.SmartHome.web.Data.Migrations
                     b.HasOne("FuDoKo.SmartHome.web.Data.Models.UserHasController", "UserHasController")
                         .WithMany("UsersHaveDevices")
                         .HasForeignKey("UsersHaveControllerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

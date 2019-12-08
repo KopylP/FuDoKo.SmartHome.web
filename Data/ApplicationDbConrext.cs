@@ -42,6 +42,9 @@ namespace FuDoKo.SmartHome.web.Data
                 .HasMany(p => p.UserHasControllers)
                 .WithOne(p => p.User)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(p => p.Scripts)
+                .WithOne(p => p.User);
 
             modelBuilder.Entity<UserHasController>()
                 .ToTable("UsersHaveControllers");
@@ -61,7 +64,7 @@ namespace FuDoKo.SmartHome.web.Data
             modelBuilder.Entity<UserHasController>()
                 .HasMany(p => p.UsersHaveDevices)
                 .WithOne(p => p.UserHasController)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Controller>()
                 .ToTable("Controllers");
@@ -159,22 +162,10 @@ namespace FuDoKo.SmartHome.web.Data
             measures.HasKey(p => p.Id);
             measures.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
-            measures.HasMany(p => p.DeviceConfigurations)
-                .WithOne(p => p.Measure)
-                .OnDelete(DeleteBehavior.Cascade);
             measures.HasIndex(p => p.MeasureName)
                 .IsUnique();
             measures.HasOne(p => p.DeviceType)
                 .WithMany(p => p.Measures);
-
-            var commands = modelBuilder.Entity<Command>();
-            commands.ToTable("Commands");
-            commands.HasKey(p => p.Id);
-            commands.Property(p => p.Id)
-                .ValueGeneratedOnAdd();
-            commands.HasOne(p => p.DeviceConfiguration)
-                .WithMany(p => p.Commands)
-                .OnDelete(DeleteBehavior.Cascade);
 
             var scripts = modelBuilder.Entity<Script>();
             scripts.ToTable("Scripts");
@@ -186,13 +177,25 @@ namespace FuDoKo.SmartHome.web.Data
             scripts.HasOne(p => p.ConditionType)
                 .WithMany(p => p.Scripts)
                 .OnDelete(DeleteBehavior.Cascade);
+            scripts.HasOne(p => p.Controller)
+                .WithMany(p => p.Scripts);
             scripts.HasOne(p => p.Sensor)
                 .WithMany(p => p.Scripts)
-                .OnDelete(DeleteBehavior.Cascade);
-            scripts.HasMany(p => p.Commands)
-                .WithOne(p => p.Script)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
+            scripts.HasOne(p => p.User)
+                .WithMany(p => p.Scripts);
 
+            var commands = modelBuilder.Entity<Command>();
+            commands.ToTable("Commands");
+            commands.HasKey(p => p.Id);
+            commands.Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+            commands.HasOne(p => p.DeviceConfiguration)
+                .WithMany(p => p.Commands)
+                .OnDelete(DeleteBehavior.Cascade);
+            commands.HasOne(p => p.Script)
+                .WithMany(p => p.Commands)
+                .OnDelete(DeleteBehavior.Restrict);
 
             var conditionTypes = modelBuilder.Entity<ConditionType>();
             conditionTypes.ToTable("ConditionTypes");

@@ -44,8 +44,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\Новая папка\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\Новая папка\**" />
+    <EmbeddedResource Remove="ClientApp\Новая папка\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\Новая папка\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -65,11 +69,13 @@
     <None Remove="ClientApp\src\app\components\sensor-item\sensor-item.component.ts" />
     <None Remove="ClientApp\src\app\components\sensor-list\sensor-list.component.ts" />
     <None Remove="ClientApp\src\app\interceptors\auth.interceptor.ts" />
+    <None Remove="ClientApp\src\app\interfaces\ConditionType.ts" />
     <None Remove="ClientApp\src\app\interfaces\Controller.ts" />
     <None Remove="ClientApp\src\app\interfaces\ControllerAccess.ts" />
     <None Remove="ClientApp\src\app\interfaces\Device.ts" />
     <None Remove="ClientApp\src\app\interfaces\DeviceType.ts" />
     <None Remove="ClientApp\src\app\interfaces\RegisterUser.ts" />
+    <None Remove="ClientApp\src\app\interfaces\Script.ts" />
     <None Remove="ClientApp\src\app\interfaces\Sensor.ts" />
     <None Remove="ClientApp\src\app\interfaces\SensorType.ts" />
     <None Remove="ClientApp\src\app\interfaces\TokenResponse.ts" />
@@ -110,9 +116,11 @@
     <TypeScriptCompile Include="ClientApp\src\app\components\sensor-item\sensor-item.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\sensor-list\sensor-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interceptors\auth.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\ConditionType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\ControllerAccess.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Device.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\DeviceType.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\Script.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Sensor.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -136,7 +144,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\Новая папка\" />
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 

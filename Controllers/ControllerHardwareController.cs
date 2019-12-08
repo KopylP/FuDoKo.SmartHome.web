@@ -69,10 +69,18 @@ namespace FuDoKo.SmartHome.web.Controllers
             _context.Sensors.Update(sensor);
             await _context.SaveChangesAsync().ConfigureAwait(false);
             var sensorViewModel = sensor.Adapt<SensorViewModel>();
-            await _hubContext.Clients.User(userHasController.UserId).UpdateSensor(sensorViewModel).ConfigureAwait(false);
+
+            var userHasControllers = _context.UserHasControllers
+                .Where(p => p.ControllerId == controller.Id);
+
+            foreach(var usrHasCntrl in userHasControllers)
+            {
+                await _hubContext.Clients.User(usrHasCntrl.UserId).UpdateSensor(sensorViewModel).ConfigureAwait(false);
+            }
             return Json(sensor.Adapt<SensorViewModel>());
         }
 
+        [Obsolete]
         [HttpGet("Scripts")]
         public async Task<IActionResult> GetScripts()
         {
@@ -82,6 +90,7 @@ namespace FuDoKo.SmartHome.web.Controllers
             var scripts = await _context.Scripts
                 .Where(p => p.ControllerId == controller.Id)
                 .Where(p => !p.Complited)
+                .Where(p => p.Status)
                 .Include(p => p.ConditionType)
                 .Include(p => p.Commands)
                 .ThenInclude(p => p.DeviceConfiguration)
@@ -94,7 +103,46 @@ namespace FuDoKo.SmartHome.web.Controllers
             return Json(scripts.Adapt<ScriptViewModel[]>());
         }
 
-        [HttpDelete("Scriprs/{scriptId}")]
+        [HttpGet("Scripts/Ids")]
+        public async Task<IActionResult> GetScriptsIds()
+        {
+            var controller = _context.Controllers.Where(p => p.MAC == HttpContext.Mac()).FirstOrDefault();
+            if (controller == null) return Unauthorized(new UnauthorizedError());
+
+            var scriptsIds = await _context.Scripts
+                .Where(p => p.ControllerId == controller.Id)
+                .Where(p => !p.Complited)
+                .Where(p => p.Status)
+                .Select(p => p.Id)
+                .ToArrayAsync().ConfigureAwait(false);
+
+            return Json(scriptsIds);
+        }
+
+        [HttpGet("Scripts/{scriptId}")]
+        public async Task<IActionResult> GetScript(int scriptId)
+        {
+            var controller = _context.Controllers.Where(p => p.MAC == HttpContext.Mac()).FirstOrDefault();
+            if (controller == null) return Unauthorized(new UnauthorizedError());
+
+            var script = await _context.Scripts
+                .Where(p => p.ControllerId == controller.Id)
+                .Where(p => !p.Complited)
+                .Where(p => p.Status)
+                .Where(p => p.Id == scriptId)
+                .Include(p => p.ConditionType)
+                .Include(p => p.Commands)
+                .ThenInclude(p => p.DeviceConfiguration)
+                .ThenInclude(p => p.Device)
+                .Include(p => p.Commands)
+                .ThenInclude(p => p.DeviceConfiguration)
+                .ThenInclude(p => p.Measure)
+                .FirstOrDefaultAsync().ConfigureAwait(false);
+            return Json(script.Adapt<ScriptViewModel>());
+        }
+
+
+        [HttpDelete("Scripts/{scriptId}")]
         public async Task<IActionResult> DeleteScript(int scriptId)
         {
             var controller = _context.Controllers.Where(p => p.MAC == HttpContext.Mac()).FirstOrDefault();

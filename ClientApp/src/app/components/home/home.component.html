@@ -5,7 +5,7 @@
         <!--Card image-->
         <div class="view view-cascade overlay waves-light" mdbWavesEffect>
           <div class="card-div">
-            <h1><fa-icon [icon]="faUserAstronaut"></fa-icon> Admin panel</h1>
+            <h1><fa-icon [icon]="faUserAstronaut"></fa-icon> Control panel</h1>
           </div>
           <a>
             <div class="mask rgba-white-slight"></div>
@@ -33,6 +33,11 @@
     </div>
     <div class="col-lg-6">
       <app-device-list *ngIf="selectedItem && selectedItem.controller.status" [controller]="selectedItem.controller" [isAdmin]="selectedItem.isAdmin"></app-device-list>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <app-script-list *ngIf="selectedItem && selectedItem.controller.status" [controller]="selectedItem.controller"></app-script-list>
     </div>
   </div>
 </div>

@@ -1,0 +1,126 @@
+<!--Title-->
+<h1>{{title}}</h1>
+<!--End Title-->
+<!--Body-->
+<form [formGroup]="form" (ngSubmit)="onSubmit">
+  <div class="container">
+    <div class="row">
+      <div class="form-group col-12">
+        <mat-progress-bar [hidden]="!isAction" mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    <div class="row">
+      <div col-12 *ngIf="form.errors?.edit" class="invalid-feedback div-edit-errors">
+        {{form.errors?.edit}}
+      </div>
+    </div>
+    <div class="row justify-content-between">
+      <div class="form-group col-12">
+        <input type="text" required formControlName="Name" class="form-control" placeholder="Please, call your script" [ngClass]="{'is-invalid': hasError('Name')}" />
+        <div *ngIf="hasError('Name')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <mat-checkbox class="form-left-margin" [(ngModel)]="useSensor" [ngModelOptions]="{standalone: true}">Use sensor</mat-checkbox>
+    </div>
+    <div class="row" *ngIf="useSensor">
+      <div class="col-12">
+        <div class="row">
+          <div class=" form-group col-4">
+            <mat-form-field>
+              <mat-label>Sensor</mat-label>
+              <mat-select formControlName="SensorId" [disabled]="editMode">
+                <mat-option *ngFor="let sensor of sensors" [value]="sensor.id">{{ sensor.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-4">
+            <mat-form-field>
+              <mat-label>Condition type</mat-label>
+              <mat-select formControlName="ConditionTypeId" [disabled]="editMode">
+                <mat-option *ngFor="let conditionType of conditionTypes" [value]="conditionType.id">{{ conditionType.type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-4 form-top-margin">
+            <input type="number" required formControlName="ConditionValue" class="form-control" placeholder="Value" [ngClass]="{'is-invalid': hasError('ConditionValue')}" />
+            <div *ngIf="hasError('ConditionValue')" class="invalid-feedback">
+              This field is required!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <mat-form-field>
+          <mat-label>Date from:</mat-label>
+          <input matInput required formControlName="DateFrom" (dateChange)="onDateFormChange()" (dateInput)="onDateFormChange()" [min]="dateNow" [matDatepicker]="dateFromDatepicker">
+          <mat-datepicker-toggle matSuffix [for]="dateFromDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #dateFromDatepicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-3 form-group form-top-margin">
+        <input class="form-control" formControlName="TimeFrom" type="time" />
+      </div>
+    </div>
+    <div class="row">
+      <mat-checkbox class="form-left-margin" [(ngModel)]="withDateTo" [ngModelOptions]="{standalone: true}">Date to</mat-checkbox>
+    </div>
+    <div class="row" *ngIf="withDateTo">
+      <div class="col-5">
+        <mat-form-field>
+          <mat-label>Date to:</mat-label>
+          <input matInput [min]="dateFrom" formControlName="DateTo" [matDatepicker]="dateToDatepicker">
+          <mat-datepicker-toggle matSuffix [for]="dateToDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #dateToDatepicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-3 form-group form-top-margin">
+        <input class="form-control form-bottom-margin" formControlName="TimeTo" type="time" />
+      </div>
+    </div>
+    <div class="row">
+      <h6 class="form-left-margin">Repeat times:</h6>
+    </div>
+    <div class="row justify-content-center">
+      <div>
+        <mat-button-toggle-group (change)="onRepeatTimeChange()" [ngModelOptions]="{standalone: true}" [(ngModel)]="repeatTimeValue" name="repeats" aria-label="Repeats">
+          <mat-button-toggle checked value="one">One</mat-button-toggle>
+          <mat-button-toggle value="two">Two</mat-button-toggle>
+          <mat-button-toggle value="five">Five</mat-button-toggle>
+          <mat-button-toggle value="infinity">Infinity</mat-button-toggle>
+          <mat-button-toggle value="own">Own</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+    <div class="row justify-content-lg-center" *ngIf="isOwn">
+      <div class="form-group col-4 repeat-times">
+        <input type="text" required formControlName="RepeatTimes" class="form-control" placeholder="Repeat times" [ngClass]="{'is-invalid': hasError('RepeatTimes')}" />
+        <div *ngIf="hasError('RepeatTimes')" class="invalid-feedback">
+          This field is required!
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h6 class="form-left-margin">Priority:</h6>
+    </div>
+    <div class="row justify-content-lg-center">
+      <mat-slider thumbLabel
+                  min="1"
+                  max="8"
+                  step="1"
+                  value="4"
+                  class="col-6"
+                  formControlName="Priority"></mat-slider>
+    </div>
+    <br />
+    <div class="row justify-content-between buttons-div">
+      <button [disabled]="form.invalid" type="button" mdbBtn color="success" mdbWavesEffect (click)="onSubmit()" class="col-lg-4 col-md-12">Submit</button>
+      <button type="button" mdbBtn color="primary" mdbWavesEffect class="col-lg-4 col-md-5" (click)="close()" autofocus>Exit</button>
+    </div>
+  </div>
+</form>
+<!--End Body-->

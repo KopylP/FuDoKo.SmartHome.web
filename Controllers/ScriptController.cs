@@ -29,14 +29,12 @@ namespace FuDoKo.SmartHome.web.Controllers
         {
             var user = User.GetUser(_context);
 
-            var userHasController = _context.UserHasControllers
-                .Include(p => p.Controller)
-                .ThenInclude(p => p.Scripts)
-                .Where(p => p.UserId == user.Id && p.ControllerId == controllerId)
-                .FirstOrDefault();
-
-            if (userHasController == null) return Unauthorized(new UnauthorizedError());
-            var scripts = userHasController.Controller.Scripts.ToArray();
+            var scripts = _context
+                .Scripts
+                .Where(p => !p.Complited)
+                .Where(p => p.ControllerId == controllerId)
+                .Where(p => p.UserId == user.Id)
+                .ToArray();
             return Json(scripts.Adapt<ScriptViewModel[]>());
         }
         #endregion
@@ -45,17 +43,16 @@ namespace FuDoKo.SmartHome.web.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var script = _context.Scripts.Find(id);
-
-            if (script == null) return NotFound(new NotFoundError());
-
             var user = User.GetUser(_context);
 
-            var userHasController = _context.UserHasControllers
-                .Where(p => p.UserId == user.Id && p.ControllerId == script.ControllerId)
+            var script = _context.Scripts
+                .Include(p => p.ConditionType)
+                .Include(p => p.Sensor)
+                .Where(p => p.Id == id)
+                .Where(p => p.UserId == user.Id)
                 .FirstOrDefault();
 
-            if (userHasController == null) return Unauthorized(new UnauthorizedError());
+            if (script == null) return NotFound(new NotFoundError());
 
             return Json(script.Adapt<ScriptViewModel>());
            
@@ -69,7 +66,8 @@ namespace FuDoKo.SmartHome.web.Controllers
             var user = User.GetUser(_context);
 
             var userHasController = _context.UserHasControllers
-                .Where(p => p.UserId == user.Id && p.ControllerId == scriptViewModel.ControllerId)
+                .Where(p => p.UserId == user.Id)
+                .Where(p => p.ControllerId == scriptViewModel.ControllerId)
                 .FirstOrDefault();
 
             if (userHasController == null) return Unauthorized(new UnauthorizedError());
@@ -86,13 +84,16 @@ namespace FuDoKo.SmartHome.web.Controllers
                 Delta = scriptViewModel.Delta,
                 SensorId = scriptViewModel.SensorId,
                 Visible = true,
-                LastModificationDate = DateTime.Now
+                LastModificationDate = DateTime.Now,
+                ConditionValue = scriptViewModel.ConditionValue,
+                UserId = user.Id,
+                Status = false, 
+                Name = scriptViewModel.Name
             };
 
             _context.Scripts.Add(script);
             _context.SaveChanges();
 
-            //TODO
             return Json(script.Adapt<ScriptViewModel>());
         }
 
@@ -107,11 +108,7 @@ namespace FuDoKo.SmartHome.web.Controllers
 
             var user = User.GetUser(_context);
 
-            var userHasController = _context.UserHasControllers
-                .Where(p => p.UserId == user.Id && p.ControllerId == scriptViewModel.ControllerId)
-                .FirstOrDefault();
-
-            if (userHasController == null) return Unauthorized(new UnauthorizedError());
+            if (script.UserId != user.Id) return Unauthorized(new UnauthorizedError());
 
             script.Priority = scriptViewModel.Priority;
             script.ConditionTypeId = scriptViewModel.ConditionTypeId;
@@ -122,7 +119,8 @@ namespace FuDoKo.SmartHome.web.Controllers
             script.SensorId = scriptViewModel.SensorId;
             script.Visible = true;
             script.LastModificationDate = DateTime.Now;
-
+            script.Status = scriptViewModel.Status;
+            script.Name = scriptViewModel.Name;
             _context.Scripts.Update(script);
             _context.SaveChanges();
 
@@ -139,13 +137,13 @@ namespace FuDoKo.SmartHome.web.Controllers
 
             var user = User.GetUser(_context);
 
-            var userHasController = _context.UserHasControllers
-                .Where(p => p.UserId == user.Id && p.ControllerId == script.ControllerId)
-                .FirstOrDefault();
+            if(script.UserId != user.Id)
+            {
+                return Unauthorized(new UnauthorizedError());
+            }
 
-            if (userHasController == null) return Unauthorized(new UnauthorizedError());
-
-            _context.Scripts.Remove(script);
+            script.Complited = true;
+            _context.Scripts.Update(script);
             _context.SaveChanges();
 
             return NoContent();
