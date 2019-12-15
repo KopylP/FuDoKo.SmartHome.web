@@ -14,9 +14,13 @@ var HomeComponent = /** @class */ (function () {
     }
     HomeComponent.prototype.onControllerChange = function (userHasController) {
         this.selectedItem = userHasController;
+        this.selectedScript = null;
     };
     HomeComponent.prototype.onDelete = function () {
         this.selectedItem = null;
+    };
+    HomeComponent.prototype.changeScript = function (script) {
+        this.selectedScript = script;
     };
     HomeComponent = __decorate([
         core_1.Component({

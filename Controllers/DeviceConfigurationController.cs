@@ -73,10 +73,10 @@ namespace FuDoKo.SmartHome.web.Controllers
             _context.DeviceConfigurations.Add(deviceConfiguration);
             _context.SaveChanges();
 
-            deviceConfiguration.Measure = _context.Measures.Find(deviceConfiguration.MeasureId);
-            deviceConfiguration.Device = _context.Devices.Find(deviceConfiguration.DeviceId);
+            deviceConfiguration.Measure = _context.Measures.Where(p => p.Id == deviceConfiguration.MeasureId).FirstOrDefault();
+            deviceConfiguration.Device = _context.Devices.Where(p => p.Id == deviceConfiguration.DeviceId).FirstOrDefault();
 
-            return Json(deviceConfiguration.Adapt<DeviceConfiguration>());
+            return Json(deviceConfiguration.Adapt<DeviceConfigurationViewModel>());
         }
 
         [HttpDelete("{id}")]

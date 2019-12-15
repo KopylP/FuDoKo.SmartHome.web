@@ -138,18 +138,14 @@ namespace FuDoKo.SmartHome.web.Data
                 .IsUnique();
             devices.HasOne(p => p.DeviceType)
                 .WithMany(p => p.Devices);
-            devices.HasMany(p => p.DeviceConfigurations)
-                .WithOne(p => p.Device)
-                .OnDelete(DeleteBehavior.Cascade);
+
 
             var configurations = modelBuilder.Entity<DeviceConfiguration>();
             configurations.ToTable("DeviceConfigurations");
             configurations.HasKey(p => p.Id);
             configurations.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
-            configurations.HasOne(p => p.Measure)
-                .WithMany(p => p.DeviceConfigurations)
-                .OnDelete(DeleteBehavior.Restrict);
+            configurations.HasOne(p => p.Measure);
             configurations.HasMany(p => p.Commands)
                 .WithOne(p => p.DeviceConfiguration)
                 .OnDelete(DeleteBehavior.Cascade);

@@ -75,7 +75,8 @@ namespace FuDoKo.SmartHome.web.Controllers
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUnixTimeSeconds().ToString())
+                    new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now)
+					.ToUnixTimeSeconds().ToString())
                 };
                 var tokenExpirationMins =
                     _configuration.GetValue<int>("Auth:Jwt:TokenExpirationInMinutes");
@@ -88,7 +89,8 @@ namespace FuDoKo.SmartHome.web.Controllers
                         claims: claims,
                         notBefore: now,
                         expires: now.Add(TimeSpan.FromMinutes(tokenExpirationMins)),
-                        signingCredentials: new SigningCredentials(issuerSigningKey, SecurityAlgorithms.HmacSha256));
+                        signingCredentials: new SigningCredentials(issuerSigningKey,
+						SecurityAlgorithms.HmacSha256));
                 var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
                 var response = new TokenResponseViewModel()
                 {

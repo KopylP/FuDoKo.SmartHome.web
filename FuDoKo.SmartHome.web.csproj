@@ -69,11 +69,14 @@
     <None Remove="ClientApp\src\app\components\sensor-item\sensor-item.component.ts" />
     <None Remove="ClientApp\src\app\components\sensor-list\sensor-list.component.ts" />
     <None Remove="ClientApp\src\app\interceptors\auth.interceptor.ts" />
+    <None Remove="ClientApp\src\app\interfaces\Command.ts" />
     <None Remove="ClientApp\src\app\interfaces\ConditionType.ts" />
     <None Remove="ClientApp\src\app\interfaces\Controller.ts" />
     <None Remove="ClientApp\src\app\interfaces\ControllerAccess.ts" />
     <None Remove="ClientApp\src\app\interfaces\Device.ts" />
+    <None Remove="ClientApp\src\app\interfaces\DeviceConfiguration.ts" />
     <None Remove="ClientApp\src\app\interfaces\DeviceType.ts" />
+    <None Remove="ClientApp\src\app\interfaces\Measure.ts" />
     <None Remove="ClientApp\src\app\interfaces\RegisterUser.ts" />
     <None Remove="ClientApp\src\app\interfaces\Script.ts" />
     <None Remove="ClientApp\src\app\interfaces\Sensor.ts" />
@@ -116,10 +119,13 @@
     <TypeScriptCompile Include="ClientApp\src\app\components\sensor-item\sensor-item.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\sensor-list\sensor-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interceptors\auth.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\Command.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\ConditionType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\ControllerAccess.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Device.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\DeviceConfiguration.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\DeviceType.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\Measure.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Script.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Sensor.ts">
       <SubType>Code</SubType>

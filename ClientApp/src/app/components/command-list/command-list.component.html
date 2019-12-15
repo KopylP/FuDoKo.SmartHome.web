@@ -1,0 +1,20 @@
+<mdb-card cascade="true" wider="true" reverse="true" class="my-4">
+
+  <!-- Card content -->
+  <mdb-card-body cascade="true" class="text-center">
+
+    <!--Title-->
+    <mdb-card-title>
+      <h4>
+        <strong>Your commands:</strong>
+      </h4>
+    </mdb-card-title>
+    <ul class="item-ul">
+      <li *ngFor="let command of commands">
+        <app-command-item [command]="command"></app-command-item>
+      </li>
+      <li><add-button (click)="addCommand()"></add-button></li>
+    </ul>
+
+  </mdb-card-body>
+</mdb-card>

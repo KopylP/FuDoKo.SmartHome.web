@@ -10,7 +10,13 @@
       </h4>
     </mdb-card-title>
     <ul class="item-ul">
-      <li *ngFor="let script of scripts"><app-script-item [script]="script" (onDeleteScript)="onDeleteScript($event)"></app-script-item></li>
+      <li *ngFor="let script of scripts">
+        <app-script-item [script]="script"
+                         (onDeleteScript)="onDeleteScript($event)"
+                         (click)="changeScript(script)"
+                         [class]="selectedScript === script? 'selected': 'unselected'">
+        </app-script-item>
+      </li>
       <li><add-button (click)="addScript()"></add-button></li>
     </ul>
 

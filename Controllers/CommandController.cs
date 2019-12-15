@@ -81,8 +81,9 @@ namespace FuDoKo.SmartHome.web.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] CommandViewModel model)
         {
+            if (model == null) return StatusCode(500, new InternalServerError());
             var user = User.GetUser(_context);
-
+            if (user == null) return Unauthorized(new UnauthorizedError());
             var script = _context.Scripts.Find(model.ScriptId);
             if (script == null) return NotFound(new NotFoundError("Script not found."));
 

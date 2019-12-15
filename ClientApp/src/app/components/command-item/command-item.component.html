@@ -1,0 +1,13 @@
+<div class="div-circle-container" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" (click)="menuTrigger.closeMenu()" (contextmenu)="toggleMenu()">
+  <div class="base-item-circle command-circle">
+    <fa-icon [icon]="commandIcon"></fa-icon>
+    <div class="base-switch">
+    </div>
+  </div>
+  <p>{{ command.name }}</p>
+</div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="editCommand()">Edit</button>
+  <button mat-menu-item (click)="deleteCommand()">Delete</button>
+</mat-menu>

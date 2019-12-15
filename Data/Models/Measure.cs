@@ -22,7 +22,7 @@ namespace FuDoKo.SmartHome.web.Data.Models
         #endregion
 
         #region lazy props
-        public virtual IEnumerable<DeviceConfiguration> DeviceConfigurations { get; set; }
+        //public virtual IEnumerable<DeviceConfiguration> DeviceConfigurations { get; set; } = new List<DeviceConfiguration>();
         public virtual DeviceType DeviceType { get; set; }
         #endregion
     }

@@ -1,7 +1,9 @@
 using FuDoKo.SmartHome.web.Data;
 using FuDoKo.SmartHome.web.Data.Models;
+using FuDoKo.SmartHome.web.Extensions;
 using FuDoKo.SmartHome.web.Filters;
 using FuDoKo.SmartHome.web.Hubs;
+using FuDoKo.SmartHome.web.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -122,6 +124,8 @@ namespace FuDoKo.SmartHome.web
 
             services.AddScoped<ControllerAuthFilter>();
 
+            services.AddScoped<ValidateTokenMiddleware>();
+
             services.AddSignalR();
 
         }
@@ -148,6 +152,7 @@ namespace FuDoKo.SmartHome.web
             });
 
             app.UseAuthentication();
+            app.UseValidateTocken();
             app.UseSignalR(conf =>
             {
                 conf.MapHub<SensorHub>("/real/sensors");

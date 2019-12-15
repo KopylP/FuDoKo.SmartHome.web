@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
 import { ScriptService } from '../../services/script.service';
 import { Script } from '../../interfaces/Script';
 import { Controller } from '../../interfaces/Controller';
@@ -9,17 +9,26 @@ import { ScriptEditService } from '../../services/script-edit.service';
   templateUrl: './script-list.component.html',
   styleUrls: ['./script-list.component.less']
 })
-export class ScriptListComponent implements OnInit {
+export class ScriptListComponent implements OnInit, OnChanges {
 
     @Input() controller: Controller;
-
+    @Output() onChangeScript: EventEmitter<Script> = new EventEmitter();
     scripts: Script[];
+    selectedScript: Script;
 
     constructor(private scriptService: ScriptService,
         private scriptEditService: ScriptEditService) { }
 
     ngOnInit() {
         this.loadData();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (typeof changes['controller'] !== 'undefined') {
+            if (!changes['controller'].firstChange) {
+                this.loadData();
+            }
+        }
     }
 
     loadData() {
@@ -41,6 +50,11 @@ export class ScriptListComponent implements OnInit {
                     this.scripts.push(res);
                 }
             });
+    }
+
+    changeScript(script: Script) {
+        this.onChangeScript.emit(script);
+        this.selectedScript = script;
     }
 
 }

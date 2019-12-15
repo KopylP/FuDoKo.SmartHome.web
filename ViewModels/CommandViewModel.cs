@@ -21,7 +21,7 @@ namespace FuDoKo.SmartHome.web.ViewModels
 
         public bool End { get; set; }
 
-        public virtual DeviceConfiguration DeviceConfiguration { get; set; }
+        public virtual DeviceConfigurationViewModel DeviceConfiguration { get; set; }
 
     }
 }

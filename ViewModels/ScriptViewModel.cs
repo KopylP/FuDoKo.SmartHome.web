@@ -35,5 +35,6 @@ namespace FuDoKo.SmartHome.web.ViewModels
 
         public virtual ConditionTypeViewModel ConditionType { get; set; }
 
+        public virtual List<CommandViewModel> Commands { get; set; }
     }
 }

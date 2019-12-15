@@ -48,6 +48,8 @@ import { MatDatepickerModule, MatDatepicker } from '@angular/material/datepicker
 import { ScriptEditService } from './services/script-edit.service';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from '@angular/material/slider';
+import { CommandListComponent } from './components/command-list/command-list.component';
+import { CommandItemComponent } from './components/command-item/command-item.component';
 
 @NgModule({
     declarations: [
@@ -70,7 +72,9 @@ import { MatSliderModule } from '@angular/material/slider';
         ControllerAccessComponent,
         ScriptListComponent,
         ScriptItemComponent,
-        ScriptEditComponent
+        ScriptEditComponent,
+        CommandListComponent,
+        CommandItemComponent
     ],
     entryComponents: [
         EditControllerComponent,

@@ -121,6 +121,7 @@ namespace FuDoKo.SmartHome.web.Controllers
             script.LastModificationDate = DateTime.Now;
             script.Status = scriptViewModel.Status;
             script.Name = scriptViewModel.Name;
+            script.ConditionValue = scriptViewModel.ConditionValue;
             _context.Scripts.Update(script);
             _context.SaveChanges();
 

@@ -132,11 +132,9 @@ namespace FuDoKo.SmartHome.web.Controllers
                 .Where(p => p.Id == scriptId)
                 .Include(p => p.ConditionType)
                 .Include(p => p.Commands)
-                .ThenInclude(p => p.DeviceConfiguration)
-                .ThenInclude(p => p.Device)
+                .ThenInclude(p => p.DeviceConfiguration.Device.DeviceType)
                 .Include(p => p.Commands)
-                .ThenInclude(p => p.DeviceConfiguration)
-                .ThenInclude(p => p.Measure)
+                .ThenInclude(p => p.DeviceConfiguration.Measure)
                 .FirstOrDefaultAsync().ConfigureAwait(false);
             return Json(script.Adapt<ScriptViewModel>());
         }
@@ -153,6 +151,19 @@ namespace FuDoKo.SmartHome.web.Controllers
             if (script == null) return NotFound(new NotFoundError());
 
             return NoContent();
+        }
+        /// <summary>
+        /// Метод для пуш уведомлений. 
+        /// </summary>
+        /// <param name="sensor"></param>
+        /// <returns></returns>
+        [HttpPut("Notification")]
+        public async Task<IActionResult> Notification([FromBody]SensorViewModel sensor)
+        {
+            string title = sensor.Name;
+            string description = $"Sensor {sensor.Name} returns value {sensor.Value}";
+            //TODO send push notification to firebase
+            return Json(new { Title = title, Description = description});
         }
 
     }

@@ -28,16 +28,21 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-6">
       <app-sensor-list *ngIf="selectedItem && selectedItem.controller.status" [controller]="selectedItem.controller" [isAdmin]="selectedItem.isAdmin"></app-sensor-list>
     </div>
-    <div class="col-lg-6">
+    <div class="col-6">
       <app-device-list *ngIf="selectedItem && selectedItem.controller.status" [controller]="selectedItem.controller" [isAdmin]="selectedItem.isAdmin"></app-device-list>
     </div>
   </div>
   <div class="row">
     <div class="col-lg-12">
-      <app-script-list *ngIf="selectedItem && selectedItem.controller.status" [controller]="selectedItem.controller"></app-script-list>
+      <app-script-list *ngIf="selectedItem && selectedItem.controller.status" [controller]="selectedItem.controller" (onChangeScript)="changeScript($event)"></app-script-list>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <app-command-list *ngIf="selectedScript" [script]="selectedScript"></app-command-list>
     </div>
   </div>
 </div>

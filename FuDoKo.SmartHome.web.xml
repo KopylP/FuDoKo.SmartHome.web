@@ -56,6 +56,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerHardwareController.Notification(FuDoKo.SmartHome.web.ViewModels.SensorViewModel)">
+            <summary>
+            Метод для пуш уведомлений. 
+            </summary>
+            <param name="sensor"></param>
+            <returns></returns>
+        </member>
         <member name="M:FuDoKo.SmartHome.web.Controllers.TokenController.Auth(FuDoKo.SmartHome.web.Data.Models.TokenRequestViewModel)">
             <summary>
             Это метод для получения токена

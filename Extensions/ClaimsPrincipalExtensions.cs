@@ -13,7 +13,7 @@ namespace FuDoKo.SmartHome.web.Extensions
         public static ApplicationUser GetUser(this ClaimsPrincipal User, ApplicationDbConrext _context)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _context.Users.Find(userId);
+            return userId != null ? _context.Users.Find(userId) : null;
         }
     }
 }

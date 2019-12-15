@@ -94,6 +94,26 @@ namespace FuDoKo.SmartHome.web.Controllers
             _context.UserHasControllers.Add(userHasController);
             //Зберігаємо зміни
             _context.SaveChanges();
+            //Створюємо віртуальний пристрій
+            var device = new Device
+            {
+                Name = "Notification",
+                Pin = 0,
+                MAC = null,
+                Status = true,
+                ControllerId = controller.Id,
+                DeviceTypeId = _context.DeviceTypes.Where(p => p.TypeName == "Virtual").FirstOrDefault().Id,
+            };
+            _context.Devices.Add(device);
+            _context.SaveChanges();
+            //Ствоюємо UserasDevice
+            var userHasDevice = new UserHasDevice
+            {
+                DeviceId = device.Id,
+                UsersHaveControllerId = userHasController.Id
+            };
+            _context.UserHasDevices.Add(userHasDevice);
+            _context.SaveChanges();
             //Повертаємо створений контролер як резльтат
             return new JsonResult(controller.Adapt<ControllerViewModel>());
         }
