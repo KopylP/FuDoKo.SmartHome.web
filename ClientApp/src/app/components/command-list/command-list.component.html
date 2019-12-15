@@ -11,7 +11,7 @@
     </mdb-card-title>
     <ul class="item-ul">
       <li *ngFor="let command of commands">
-        <app-command-item [command]="command"></app-command-item>
+        <app-command-item [command]="command" (onCommandDeleted)="deleteCommand($event)"></app-command-item>
       </li>
       <li><add-button (click)="addCommand()"></add-button></li>
     </ul>

@@ -12,8 +12,8 @@ export class DeviceService {
 
     link = "api/Device/";
 
-    all(controllerId: number): Observable<Device[]> {
-        return this.http.get<Device[]>(this.link + "All/" + controllerId);
+    all(controllerId: number, virtual = false): Observable<Device[]> {
+        return this.http.get<Device[]>(this.link + "All/" + controllerId + "?virtual=" + virtual);
     }
 
     get(id: number): Observable<Device> {

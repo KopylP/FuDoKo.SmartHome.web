@@ -65,6 +65,7 @@ export class ScriptEditComponent implements OnInit {
 
     }
 
+
     createForm() {
         this.dateFrom = this.dateNow;
         this.dateTo = moment(this.dateFrom).add(1, "hours").toDate();

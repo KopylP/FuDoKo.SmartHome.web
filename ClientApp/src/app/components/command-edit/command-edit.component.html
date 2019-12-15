@@ -1,0 +1,76 @@
+<mat-dialog-content>
+  <h1>{{title}}</h1>
+  <mat-vertical-stepper [linear]="true" #stepper (selectionChange)="onStepChange($event)">
+    <!-- change default 'edit' icon -->
+    <ng-template matStepperIcon="edit">
+      <fa-icon [icon]="editIcon"></fa-icon>
+    </ng-template>
+    <mat-step [stepControl]="deviceFormGroup">
+      <form [formGroup]="deviceFormGroup">
+        <ng-template matStepLabel>Select device</ng-template>
+        <mat-form-field>
+          <mat-label>Device</mat-label>
+          <mat-select formControlName="DeviceId" [disabled]="editMode">
+            <mat-option *ngFor="let device of devices" [value]="device.id">{{ device.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="measureFormGroup">
+      <form [formGroup]="measureFormGroup">
+        <ng-template matStepLabel>Select maesure</ng-template>
+        <mat-form-field>
+          <mat-label>Measure</mat-label>
+          <mat-select formControlName="MeasureId" [disabled]="editMode">
+            <mat-option *ngFor="let measure of measures" [value]="measure.id">{{ measure.measureName }}</mat-option>
+          </mat-select>
+        </mat-form-field><br />
+        <mat-form-field>
+          <input matInput
+                 formControlName="Value"
+                 placeholder="Configuration value"
+                 type="number"
+                 min="0"
+                 max="254">
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="commandFormGroup">
+      <form [formGroup]="commandFormGroup">
+        <ng-template matStepLabel>Command information</ng-template>
+        <mat-form-field>
+          <input matInput
+                 formControlName="Name"
+                 placeholder="Command name"
+                 type="text">
+        </mat-form-field><br/>
+        <mat-form-field>
+          <input matInput
+                 formControlName="TimeSpan"
+                 placeholder="Delay"
+                 type="number">
+        </mat-form-field><br/>
+        <mat-slide-toggle formControlName="End">Run at the end</mat-slide-toggle>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <h5>Create command?</h5>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onSubmit()">Create</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</mat-dialog-content>

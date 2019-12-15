@@ -41,6 +41,7 @@ export class ScriptListComponent implements OnInit, OnChanges {
     onDeleteScript(script: Script) {
         const index = this.scripts.findIndex(s => s.id == script.id);
         this.scripts.splice(index, 1);
+        this.selectedScript = null;
     }
 
     addScript() {

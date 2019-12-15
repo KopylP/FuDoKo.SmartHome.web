@@ -24,7 +24,7 @@ import { AuthTrueGuard } from './guards/auth.true.guard';
 import { EditControllerComponent } from './components/edit-controller/edit-controller.component';
 import { EditControllerService } from './services/edit-controller.service';
 import { AddButtonComponent } from './components/add-button/add-button.component';
-import { MatDialogModule, MatOptionModule, MatSelectModule, MatRadioButton, MatRadioModule, MatChipsModule, MatIconModule, MatNativeDateModule, GestureConfig } from '@angular/material';
+import { MatDialogModule, MatOptionModule, MatSelectModule, MatRadioButton, MatRadioModule, MatChipsModule, MatIconModule, MatNativeDateModule, GestureConfig, MatStepperModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { SensorService } from './services/sensor.service';
@@ -50,6 +50,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { CommandListComponent } from './components/command-list/command-list.component';
 import { CommandItemComponent } from './components/command-item/command-item.component';
+import { CommandEditComponent } from './components/command-edit/command-edit.component';
 
 @NgModule({
     declarations: [
@@ -74,14 +75,16 @@ import { CommandItemComponent } from './components/command-item/command-item.com
         ScriptItemComponent,
         ScriptEditComponent,
         CommandListComponent,
-        CommandItemComponent
+        CommandItemComponent,
+        CommandEditComponent
     ],
     entryComponents: [
         EditControllerComponent,
         SensorEditComponent,
         EditDeviceComponent,
         ControllerAccessComponent,
-        ScriptEditComponent
+        ScriptEditComponent,
+        CommandEditComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -108,7 +111,9 @@ import { CommandItemComponent } from './components/command-item/command-item.com
         MatDatepickerModule,
         MatButtonToggleModule,
         MatNativeDateModule,
+        MatStepperModule,
         MatSliderModule,
+        MatButtonModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, canActivate: [AuthGuard] },
             { path: 'auth', component: LoginComponent, canActivate: [AuthTrueGuard] },

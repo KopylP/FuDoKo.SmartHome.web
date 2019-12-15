@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ElementRef }
 import { Command } from '../../interfaces/Command';
 import { MatMenuTrigger } from '@angular/material';
 import { faCubes } from '@fortawesome/free-solid-svg-icons';
+import { CommandService } from '../../services/command.service';
 
 @Component({
     selector: 'app-command-item',
@@ -20,7 +21,7 @@ export class CommandItemComponent implements OnInit {
 
     commandIcon = faCubes;
 
-    constructor() { }
+    constructor(private commandService: CommandService) { }
 
     ngOnInit() {
     
@@ -36,7 +37,9 @@ export class CommandItemComponent implements OnInit {
     }
 
     deleteCommand() {
-
+        this.commandService.delete(this.command.id).subscribe(p => {
+            this.onCommandDeleted.emit(this.command);
+        });
     }
 
 }
