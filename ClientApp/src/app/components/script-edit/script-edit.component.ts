@@ -47,22 +47,25 @@ export class ScriptEditComponent implements OnInit {
         this.editMode = data.editMode;
         this.id = data.id;
         this.controllerId = data.controllerId;
+
         this.createForm();
-
-        this.script = <Script>{};
-
         this.createForm();
         this.loadSensors();
         this.loadConditionTypes();
+
+        this.script = <Script>{};
+
         if (this.editMode) {
             this.title = "Edit script";
         } else {
             this.title = "Create script";
         }
-    }
+      }
 
     ngOnInit() {
-
+      if (this.editMode) {
+        this.loadData();
+      }
     }
 
     createForm() {
@@ -136,11 +139,25 @@ export class ScriptEditComponent implements OnInit {
     updateForm() {
         this.form.setValue({
             Name: this.script.name,
+            SensorId: this.script.sensorId,
+            ConditionTypeId: this.script.ConditionTypeId,
+            ConditionValue: this.script.conditionValue,
+            TimeFrom: moment(this.script.timeFrom).format("HH:mm"),
+            TimeTo: moment(this.script.timeTo).format("HH:mm"),
+            DateFrom: this.script.timeFrom,
+            DateTo: this.script.timeTo,
+            RepeatTimes: this.script.repeatTimes,
+            Priority: this.script.priority
         });
     }
 
     loadData() {
+      this.scriptService.get(this.id).subscribe(res => {
+        this.script = res;
+        this.updateForm();
+      }, err => {
 
+      });
     }
 
     onRepeatTimeChange() {
