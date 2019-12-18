@@ -9,10 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var ControllerItemComponent = /** @class */ (function () {
-    function ControllerItemComponent(controllerService, editControllerService, controllerAccessService) {
+    function ControllerItemComponent(controllerService, editControllerService, controllerAccessService, snackBar) {
         this.controllerService = controllerService;
         this.editControllerService = editControllerService;
         this.controllerAccessService = controllerAccessService;
+        this.snackBar = snackBar;
         this.countOfClicks = 0;
         this.onDeleteController = new core_1.EventEmitter();
         this.faHome = free_solid_svg_icons_1.faHome;
@@ -60,6 +61,8 @@ var ControllerItemComponent = /** @class */ (function () {
         var _this = this;
         this.controllerService.delete(this.userHasController.controller.id).subscribe(function (res) {
             _this.onDeleteController.emit(_this.userHasController.controller.id);
+        }, function (err) {
+            _this.openSnackBar(err.error.message, null, "snack-error");
         });
     };
     ControllerItemComponent.prototype.editController = function () {
@@ -72,6 +75,14 @@ var ControllerItemComponent = /** @class */ (function () {
     };
     ControllerItemComponent.prototype.accessPolicy = function () {
         this.controllerAccessService.open(this.userHasController.controller.id);
+    };
+    ControllerItemComponent.prototype.openSnackBar = function (message, action, snackClass) {
+        return this.snackBar.open(message, action, {
+            duration: 3000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+            panelClass: [snackClass]
+        });
     };
     __decorate([
         core_1.Input()

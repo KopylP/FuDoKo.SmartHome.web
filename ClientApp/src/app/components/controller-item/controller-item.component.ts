@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ContentChild, ElementRef, ViewChild, OnChanges, SimpleChanges, Output, EventEmitter } from "@angular/core";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { ControllerService } from "../../services/controller.service";
-import { MatMenuTrigger } from "@angular/material";
+import { MatMenuTrigger, MatSnackBar } from "@angular/material";
 import { EditControllerService } from "../../services/edit-controller.service";
 import { UserHasController } from "../../interfaces/UserHasController";
 import { ControllerAccessService } from "../../services/controller-access.service";
@@ -30,7 +30,8 @@ export class ControllerItemComponent implements OnInit, OnChanges {
     constructor(
         private controllerService: ControllerService,
         private editControllerService: EditControllerService,
-        private controllerAccessService: ControllerAccessService
+        private controllerAccessService: ControllerAccessService,
+        private snackBar: MatSnackBar
     ) {
     }
 
@@ -76,6 +77,8 @@ export class ControllerItemComponent implements OnInit, OnChanges {
     deleteController() {
         this.controllerService.delete(this.userHasController.controller.id).subscribe(res => {
             this.onDeleteController.emit(this.userHasController.controller.id);
+        }, err => {
+                this.openSnackBar(err.error.message, null, "snack-error");
         });
     }
 
@@ -90,4 +93,14 @@ export class ControllerItemComponent implements OnInit, OnChanges {
     accessPolicy() {
         this.controllerAccessService.open(this.userHasController.controller.id);
     }
+
+    openSnackBar(message: string, action: string, snackClass: string) {
+        return this.snackBar.open(message, action, {
+            duration: 3000,
+            verticalPosition: "top",
+            horizontalPosition: "right",
+            panelClass: [snackClass]
+        });
+    }
+
 }

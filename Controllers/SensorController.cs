@@ -145,6 +145,19 @@ namespace FuDoKo.SmartHome.web.Controllers
 
             if (userHasController == null) return Unauthorized(new UnauthorizedError());
 
+            var scripts = _context.Scripts
+                .Where(p => p.SensorId == sensor.Id)
+                .Include(p => p.Commands)
+                .ToArray();
+
+            if (scripts.Any())
+            {
+                Command[] commands = scripts.SelectMany(p => p.Commands).ToArray();
+                if (commands.Any())
+                    _context.Commands.RemoveRange(commands);
+                _context.Scripts.RemoveRange(scripts);
+            }
+
             _context.Sensors.Remove(sensor);
             _context.SaveChanges();
             return NoContent();

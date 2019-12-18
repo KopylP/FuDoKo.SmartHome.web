@@ -22,6 +22,9 @@ var HomeComponent = /** @class */ (function () {
     HomeComponent.prototype.changeScript = function (script) {
         this.selectedScript = script;
     };
+    HomeComponent.prototype.deleteScript = function () {
+        this.selectedScript = null;
+    };
     HomeComponent = __decorate([
         core_1.Component({
             selector: "app-home",

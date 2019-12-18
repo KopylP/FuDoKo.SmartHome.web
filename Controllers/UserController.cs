@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using FuDoKo.SmartHome.web.Api.ApiErrors;
 using FuDoKo.SmartHome.web.Data;
 using FuDoKo.SmartHome.web.Data.Models;
+using FuDoKo.SmartHome.web.Extensions;
 using FuDoKo.SmartHome.web.ViewModels;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -80,6 +82,36 @@ namespace FuDoKo.SmartHome.web.Controllers
             _context.SaveChanges();
 
             return new JsonResult(user.Adapt<UserViewModel>());
+        }
+        [Authorize]
+        [HttpPost("Firebase")]
+        public IActionResult Firabase([FromQuery]string token)
+        {
+            if (token == null) return StatusCode(500, new InternalServerError());
+            var user = User.GetUser(_context);
+            user.FirebaseToken = token;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            return Json(token);
+        }
+
+        [Authorize]
+        [HttpDelete("Firebase")]
+        public IActionResult Firebase()
+        {
+            var user = User.GetUser(_context);
+            user.FirebaseToken = null;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [Authorize]
+        [HttpGet("Me")]
+        public IActionResult GetMe()
+        {
+            var user = User.GetUser(_context);
+            return Json(user.Adapt<UserViewModel>());
         }
     }
 }

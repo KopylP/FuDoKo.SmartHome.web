@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace FuDoKo.SmartHome.web.Filters
             {
                 headers.TryGetValue(KEY, out var macAddressValue);
                 var controller = _context.Controllers
-                    .Where(p => p.MAC == context.HttpContext.Mac())
+                    .Where(p => p.MAC.ToUpperInvariant().Trim() == context.HttpContext.Mac().ToUpperInvariant().Trim())
                     .FirstOrDefault();
                 if(controller == null)
                 {

@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Device } from '../../interfaces/Device';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger, MatSnackBar } from '@angular/material';
 import { IconDefinition, faLightbulb, faMenorah } from '@fortawesome/free-solid-svg-icons';
 import { DeviceService } from '../../services/device.service';
 import { EditDeviceService } from '../../services/edit-device.service';
+import { DeviceAccessDialogService } from '../../services/device-access-dialog.service';
 
 @Component({
     selector: 'app-device-item',
@@ -27,7 +28,9 @@ export class DeviceItemComponent implements OnInit {
 
 
     constructor(private deviceService: DeviceService,
-        private editDeviceService: EditDeviceService) { }
+        private editDeviceService: EditDeviceService,
+        private snackBar: MatSnackBar,
+        private deviceAccessDialogService: DeviceAccessDialogService) { }
 
     ngOnInit() {
         switch (this.device.deviceType.typeName) {
@@ -71,16 +74,31 @@ export class DeviceItemComponent implements OnInit {
             });
     }
 
+    accessPolicy() {
+        this.deviceAccessDialogService.open(this.device.id);
+    }
+
     deleteDevice() {
         this.deviceService
             .delete(this.device.id)
             .subscribe(res => {
                 this.onDeviceDeleted.emit(this.device);
+            }, err => {
+                    this.openSnackBar(err.error.message, null, "snack-error-bottom");
             });
     }
-
+    
     getClass() {
         return this.device.deviceType.typeName.toLowerCase().replace(" ", "-");
+    }
+
+    openSnackBar(message: string, action: string, snackClass: string) {
+        return this.snackBar.open(message, action, {
+            duration: 3000,
+            verticalPosition: "bottom",
+            horizontalPosition: "center",
+            panelClass: [snackClass]
+        });
     }
 
 }

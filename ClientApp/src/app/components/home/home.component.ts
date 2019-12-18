@@ -26,4 +26,8 @@ export class HomeComponent  {
     changeScript(script: Script) {
         this.selectedScript = script;
     }
+
+    deleteScript() {
+        this.selectedScript = null;
+    }
 }

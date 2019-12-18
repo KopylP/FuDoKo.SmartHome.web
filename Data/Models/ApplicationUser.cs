@@ -31,6 +31,8 @@ namespace FuDoKo.SmartHome.web.Data.Models
         public DateTime LastModifiedDate { get; set; }
         #endregion
 
+        public string FirebaseToken { get; set; }
+
         #region lazy props
         public virtual IEnumerable<UserHasController> UserHasControllers { get; set; }
 

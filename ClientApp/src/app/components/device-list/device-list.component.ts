@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DeviceService } from '../../services/device.service';
 import { Device } from '../../interfaces/Device';
 import { Controller } from '../../interfaces/Controller';
@@ -9,7 +9,7 @@ import { EditDeviceService } from '../../services/edit-device.service';
     templateUrl: './device-list.component.html',
     styleUrls: ['./device-list.component.less']
 })
-export class DeviceListComponent implements OnInit {
+export class DeviceListComponent implements OnInit, OnChanges {
 
     constructor(private deviceService: DeviceService,
         private editDeviceService: EditDeviceService) { }
@@ -21,6 +21,14 @@ export class DeviceListComponent implements OnInit {
     ngOnInit() {
         console.log("Device List");
         this.loadData();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (typeof changes['controller'] !== 'undefined') {
+            if (!changes['controller'].firstChange) {
+                this.loadData();
+            }
+        }
     }
 
     loadData() {

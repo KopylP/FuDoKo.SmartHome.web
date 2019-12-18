@@ -14,5 +14,7 @@ namespace FuDoKo.SmartHome.web.ViewModels
         public string Surname { get; set; }
 
         public string UserName { get; set; }
+
+        public string FirebaseToken { get; set; }
     }
 }

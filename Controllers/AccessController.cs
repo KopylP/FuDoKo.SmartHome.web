@@ -103,6 +103,16 @@ namespace FuDoKo.SmartHome.web.Controllers
 
             if (userHasController == null) return Unauthorized(new UnauthorizedError());
 
+            var accessUserHasDevices = _context
+                .UserHasDevices
+                .Where(p => p.UsersHaveControllerId == accessUserHasController.Id)
+                .ToArray();
+
+            if (accessUserHasDevices.Any())
+            {
+                _context.UserHasDevices.RemoveRange(accessUserHasDevices);
+            }
+
             _context.UserHasControllers.Remove(accessUserHasController);
             _context.SaveChanges();
             return NoContent();
@@ -133,9 +143,10 @@ namespace FuDoKo.SmartHome.web.Controllers
                 .Where(p => p.DeviceId == id)
                 .Where(p => p.UsersHaveControllerId != userHasController.Id)
                 .Include(p => p.UserHasController)
-                .ThenInclude(p => p.User);
-            //TODO ADAPT
-            return Json(accessUserHasDevice);
+                .ThenInclude(p => p.User)
+                .ToArray();
+
+            return Json(accessUserHasDevice.Adapt<UserHasDeviceViewModel[]>());
         }
 
         [HttpPut("Device")]
@@ -164,10 +175,18 @@ namespace FuDoKo.SmartHome.web.Controllers
 
             var accessUserHasController = _context.UserHasControllers
                 .Where(p => p.ControllerId == device.ControllerId)
-                .Where(p => p.UserId == user.Id)
+                .Where(p => p.UserId == accessUser.Id)
                 .FirstOrDefault();
 
             if (accessUserHasController == null) return Unauthorized(new UnauthorizedError("User hasn`t access to your controller!"));
+
+            var userHasDevice = _context
+                .UserHasDevices
+                .Where(p => p.DeviceId == device.Id)
+                .Where(p => p.UsersHaveControllerId == accessUserHasController.Id)
+                .FirstOrDefault();
+
+            if (userHasDevice != null) return StatusCode(500, new InternalServerError("User have been alerady added"));
 
             var accessUserHasDevice = new UserHasDevice
             {
@@ -179,8 +198,34 @@ namespace FuDoKo.SmartHome.web.Controllers
             _context.SaveChanges();
             accessUserHasDevice.UserHasController = _context.UserHasControllers.Find(accessUserHasDevice.UsersHaveControllerId);
             accessUserHasDevice.UserHasController.User = _context.Users.Find(accessUserHasDevice.UserHasController.UserId);
-            //TODO ADAPT
-            return Json(accessUserHasDevice);
+
+            return Json(accessUserHasDevice.Adapt<UserHasDeviceViewModel>());
+        }
+
+        [HttpDelete("Device/UserHasDevice/{id}")]
+        public IActionResult DeleteDevice(int id)
+        {
+            var user = User.GetUser(_context);
+
+            var userHasDevice = _context.UserHasDevices
+                .Where(p => p.Id == id)
+                .Include(p => p.UserHasController)
+                .FirstOrDefault();
+            if (userHasDevice == null) return NotFound(new NotFoundError());
+
+            var userHasController = _context
+                .UserHasControllers
+                .Where(p => p.ControllerId == userHasDevice.UserHasController.ControllerId)
+                .Where(p => p.IsAdmin)
+                .Where(p => p.UserId == user.Id)
+                .FirstOrDefault();
+
+            if (userHasController == null) return Unauthorized(new UnauthorizedError("You have no access to this controller"));
+
+            _context.UserHasDevices.Remove(userHasDevice);
+            _context.SaveChanges();
+
+            return NoContent();
         }
         #endregion
 

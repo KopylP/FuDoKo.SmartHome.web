@@ -74,6 +74,7 @@
     <None Remove="ClientApp\src\app\interfaces\Controller.ts" />
     <None Remove="ClientApp\src\app\interfaces\ControllerAccess.ts" />
     <None Remove="ClientApp\src\app\interfaces\Device.ts" />
+    <None Remove="ClientApp\src\app\interfaces\DeviceAccess.ts" />
     <None Remove="ClientApp\src\app\interfaces\DeviceConfiguration.ts" />
     <None Remove="ClientApp\src\app\interfaces\DeviceType.ts" />
     <None Remove="ClientApp\src\app\interfaces\Measure.ts" />
@@ -83,6 +84,7 @@
     <None Remove="ClientApp\src\app\interfaces\SensorType.ts" />
     <None Remove="ClientApp\src\app\interfaces\TokenResponse.ts" />
     <None Remove="ClientApp\src\app\interfaces\UserHasController.ts" />
+    <None Remove="ClientApp\src\app\interfaces\UserHasDevice.ts" />
     <None Remove="ClientApp\src\app\services\auth.service.ts" />
     <None Remove="ClientApp\src\app\services\controller.service.ts" />
     <None Remove="ClientApp\src\app\services\edit-controller.service.ts" />
@@ -123,6 +125,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\ConditionType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\ControllerAccess.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Device.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\DeviceAccess.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\DeviceConfiguration.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\DeviceType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\Measure.ts" />
@@ -135,6 +138,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\SensorType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\TokenResponse.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\UserHasController.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\UserHasDevice.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\controller.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\edit-controller.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\register.service.ts" />

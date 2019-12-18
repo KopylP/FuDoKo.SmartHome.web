@@ -13,6 +13,7 @@ export class ScriptListComponent implements OnInit, OnChanges {
 
     @Input() controller: Controller;
     @Output() onChangeScript: EventEmitter<Script> = new EventEmitter();
+    @Output() onScriptDelete: EventEmitter<any> = new EventEmitter();
     scripts: Script[];
     selectedScript: Script;
 
@@ -42,6 +43,7 @@ export class ScriptListComponent implements OnInit, OnChanges {
         const index = this.scripts.findIndex(s => s.id == script.id);
         this.scripts.splice(index, 1);
         this.selectedScript = null;
+        this.onScriptDelete.emit();
     }
 
     addScript() {

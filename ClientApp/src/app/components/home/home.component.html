@@ -37,7 +37,7 @@
   </div>
   <div class="row">
     <div class="col-lg-12">
-      <app-script-list *ngIf="selectedItem && selectedItem.controller.status" [controller]="selectedItem.controller" (onChangeScript)="changeScript($event)"></app-script-list>
+      <app-script-list *ngIf="selectedItem && selectedItem.controller.status" [controller]="selectedItem.controller" (onChangeScript)="changeScript($event)" (onScriptDelete)="deleteScript()"></app-script-list>
     </div>
   </div>
   <div class="row">

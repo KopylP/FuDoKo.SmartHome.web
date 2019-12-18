@@ -2,6 +2,7 @@ using FuDoKo.SmartHome.web.Data;
 using FuDoKo.SmartHome.web.Data.Models;
 using FuDoKo.SmartHome.web.Extensions;
 using FuDoKo.SmartHome.web.Filters;
+using FuDoKo.SmartHome.web.Firebase;
 using FuDoKo.SmartHome.web.Hubs;
 using FuDoKo.SmartHome.web.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -125,6 +126,8 @@ namespace FuDoKo.SmartHome.web
             services.AddScoped<ControllerAuthFilter>();
 
             services.AddScoped<ValidateTokenMiddleware>();
+
+            services.AddSingleton<FudokoCloudMessage>();
 
             services.AddSignalR();
 

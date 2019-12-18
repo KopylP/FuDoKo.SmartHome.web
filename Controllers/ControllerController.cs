@@ -77,7 +77,7 @@ namespace FuDoKo.SmartHome.web.Controllers
             if (model == null || !ModelState.IsValid) return StatusCode(500, new InternalServerError("Data is incorrect!"));
             var controller = _context.Controllers.Where(p => p.MAC == model.MAC).FirstOrDefault();
             if (controller != null) return StatusCode(500, new InternalServerError("Controller is already exists"));
-            if(model.MAC.Length != 12) return StatusCode(500, new InternalServerError("MAC address must has 12 symbols!"));
+            if (model.MAC.Length != 12) return StatusCode(500, new InternalServerError("MAC address must has 12 symbols!"));
             //Беремо айді користувача з токену
             var user = User.GetUser(_context);
             if (user == null) return Unauthorized(new UnauthorizedError());
@@ -170,23 +170,42 @@ namespace FuDoKo.SmartHome.web.Controllers
             //Беремо айді користувача з токену
             var user = User.GetUser(_context);
             //Шукаємо контролер о тим самим id
-            var controller = _context.Controllers.Find(id);
-            if(controller == null) return NotFound(new NotFoundError());
+            var controller = _context
+                .Controllers
+                .Include(p => p.Sensors)
+                .Where(p => p.Id == id)
+                .FirstOrDefault();
+            if (controller == null) return NotFound(new NotFoundError());
             //Перевіряємо, чи користувач належить до цього контроллера
             var userHasController = _context
                 .UserHasControllers
                 .Where(p => p.UserId == user.Id)
                 .Where(p => p.ControllerId == controller.Id)
                 .Where(p => p.IsAdmin)
+                .Include(p => p.UsersHaveDevices)
+                .ThenInclude(p => p.Device)
                 .FirstOrDefault();
             if (userHasController == null) return Unauthorized(new UnauthorizedError());
+
+            var deviceTypeVirtual = _context.DeviceTypes.Where(p => p.TypeName == "Virtual").FirstOrDefault();
+            if (controller.Sensors.Any() || userHasController.UsersHaveDevices.Any(p => p.Device.DeviceTypeId != deviceTypeVirtual.Id))
+            {
+                return StatusCode(500, new InternalServerError("For first, disable and remove all sensors and devices belongs to this controller."));
+            }
+
+            var userHasDeviceVirtual = userHasController.UsersHaveDevices.Where(p => p.Device.DeviceTypeId == deviceTypeVirtual.Id).FirstOrDefault();
+
+            if (userHasDeviceVirtual != null)
+            {
+                _context.Devices.Remove(userHasDeviceVirtual.Device);
+            }
+
             //Змінюємо статус контроллера
             _context.Controllers.Remove(controller);
             _context.UserHasControllers.Remove(userHasController);
             _context.SaveChanges();
             return NoContent();
         }
-
         #endregion
     }
 }

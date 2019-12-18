@@ -4,14 +4,16 @@ using FuDoKo.SmartHome.web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FuDoKo.SmartHome.web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbConrext))]
-    partial class ApplicationDbConrextModelSnapshot : ModelSnapshot
+    [Migration("20191215152955_Firebase")]
+    partial class Firebase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

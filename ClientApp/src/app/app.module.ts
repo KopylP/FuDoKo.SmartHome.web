@@ -51,6 +51,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { CommandListComponent } from './components/command-list/command-list.component';
 import { CommandItemComponent } from './components/command-item/command-item.component';
 import { CommandEditComponent } from './components/command-edit/command-edit.component';
+import { DeviceAccessComponent } from './components/device-access/device-access.component';
 
 @NgModule({
     declarations: [
@@ -76,7 +77,8 @@ import { CommandEditComponent } from './components/command-edit/command-edit.com
         ScriptEditComponent,
         CommandListComponent,
         CommandItemComponent,
-        CommandEditComponent
+        CommandEditComponent,
+        DeviceAccessComponent
     ],
     entryComponents: [
         EditControllerComponent,
@@ -84,7 +86,8 @@ import { CommandEditComponent } from './components/command-edit/command-edit.com
         EditDeviceComponent,
         ControllerAccessComponent,
         ScriptEditComponent,
-        CommandEditComponent
+        CommandEditComponent,
+        DeviceAccessComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
