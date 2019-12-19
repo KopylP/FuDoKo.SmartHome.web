@@ -187,10 +187,11 @@ namespace FuDoKo.SmartHome.web.Controllers
         /// </summary>
         /// <param name="sensor"></param>
         /// <returns></returns>
-        [HttpPut("Notification")]
-        public async Task<IActionResult> Notification([FromBody]SensorViewModel sensor)
+        [HttpPut("Notification/{id}")]
+        public async Task<IActionResult> Notification(int id)
         {
-            if (sensor == null) return StatusCode(500, new InternalServerError());
+            var sensor = _context.Sensors.Find(id);
+            if (sensor == null) return NotFound(new NotFoundError());
             var tokens = _context.UserHasControllers
                 .Include(p => p.User)
                 .Where(p => p.ControllerId == sensor.ControllerId)
@@ -199,8 +200,8 @@ namespace FuDoKo.SmartHome.web.Controllers
                 .Select(p => p.FirebaseToken);
             string title = sensor.Name;
             string description = $"Sensor {sensor.Name} returns value {sensor.Value}";
-
-            await _fudokoCloudMessage.Push(title, description, null, tokens.ToArray()).ConfigureAwait(false);
+            var tokensArray = tokens.ToArray();
+            await _fudokoCloudMessage.Push(title, description, null, tokensArray).ConfigureAwait(false);
 
             return Json(new { Title = title, Description = description});
         }

@@ -56,7 +56,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerHardwareController.Notification(FuDoKo.SmartHome.web.ViewModels.SensorViewModel)">
+        <member name="M:FuDoKo.SmartHome.web.Controllers.ControllerHardwareController.Notification(System.Int32)">
             <summary>
             Метод для пуш уведомлений. 
             </summary>
