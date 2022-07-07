@@ -36,7 +36,7 @@
     "hammerjs": "^2.0.8",
     "jquery": "3.4.1",
     "mdbootstrap": "^4.8.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "popper.js": "^1.16.0",
     "rxjs": "~6.5.3",
     "tslib": "^1.10.0",
